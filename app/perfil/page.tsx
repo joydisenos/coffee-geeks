@@ -58,6 +58,15 @@ export default async function PerfilPage() {
            </div>
         )}
 
+        {session.role === "cafeteria" && (
+           <div className="mb-6 p-4 rounded-xl bg-orange-500/20 border border-orange-500/50 flex justify-between items-center">
+             <span className="text-orange-200 text-sm font-medium">Panel de Cafetería</span>
+             <Link href="/perfil/menu" className="text-white text-sm bg-orange-600 hover:bg-orange-500 px-4 py-2 rounded-lg transition-colors font-semibold">
+               Gestionar Menú
+             </Link>
+           </div>
+        )}
+
         <ProfileForm user={user} />
       </div>
     </main>

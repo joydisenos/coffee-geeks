@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Coffee Geeks Panamá",
-  description: "Coffee Geeks Panamá",
+  title: "Coffee Geeks Panamá | Descubre, Vota y Recorre las Mejores lugares donde sirven café de Panamá",
+  description: "Explora los mejores Coffee Shop, Hoteles y Restaurantes de Panamá, participa en el concurso, vota por tu favorito y recorre la ruta de las mejores Coffee Shops con Coffee Geeks Panamá. Vive la experiencia",
   icons: {
     icon: "/fav.png",
   },

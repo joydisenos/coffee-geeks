@@ -81,6 +81,22 @@ export default function RegisterPage() {
           </div>
 
           <div className="flex flex-col gap-2">
+            <label className="text-white/90 text-sm font-medium pl-1">
+              Tipo de Cuenta
+            </label>
+            <div className="flex gap-4 mb-2 bg-black/30 p-2 rounded-xl border border-white/10">
+               <label className="flex items-center gap-2 text-white/90 cursor-pointer p-2 flex-1 justify-center rounded-lg hover:bg-white/10 transition-colors">
+                  <input type="radio" name="role" value="user" defaultChecked className="accent-white" />
+                  Usuario
+               </label>
+               <label className="flex items-center gap-2 text-white/90 cursor-pointer p-2 flex-1 justify-center rounded-lg hover:bg-white/10 transition-colors">
+                  <input type="radio" name="role" value="cafeteria" className="accent-white" />
+                  Cafetería
+               </label>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
             <label className="text-white/90 text-sm font-medium pl-1" htmlFor="email">
               Correo Electrónico
             </label>

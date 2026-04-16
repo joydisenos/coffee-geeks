@@ -67,8 +67,16 @@ export async function updateUserAdmin(userId: string, formData: FormData) {
   const lastName = formData.get("lastName")?.toString().trim();
   const email = formData.get("email")?.toString().trim();
   const role = formData.get("role")?.toString().trim();
+  const password = formData.get("password")?.toString().trim();
 
-  await User.findByIdAndUpdate(userId, { name, lastName, email, role });
+  const updateData: any = { name, lastName, email, role };
+
+  if (password) {
+    const salt = await bcrypt.genSalt(10);
+    updateData.password = await bcrypt.hash(password, salt);
+  }
+
+  await User.findByIdAndUpdate(userId, updateData);
   revalidatePath("/admin/users");
   
   return { success: "Usuario modificado" };

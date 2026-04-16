@@ -8,6 +8,7 @@ export default async function AdminDashboard() {
   const totalUsers = await User.countDocuments();
   const adminUsers = await User.countDocuments({ role: "admin" });
   const regularUsers = await User.countDocuments({ role: "user" });
+  const cafeteriaUsers = await User.countDocuments({ role: "cafeteria" });
 
   return (
     <div className="space-y-6">
@@ -18,7 +19,7 @@ export default async function AdminDashboard() {
         Resumen de la plataforma y métricas clave.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
         {/* Card Total Users */}
         <div className="p-8 rounded-3xl bg-gradient-to-br from-[#2a1f18] to-[#120d0a] border border-amber-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(217,119,6,0.15)] transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
@@ -47,6 +48,16 @@ export default async function AdminDashboard() {
             </span>
           </div>
           <div className="text-6xl font-black text-orange-200 drop-shadow-lg">{regularUsers}</div>
+        </div>
+
+        {/* Card Cafeterias */}
+        <div className="p-8 rounded-3xl bg-gradient-to-br from-green-900/20 to-[#120d0a] border border-green-800/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(217,119,6,0.15)] transition-all duration-300">
+          <div className="flex justify-between items-start mb-6">
+             <span className="text-xs font-bold text-green-400 uppercase tracking-[0.2em]">
+              Cafeterías
+            </span>
+          </div>
+          <div className="text-6xl font-black text-green-200 drop-shadow-lg">{cafeteriaUsers}</div>
         </div>
       </div>
     </div>

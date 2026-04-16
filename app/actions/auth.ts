@@ -55,6 +55,7 @@ export async function register(state: any, formData: FormData) {
   const lastName = sanitizeString(formData.get("lastName"));
   const email = sanitizeString(formData.get("email"));
   const password = sanitizeString(formData.get("password"));
+  const selectedRole = formData.get("role")?.toString(); // user or cafeteria
 
   if (!name || !email || !password) {
     return { error: "Nombre, email y contraseña son obligatorios." };
@@ -75,7 +76,21 @@ export async function register(state: any, formData: FormData) {
 
   // Si no hay usuarios en la base de datos, el primero será admin por defecto 
   const userCount = await User.countDocuments();
-  const role = userCount === 0 ? "admin" : "user";
+  
+  let role = "user";
+  if (userCount === 0) {
+     role = "admin";
+  } else {
+     if (selectedRole === "cafeteria" || selectedRole === "user") {
+        role = selectedRole;
+     } else if (selectedRole === "admin") {
+        const { getSession } = await import("@/lib/session");
+        const session = await getSession();
+        if (session && session.role === "admin") {
+           role = "admin";
+        }
+     }
+  }
 
   const newUser = await User.create({
     name,

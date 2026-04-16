@@ -3,9 +3,12 @@
 import { useState } from "react";
 import { deleteUser, updateUserAdmin } from "@/app/actions/user";
 import { register } from "@/app/actions/auth";
+import AdminMenuModal from "./AdminMenuModal";
 
 export default function UserTableManager({ initialUsers }: { initialUsers: any[] }) {
   const [editingUser, setEditingUser] = useState<any>(null);
+  const [managingMenu, setManagingMenu] = useState<any>(null);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -46,18 +49,34 @@ export default function UserTableManager({ initialUsers }: { initialUsers: any[]
                 </td>
                 <td className="px-6 py-5 font-medium">{u.email}</td>
                 <td className="px-6 py-5">
-                  <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-inner ${u.role === 'admin' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-[#1c140f] text-amber-200/60 border border-amber-900/50'}`}>
+                  <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-inner ${u.role === 'admin' ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : u.role === 'cafeteria' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-[#1c140f] text-amber-200/60 border border-amber-900/50'}`}>
                     {u.role}
                   </span>
                 </td>
                 <td className="px-6 py-5 text-amber-200/50 font-medium">{new Date(u.createdAt).toLocaleDateString()}</td>
-                <td className="px-6 py-5 text-right space-x-4 font-bold tracking-wide">
-                  <button onClick={() => setEditingUser(u)} className="text-orange-400 hover:text-orange-300 hover:underline transition-colors" disabled={loading}>
-                    Editar
-                  </button>
-                  <button onClick={() => handleDelete(u.id)} className="text-red-500 hover:text-red-400 hover:underline transition-colors" disabled={loading}>
-                    Borrar
-                  </button>
+                <td className="px-6 py-5 text-right font-bold tracking-wide relative">
+                   <button 
+                      onClick={() => setOpenDropdown(openDropdown === u.id ? null : u.id)} 
+                      className="text-amber-200/70 hover:text-amber-50 px-3 py-1.5 bg-amber-900/20 rounded-xl border border-amber-700/30 transition-colors"
+                   >
+                      Opciones ▾
+                   </button>
+                   
+                   {openDropdown === u.id && (
+                      <div className="absolute right-6 top-14 z-50 bg-[#1c140f] border border-amber-600/30 rounded-xl shadow-2xl py-2 w-40 flex flex-col text-left animate-fade-in-up">
+                         {u.role === "cafeteria" && (
+                           <button onClick={() => { setManagingMenu(u); setOpenDropdown(null); }} className="px-4 py-2.5 text-green-400 hover:bg-white/5 text-left text-sm transition-colors border-b border-white/5" disabled={loading}>
+                             ☕ Ver Menú
+                           </button>
+                         )}
+                         <button onClick={() => { setEditingUser(u); setOpenDropdown(null); }} className="px-4 py-2.5 text-orange-400 hover:bg-white/5 text-left text-sm transition-colors border-b border-white/5" disabled={loading}>
+                           ✏️ Editar Perfil
+                         </button>
+                         <button onClick={() => { handleDelete(u.id); setOpenDropdown(null); }} className="px-4 py-2.5 text-red-400 hover:bg-red-500/10 text-left text-sm transition-colors" disabled={loading}>
+                           🗑️ Borrar
+                         </button>
+                      </div>
+                   )}
                 </td>
               </tr>
             ))}
@@ -95,6 +114,14 @@ export default function UserTableManager({ initialUsers }: { initialUsers: any[]
                    <label className="text-sm font-bold text-amber-200/80 uppercase tracking-widest">Contraseña</label>
                    <input required type="password" name="password" minLength={6} className="w-full mt-2 px-4 py-3 rounded-xl bg-black/50 border border-amber-900/50 text-amber-50 focus:ring-2 focus:ring-amber-600 focus:outline-none transition-shadow" />
                  </div>
+                 <div>
+                   <label className="text-sm font-bold text-amber-200/80 uppercase tracking-widest">Rol</label>
+                   <select name="role" defaultValue="user" className="w-full mt-2 px-4 py-3 rounded-xl bg-black/50 border border-amber-900/50 text-amber-50 focus:ring-2 focus:ring-amber-600 focus:outline-none transition-shadow">
+                      <option value="user">Usuario</option>
+                      <option value="cafeteria">Cafetería</option>
+                      <option value="admin">Administrador</option>
+                   </select>
+                 </div>
                  <div className="flex justify-end gap-4 mt-8">
                    <button type="button" onClick={() => setCreating(false)} className="px-5 py-2.5 rounded-xl bg-[#2a1f18] hover:bg-[#382b22] border border-amber-900/50 text-amber-100 font-bold transition-colors">Cancelar</button>
                    <button type="submit" disabled={loading} className="px-5 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-bold shadow-lg transition-colors">Guardar Usuario</button>
@@ -128,7 +155,12 @@ export default function UserTableManager({ initialUsers }: { initialUsers: any[]
                    <select name="role" defaultValue={editingUser.role} className="w-full mt-2 px-4 py-3 rounded-xl bg-black/50 border border-amber-900/50 text-amber-50 focus:ring-2 focus:ring-amber-600 focus:outline-none transition-shadow">
                       <option value="user">User</option>
                       <option value="admin">Admin</option>
+                      <option value="cafeteria">Cafetería</option>
                    </select>
+                 </div>
+                 <div>
+                   <label className="text-sm font-bold text-amber-200/80 uppercase tracking-widest">Nueva Contraseña (Opcional)</label>
+                   <input type="password" name="password" minLength={6} placeholder="Dejar en blanco para no cambiar..." className="w-full mt-2 px-4 py-3 rounded-xl bg-black/50 border border-amber-900/50 text-amber-50 focus:ring-2 focus:ring-amber-600 focus:outline-none transition-shadow" />
                  </div>
                  <div className="flex justify-end gap-4 mt-8">
                    <button type="button" onClick={() => setEditingUser(null)} className="px-5 py-2.5 rounded-xl bg-[#2a1f18] hover:bg-[#382b22] border border-amber-900/50 text-amber-100 font-bold transition-colors">Cancelar</button>
@@ -137,6 +169,15 @@ export default function UserTableManager({ initialUsers }: { initialUsers: any[]
               </form>
            </div>
          </div>
+      )}
+
+      {/* MODAL GESTION DE MENU PARA CAFETERIAS (ADMIN) */}
+      {managingMenu && (
+         <AdminMenuModal 
+            cafeteriaId={managingMenu.id} 
+            cafeteriaName={managingMenu.name + " " + managingMenu.lastName} 
+            onClose={() => setManagingMenu(null)} 
+         />
       )}
     </div>
   );
