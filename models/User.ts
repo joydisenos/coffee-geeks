@@ -1,5 +1,11 @@
 import mongoose, { Schema, model, models } from "mongoose";
 
+const BaristaSchema = new Schema({
+  fullName: { type: String, required: true, trim: true },
+  photo: { type: String, default: "" },
+  isHighlighted: { type: Boolean, default: false },
+});
+
 const UserSchema = new Schema(
   {
     name: {
@@ -33,6 +39,16 @@ const UserSchema = new Schema(
       enum: ["admin", "user", "cafeteria"],
       default: "user",
     },
+    // ── Campos exclusivos del rol cafetería ──
+    cafeteriaName: { type: String, trim: true, default: "" },
+    neighborhood: { type: String, trim: true, default: "" },
+    coverImage: { type: String, default: "" },
+    competitionCategory: {
+      type: String,
+      enum: ["Filtrado", "Espresso", "Bebida de Autor", ""],
+      default: "",
+    },
+    baristas: { type: [BaristaSchema], default: [] },
   },
   {
     timestamps: true,

@@ -33,6 +33,9 @@ export default function AdminLayout({
                 <Link href="/admin/users" className="text-sm font-medium text-amber-100/70 hover:text-amber-400 transition-all duration-300 relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 hover:after:w-full after:transition-all after:duration-300">
                   Usuarios
                 </Link>
+                <Link href="/admin/settings" className="text-sm font-medium text-amber-100/70 hover:text-amber-400 transition-all duration-300 relative after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-amber-500 hover:after:w-full after:transition-all after:duration-300">
+                  Configuración
+                </Link>
               </div>
             </div>
             

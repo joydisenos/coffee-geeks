@@ -110,6 +110,45 @@ export async function register(state: any, formData: FormData) {
   }
 }
 
+export async function registerCafeteria(state: any, formData: FormData) {
+  await dbConnect();
+
+  const name = sanitizeString(formData.get("name"));
+  const email = sanitizeString(formData.get("email"));
+  const password = sanitizeString(formData.get("password"));
+
+  if (!name || !email || !password) {
+    return { error: "Nombre, email y contraseña son obligatorios." };
+  }
+
+  if (password.length < 6) {
+    return { error: "La contraseña debe tener al menos 6 caracteres." };
+  }
+
+  const existingUser = await User.findOne({ email: String(email) });
+  if (existingUser) {
+    return { error: "Este correo electrónico ya está registrado." };
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  // Si no hay usuarios aún, el primero siempre será admin
+  const userCount = await User.countDocuments();
+  const role = userCount === 0 ? "admin" : "cafeteria";
+
+  const newUser = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+    role,
+  });
+
+  await createSession(newUser._id.toString(), newUser.role);
+
+  redirect("/perfil");
+}
+
 export async function logout() {
   await deleteSession();
   redirect("/login");
