@@ -1,0 +1,95 @@
+import Link from "next/link";
+
+const POSTS = [
+  {
+    id: "guia",
+    chip: "Guía",
+    bg: "linear-gradient(135deg,#2C1A0E,#5C3A1A)",
+    date: "12 Abr · 2026",
+    title: "Guía de supervivencia Coffee Geek",
+    excerpt: "Todo lo que necesitas antes de explorar la ruta del café panameño.",
+  },
+  {
+    id: "origen",
+    chip: "Origen",
+    bg: "linear-gradient(135deg,#1A2C0E,#3A5C1A)",
+    date: "08 Abr · 2026",
+    title: "Por qué el café panameño domina el mundo",
+    excerpt: "Geisha, Catuaí y Bourbon: el terroir único de Chiriquí.",
+  },
+  {
+    id: "entrevista",
+    chip: "Entrevista",
+    bg: "linear-gradient(135deg,#1A0E2C,#3A1A5C)",
+    date: "03 Abr · 2026",
+    title: "Entrevista cruzada con los 3 jueces del concurso",
+    excerpt: "Los criterios secretos que evalúan la experiencia integral de cada local.",
+  },
+];
+
+export default function BlogSection() {
+  return (
+    <>
+      <style>{`
+        .blog-sec { background: #FFFFFF; padding: 80px 0; }
+        .blog-wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px,5vw,60px); }
+        .blog-hd { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 32px; flex-wrap: wrap; }
+        .eyebrow-bl { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; }
+        .eyebrow-line-bl { width: 24px; height: 2px; background: #9E3A52; flex-shrink: 0; }
+        .eyebrow-text-bl { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #9E3A52; }
+        .blog-title { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(28px,4vw,42px); font-weight: 900; text-transform: uppercase; color: #22191A; line-height: .92; margin-top: 6px; }
+        .btn-out-bl {
+          display: inline-flex; align-items: center; height: 40px; padding: 0 24px;
+          border-radius: 50px; border: 1px solid #857375; background: transparent;
+          color: #9E3A52; font-family: 'Barlow', sans-serif; font-size: 14px; font-weight: 500;
+          cursor: pointer; transition: all .2s; text-decoration: none;
+        }
+        .btn-out-bl:hover { background: #9E3A52; color: #fff; border-color: #9E3A52; }
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .bc { background: #FEF0F1; border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.12), 0 1px 3px 1px rgba(0,0,0,.08); transition: box-shadow .25s, transform .25s; cursor: pointer; border: 1px solid rgba(92,14,32,.05); }
+        .bc:hover { box-shadow: 0 4px 8px 3px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.12); transform: translateY(-5px); }
+        .bc-img { width: 100%; height: 160px; display: flex; align-items: flex-start; padding: 12px; }
+        .bc-chip { font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: .04em; background: rgba(255,255,255,.18); color: #fff; padding: 4px 9px; border-radius: 50px; border: 1px solid rgba(255,255,255,.2); }
+        .bc-body { padding: 14px 15px 12px; }
+        .bc-date { font-family: 'Barlow', sans-serif; font-size: 12px; color: #857375; margin-bottom: 5px; }
+        .bc-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; color: #22191A; line-height: 1.15; margin-bottom: 6px; }
+        .bc-exc { font-family: 'Barlow', sans-serif; font-size: 13.5px; color: #524345; line-height: 1.55; margin-bottom: 10px; }
+        .bc-more { font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 500; color: #9E3A52; text-decoration: none; transition: color .2s; }
+        .bc-more:hover { color: #5C0E20; }
+        @media (max-width: 960px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } }
+      `}</style>
+
+      <section className="blog-sec">
+        <div className="blog-wrap">
+          <div className="blog-hd">
+            <div>
+              <div className="eyebrow-bl">
+                <div className="eyebrow-line-bl" />
+                <span className="eyebrow-text-bl">Historias</span>
+              </div>
+              <h2 className="blog-title">Más allá<br />de la taza</h2>
+            </div>
+            <Link href="/blog" className="btn-out-bl">Ver todo el blog →</Link>
+          </div>
+
+          <div className="blog-grid">
+            {POSTS.map((post) => (
+              <div className="bc" key={post.id}>
+                <div className="bc-img" style={{ background: post.bg }}>
+                  <span className="bc-chip">{post.chip}</span>
+                </div>
+                <div className="bc-body">
+                  <div className="bc-date">{post.date}</div>
+                  <div className="bc-title">{post.title}</div>
+                  <div className="bc-exc">{post.excerpt}</div>
+                  <Link href={`/blog/${post.id}`} className="bc-more">Leer más →</Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}

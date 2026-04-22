@@ -1,0 +1,204 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import Navbar from "@/app/components/layout/Navbar";
+import Footer from "@/app/components/layout/Footer";
+import VoteModal from "@/app/components/VoteModal";
+
+const SHOPS = [
+  { id: "kotowa",   type: "coffee", name: "Kotowa",   cat: "Coffee House",          loc: "La Chorrera | Costa Verde", votes: 175, img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=75" },
+  { id: "tosto",    type: "coffee", name: "Tosto",    cat: "Coffee Co.",             loc: "San Francisco | Panamá",    votes: 162, img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=75" },
+  { id: "tonos",    type: "rest",   name: "Toño's",   cat: "Café Bakery",            loc: "Colón | Margarita",         votes: 148, img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=75" },
+  { id: "unido",    type: "coffee", name: "Unido",    cat: "Panama Coffee Roasters", loc: "Casco Viejo | Panamá",      votes: 134, img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=75" },
+  { id: "radisson", type: "hotel",  name: "Radisson", cat: "Café & Lobby Bar",       loc: "Paitilla | Panamá",         votes: 118, img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=75" },
+  { id: "origin",   type: "coffee", name: "Origin",   cat: "Specialty Coffee",       loc: "Boquete | Chiriquí",        votes: 96,  img: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=75" },
+  { id: "pergamino",type: "coffee", name: "Pergamino",cat: "Brew Bar",               loc: "Casco Viejo | Panamá",      votes: 82,  img: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=75" },
+];
+
+const CHIPS = [
+  { label: "Todos", value: "all" },
+  { label: "Coffee Shops", value: "coffee" },
+  { label: "Hoteles", value: "hotel" },
+  { label: "Restaurantes", value: "rest" },
+];
+
+export default function ParticipantesPage() {
+  const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("votes");
+  const [voteModal, setVoteModal] = useState<{ open: boolean; preselected?: string }>({ open: false });
+
+  const openVote = (id?: string) => setVoteModal({ open: true, preselected: id });
+  const closeVote = () => setVoteModal({ open: false });
+
+  const filtered = SHOPS
+    .filter((s) => filter === "all" || s.type === filter)
+    .filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => sortBy === "votes" ? b.votes - a.votes : a.name.localeCompare(b.name));
+
+  return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400;500&display=swap');
+
+        /* ── Page hero ── */
+        .ph{position:relative;padding-top:58px}
+        .ph-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18}
+        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#3D0814 0%,rgba(61,8,20,.7) 100%)}
+        .ph-sello{position:absolute;right:clamp(20px,5vw,60px);top:72px;width:84px;height:84px;opacity:.55;animation:spin2 28s linear infinite}
+        @keyframes spin2{to{transform:rotate(360deg)}}
+        .ph-cnt{position:relative;z-index:2;padding:44px 0 44px}
+        .ph-eye{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(196,212,232,.7);margin-bottom:10px}
+        .ph-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,6vw,64px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92;margin-bottom:4px}
+        .ph-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:400;text-transform:uppercase;color:rgba(196,212,232,.55)}
+
+        /* ── Breadcrumb ── */
+        .bread{background:#5C0E20;border-bottom:1px solid rgba(255,255,255,.06)}
+        .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
+        .bread-i a{color:rgba(255,255,255,.45);transition:color .2s;text-decoration:none}
+        .bread-i a:hover{color:#fff}
+        .bread-i span{color:rgba(255,255,255,.25)}
+
+        /* ── Participantes list section ── */
+        .part-sec{background:#FFF8F7;padding:44px 0 80px}
+        .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
+
+        /* Controls */
+        .shops-ctrl{display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+        .shops-badge{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9E3A52;background:#FFD9E2;padding:5px 13px;border-radius:50px;border:1px solid rgba(158,58,82,.12);flex-shrink:0}
+        .m3s{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #D6C2C4;border-radius:8px;padding:0 10px;height:34px}
+        .m3s input{border:none;outline:none;font-family:'Barlow',sans-serif;font-size:14px;color:#22191A;background:transparent;width:160px}
+        .chip{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:8px;border:1px solid #D6C2C4;background:transparent;color:#524345;font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s}
+        .chip:hover{background:#F8E8EA}
+        .chip.on{background:#FFD9E2;color:#3D0014;border-color:#FFD9E2}
+        .m3-sel{border:1px solid #D6C2C4;border-radius:8px;padding:5px 10px;font-family:'Barlow',sans-serif;font-size:14px;color:#524345;background:#fff;outline:none;margin-left:auto;cursor:pointer}
+
+        /* Grid */
+        .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+        .sc{background:#FEF0F1;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.12),0 1px 3px 1px rgba(0,0,0,.08);transition:box-shadow .25s,transform .25s;cursor:pointer;border:1px solid rgba(92,14,32,.05)}
+        .sc:hover{box-shadow:0 4px 8px 3px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.12);transform:translateY(-5px)}
+        .sc-img{width:100%;aspect-ratio:1/1;background-size:cover;background-position:center;display:flex;align-items:flex-start;justify-content:flex-end;padding:9px}
+        .sc-badge{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;background:#9E3A52;color:#fff;padding:4px 9px;border-radius:50px}
+        .sc-body{padding:13px 14px 11px}
+        .sc-cat{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9E3A52;margin-bottom:1px}
+        .sc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;font-weight:900;text-transform:uppercase;color:#22191A;line-height:1.05;margin-bottom:4px}
+        .sc-loc{display:flex;align-items:center;gap:5px;font-family:'Barlow',sans-serif;font-size:13px;color:#524345;margin-bottom:11px}
+        .sc-acts{display:flex;gap:7px;padding-top:9px;border-top:1px solid #D6C2C4}
+        .scb{flex:1;height:33px;border-radius:50px;border:none;font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:box-shadow .15s}
+        .scb-v{background:#9E3A52;color:#fff}
+        .scb-v:hover{box-shadow:0 1px 2px rgba(0,0,0,.12),0 2px 6px 2px rgba(0,0,0,.08)}
+        .scb-p{background:#F2E2E4;color:#9E3A52}
+        .scb-p:hover{background:#FFD9E2}
+
+        @media(max-width:960px){.sc-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:640px){.sc-grid{grid-template-columns:1fr}}
+      `}</style>
+
+      <Navbar />
+
+      {/* Page Hero */}
+      <div className="ph">
+        <div className="ph-bg" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=1800&q=75')" }} />
+        <div className="ph-sc" />
+        <div className="ph-cnt">
+          <div className="wrap">
+            <div className="ph-eye">Coffee Geeks Panamá · Temporada 2026</div>
+            <h1 className="ph-h1">Participantes</h1>
+            <h2 className="ph-h2">Los protagonistas<br />de la ruta del café</h2>
+          </div>
+        </div>
+      </div>
+
+      {/* Breadcrumb */}
+      <div className="bread">
+        <div className="wrap">
+          <div className="bread-i">
+            <Link href="/home">Inicio</Link>
+            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "rgba(255,255,255,.3)", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
+            <span>Participantes</span>
+          </div>
+        </div>
+      </div>
+
+      {/* List */}
+      <main className="part-sec">
+        <div className="wrap">
+          {/* Controls */}
+          <div className="shops-ctrl">
+            <span className="shops-badge">{SHOPS.length} cafeterías registradas</span>
+            <div className="m3s">
+              <svg viewBox="0 0 24 24" style={{ width: 15, height: 15, stroke: "#524345", fill: "none", strokeWidth: 1.5, flexShrink: 0 }}>
+                <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Buscar cafetería..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            {CHIPS.map((c) => (
+              <button
+                key={c.value}
+                className={`chip${filter === c.value ? " on" : ""}`}
+                onClick={() => setFilter(c.value)}
+              >
+                {c.label}
+              </button>
+            ))}
+            <select
+              className="m3-sel"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <option value="votes">Por votos</option>
+              <option value="name">Nombre A–Z</option>
+            </select>
+          </div>
+
+          {/* Cards */}
+          <div className="sc-grid">
+            {filtered.map((shop) => (
+              <div className="sc" key={shop.id}>
+                <div className="sc-img" style={{ backgroundImage: `url('${shop.img}')` }}>
+                  <span className="sc-badge">{shop.votes} votos</span>
+                </div>
+                <div className="sc-body">
+                  <div className="sc-cat">{shop.cat}</div>
+                  <div className="sc-name">{shop.name}</div>
+                  <div className="sc-loc">
+                    <svg viewBox="0 0 24 24" style={{ width: 11, height: 11, stroke: "#9E3A52", fill: "none", strokeWidth: 1.5, flexShrink: 0 }}>
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                    </svg>
+                    {shop.loc}
+                  </div>
+                  <div className="sc-acts">
+                    <button className="scb scb-v" onClick={(e) => { e.stopPropagation(); openVote(shop.id); }}>Votar</button>
+                    <Link href={`/participantes/${shop.id}`} className="scb scb-p" style={{ display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none" }}>
+                      Ver perfil
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {filtered.length === 0 && (
+            <p style={{ textAlign: "center", color: "#857375", fontFamily: "'Barlow',sans-serif", padding: "40px 0" }}>
+              No se encontraron cafeterías con ese filtro.
+            </p>
+          )}
+        </div>
+      </main>
+
+      <Footer />
+
+      <VoteModal
+        open={voteModal.open}
+        preselected={voteModal.preselected}
+        onClose={closeVote}
+      />
+    </>
+  );
+}
