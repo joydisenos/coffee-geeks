@@ -7,7 +7,10 @@ import {
   addBarista,
   deleteBarista,
   setHighlightedBarista,
+  uploadGalleryImages,
+  deleteGalleryImage,
 } from "@/app/actions/cafeteria";
+import MapPicker from "@/app/components/MapPicker";
 import Image from "next/image";
 
 // ─── Sub-componente: mensaje flash ────────────────────────────────────────────
@@ -28,7 +31,7 @@ const inputCls =
 const labelCls = "text-white/90 text-sm font-medium pl-1";
 
 // ─── Componente principal ──────────────────────────────────────────────────────
-export default function ProfileForm({ user }: { user: any }) {
+export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any, maxGalleryImages?: number }) {
   // ── Perfil básico ──
   const [basicState, basicAction, basicPending] = useActionState(updateProfile, null);
   const [basicMsg, setBasicMsg] = useState("");
@@ -56,6 +59,55 @@ export default function ProfileForm({ user }: { user: any }) {
     if (cafState?.error) { setCafErr(cafState.error); setTimeout(() => setCafErr(""), 4000); }
   }, [cafState]);
 
+  // ── Mapa ──
+  const [locationLat, setLocationLat] = useState<number | null>(user.locationLat);
+  const [locationLng, setLocationLng] = useState<number | null>(user.locationLng);
+  const [mapMsg, setMapMsg] = useState("");
+
+  async function handleGeocode() {
+    const address = (document.getElementById("neighborhood") as HTMLInputElement)?.value;
+    if (!address) {
+      setMapMsg("Ingresa una ubicación primero.");
+      setTimeout(() => setMapMsg(""), 3000);
+      return;
+    }
+    setMapMsg("Buscando...");
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address + ", Panama")}`);
+      const data = await res.json();
+      if (data && data.length > 0) {
+        setLocationLat(parseFloat(data[0].lat));
+        setLocationLng(parseFloat(data[0].lon));
+        setMapMsg("Ubicación encontrada.");
+      } else {
+        setMapMsg("No se encontró. Intenta mover el marcador.");
+      }
+    } catch (e) {
+      setMapMsg("Error al buscar ubicación.");
+    }
+    setTimeout(() => setMapMsg(""), 3000);
+  }
+
+  // ── Galería de imágenes ──
+  const [galleryState, galleryAction, galleryPending] = useActionState(uploadGalleryImages, null);
+  const [galleryMsg, setGalleryMsg] = useState("");
+  const [galleryErr, setGalleryErr] = useState("");
+  const galleryFormRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (galleryState?.success) {
+      setGalleryMsg(galleryState.success);
+      galleryFormRef.current?.reset();
+      setTimeout(() => setGalleryMsg(""), 3500);
+    }
+    if (galleryState?.error) { setGalleryErr(galleryState.error); setTimeout(() => setGalleryErr(""), 4000); }
+  }, [galleryState]);
+
+  async function handleDeleteGalleryImage(url: string) {
+    if (!confirm("¿Eliminar imagen?")) return;
+    await deleteGalleryImage(url, user._id || user.id);
+  }
+
   // ── Agregar barista ──
   const [baristaState, baristaAction, baristaPending] = useActionState(addBarista, null);
   const [baristaMsg, setBaristaMsg] = useState("");
@@ -79,14 +131,14 @@ export default function ProfileForm({ user }: { user: any }) {
 
   async function handleDelete(baristaId: string) {
     setBaristas((prev) => prev.filter((b) => b._id !== baristaId));
-    await deleteBarista(baristaId);
+    await deleteBarista(baristaId, user._id || user.id);
   }
 
   async function handleHighlight(baristaId: string) {
     setBaristas((prev) =>
       prev.map((b) => ({ ...b, isHighlighted: b._id === baristaId }))
     );
-    await setHighlightedBarista(baristaId);
+    await setHighlightedBarista(baristaId, user._id || user.id);
   }
 
   return (
@@ -98,6 +150,7 @@ export default function ProfileForm({ user }: { user: any }) {
           Información Personal
         </h2>
         <form action={basicAction} className="flex flex-col gap-4">
+          <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
           <div className="flex flex-col gap-1">
             <FlashMessage msg={basicErr} type="error" />
             <FlashMessage msg={basicMsg} type="success" />
@@ -143,6 +196,7 @@ export default function ProfileForm({ user }: { user: any }) {
               ☕ Datos de la Cafetería
             </h2>
             <form action={cafAction} className="flex flex-col gap-4">
+              <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
               <div className="flex flex-col gap-1">
                 <FlashMessage msg={cafErr} type="error" />
                 <FlashMessage msg={cafMsg} type="success" />
@@ -160,10 +214,28 @@ export default function ProfileForm({ user }: { user: any }) {
               {/* Barrio / ubicación */}
               <div className="flex flex-col gap-2">
                 <label className={labelCls} htmlFor="neighborhood">Barrio o ubicación en Panamá</label>
-                <input id="neighborhood" name="neighborhood" type="text"
-                  defaultValue={user.neighborhood}
-                  placeholder="Ej: Casco Viejo, San Francisco..."
-                  className={inputCls} />
+                <div className="flex gap-2">
+                  <input id="neighborhood" name="neighborhood" type="text"
+                    defaultValue={user.neighborhood}
+                    placeholder="Ej: Casco Viejo, San Francisco..."
+                    className={inputCls} />
+                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-colors border border-white/10 whitespace-nowrap">
+                    Buscar en Mapa
+                  </button>
+                </div>
+                {mapMsg && <p className="text-amber-400 text-xs pl-1">{mapMsg}</p>}
+                <div className="mt-2 relative z-0">
+                   <MapPicker 
+                     initialLat={locationLat} 
+                     initialLng={locationLng} 
+                     onLocationChange={(lat, lng) => {
+                       setLocationLat(lat);
+                       setLocationLng(lng);
+                     }} 
+                   />
+                </div>
+                <input type="hidden" name="locationLat" value={locationLat ?? ""} />
+                <input type="hidden" name="locationLng" value={locationLng ?? ""} />
               </div>
 
               {/* Categoría de competencia */}
@@ -178,6 +250,50 @@ export default function ProfileForm({ user }: { user: any }) {
                   <option value="Espresso" className="bg-neutral-900">Espresso</option>
                   <option value="Bebida de Autor" className="bg-neutral-900">Bebida de Autor</option>
                 </select>
+              </div>
+
+              {/* Tipo de negocio */}
+              <div className="flex flex-col gap-2">
+                <label className={labelCls} htmlFor="businessType">Tipo de Negocio</label>
+                <select id="businessType" name="businessType" defaultValue={user.businessType || "coffee"} className={`${inputCls} appearance-none cursor-pointer`}>
+                  <option value="coffee" className="bg-neutral-900">Coffee Shop</option>
+                  <option value="hotel" className="bg-neutral-900">Hotel</option>
+                  <option value="rest" className="bg-neutral-900">Restaurante</option>
+                </select>
+              </div>
+
+              {/* Información Adicional */}
+              <div className="flex flex-col gap-2">
+                <label className={labelCls} htmlFor="description">Descripción de la Cafetería</label>
+                <textarea id="description" name="description" rows={3}
+                  defaultValue={user.description}
+                  placeholder="Cuéntanos sobre tu cafetería, historia, especialidades..."
+                  className={`${inputCls} resize-none`} />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls} htmlFor="hours">Horarios de atención</label>
+                  <input id="hours" name="hours" type="text"
+                    defaultValue={user.hours}
+                    placeholder="Ej: Lun-Vie 8am - 6pm"
+                    className={inputCls} />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls} htmlFor="phone">Teléfono</label>
+                  <input id="phone" name="phone" type="text"
+                    defaultValue={user.phone}
+                    placeholder="Ej: +507 6000-0000"
+                    className={inputCls} />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className={labelCls} htmlFor="web">Sitio web o Instagram</label>
+                <input id="web" name="web" type="text"
+                  defaultValue={user.web}
+                  placeholder="Ej: instagram.com/tu_cafe"
+                  className={inputCls} />
               </div>
 
               {/* Foto de portada */}
@@ -203,6 +319,56 @@ export default function ProfileForm({ user }: { user: any }) {
                 {cafPending ? "Guardando..." : "Guardar Datos de Cafetería"}
               </button>
             </form>
+          </section>
+
+          <div className="border-t border-white/10" />
+
+          {/* ── Módulo de Galería ── */}
+          <section>
+            <h2 className="text-amber-400/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+              📸 Galería de Imágenes
+            </h2>
+
+            {user.gallery && user.gallery.length === 0 ? (
+              <p className="text-white/40 text-sm text-center py-4">
+                Aún no has agregado imágenes a tu galería.
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                {(user.gallery || []).map((url: string, idx: number) => (
+                  <div key={idx} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 group">
+                    <Image src={url} alt="Galería" fill className="object-cover" />
+                    <button type="button" onClick={() => handleDeleteGalleryImage(url)} className="absolute top-2 right-2 bg-red-500/80 hover:bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-xs shadow-lg">
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {(!user.gallery || user.gallery.length < maxGalleryImages) && (
+              <div className="p-4 rounded-2xl bg-black/20 border border-white/10">
+                <h3 className="text-white/70 text-xs font-semibold uppercase tracking-wider mb-3">
+                  Añadir a la galería (Máximo {maxGalleryImages})
+                </h3>
+                <form ref={galleryFormRef} action={galleryAction} className="flex flex-col gap-3">
+                  <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
+                  <div className="flex flex-col gap-1">
+                    <FlashMessage msg={galleryErr} type="error" />
+                    <FlashMessage msg={galleryMsg} type="success" />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <input name="gallery" type="file" accept="image/*" multiple
+                      className="w-full text-sm text-white/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-white/10 file:text-white/70 file:font-medium file:cursor-pointer hover:file:bg-white/20 transition-all cursor-pointer"
+                    />
+                  </div>
+                  <button type="submit" disabled={galleryPending}
+                    className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-white/10">
+                    {galleryPending ? "Subiendo..." : "Subir Imágenes"}
+                  </button>
+                </form>
+              </div>
+            )}
           </section>
 
           <div className="border-t border-white/10" />
@@ -275,6 +441,7 @@ export default function ProfileForm({ user }: { user: any }) {
                 Agregar Barista
               </h3>
               <form ref={baristaFormRef} action={baristaAction} className="flex flex-col gap-3">
+                <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
                 <div className="flex flex-col gap-1">
                   <FlashMessage msg={baristaErr} type="error" />
                   <FlashMessage msg={baristaMsg} type="success" />

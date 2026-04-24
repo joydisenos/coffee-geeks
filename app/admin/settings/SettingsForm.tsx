@@ -159,6 +159,25 @@ export default function SettingsForm({ config }: { config: any }) {
         </div>
       </div>
 
+      {/* ── Cafeterías ── */}
+      <div className={sectionCls}>
+        <SectionTitle icon="☕" label="Configuración de Cafeterías" />
+
+        <div className="flex flex-col gap-2">
+          <label className={labelCls} htmlFor="maxGalleryImages">Límite de Imágenes en Galería</label>
+          <input
+            id="maxGalleryImages"
+            name="maxGalleryImages"
+            type="number"
+            min="1"
+            max="20"
+            defaultValue={config.maxGalleryImages ?? 3}
+            className={inputCls}
+          />
+          <p className="text-amber-100/30 text-xs pl-1">Número máximo de imágenes que una cafetería puede subir a su galería (por defecto 3).</p>
+        </div>
+      </div>
+
       <button
         type="submit"
         disabled={pending}

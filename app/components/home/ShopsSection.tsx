@@ -1,63 +1,20 @@
 import Link from "next/link";
+import dbConnect from "@/lib/mongodb";
+import User from "@/models/User";
 
-const SHOPS = [
-  {
-    id: "kotowa",
-    type: "coffee",
-    name: "Kotowa",
-    cat: "Coffee House",
-    loc: "La Chorrera | Costa Verde",
-    votes: 175,
-    img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=75",
-  },
-  {
-    id: "tosto",
-    type: "coffee",
-    name: "Tosto",
-    cat: "Coffee Co.",
-    loc: "San Francisco | Panamá",
-    votes: 162,
-    img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=75",
-  },
-  {
-    id: "tonos",
-    type: "rest",
-    name: "Toño's",
-    cat: "Café Bakery",
-    loc: "Colón | Margarita",
-    votes: 148,
-    img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=75",
-  },
-  {
-    id: "unido",
-    type: "coffee",
-    name: "Unido",
-    cat: "Panama Coffee Roasters",
-    loc: "Casco Viejo | Panamá",
-    votes: 134,
-    img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=75",
-  },
-  {
-    id: "radisson",
-    type: "hotel",
-    name: "Radisson",
-    cat: "Café & Lobby Bar",
-    loc: "Paitilla | Panamá",
-    votes: 118,
-    img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=75",
-  },
-  {
-    id: "origin",
-    type: "coffee",
-    name: "Origin",
-    cat: "Specialty Coffee",
-    loc: "Boquete | Chiriquí",
-    votes: 96,
-    img: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=800&q=75",
-  },
-];
+export default async function ShopsSection() {
+  await dbConnect();
+  const cafeterias = await User.find({ role: "cafeteria", isActive: true }).lean();
 
-export default function ShopsSection() {
+  const SHOPS = cafeterias.map((c: any) => ({
+    id: c._id.toString(),
+    type: c.businessType || "coffee",
+    name: c.cafeteriaName || `${c.name} ${c.lastName}`.trim(),
+    cat: c.competitionCategory || "Cafetería",
+    loc: c.neighborhood || "Panamá",
+    votes: 0, // En el futuro se puede conectar a los votos reales
+    img: c.coverImage || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=75",
+  }));
   return (
     <>
       <style>{`
@@ -113,7 +70,7 @@ export default function ShopsSection() {
           </div>
 
           <div className="shops-ctrl">
-            <span className="shops-badge">24 cafeterías registradas</span>
+            <span className="shops-badge">{SHOPS.length} cafeterías registradas</span>
           </div>
 
           <div className="shops-grid">
@@ -145,8 +102,8 @@ export default function ShopsSection() {
           </div>
 
           <div className="spons-row">
-            {["Kotowa", "Tosto Co.", "Unido", "Toño's", "Origin"].map((n) => (
-              <div className="chip-static" key={n}>{n}</div>
+            {SHOPS.slice(0, 5).map((shop) => (
+              <div className="chip-static" key={shop.id}>{shop.name}</div>
             ))}
           </div>
         </div>

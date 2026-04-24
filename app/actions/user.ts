@@ -13,6 +13,10 @@ export async function updateProfile(state: any, formData: FormData) {
 
     await dbConnect();
 
+    const targetUserId = (session.role === "admin" && formData.get("targetUserId")) 
+      ? formData.get("targetUserId")?.toString() 
+      : session.userId;
+
     const name = formData.get("name")?.toString().trim();
     const lastName = formData.get("lastName")?.toString().trim();
     const email = formData.get("email")?.toString().trim();
@@ -32,12 +36,17 @@ export async function updateProfile(state: any, formData: FormData) {
 
     // Prevención colisión correo
     const existing = await User.findOne({ email });
-    if (existing && existing._id.toString() !== session.userId) {
+    if (existing && existing._id.toString() !== targetUserId) {
       return { error: "El correo ya está en uso por otra persona." };
     }
 
-    await User.findByIdAndUpdate(session.userId, updateData);
-    revalidatePath("/perfil");
+    await User.findByIdAndUpdate(targetUserId, updateData);
+    
+    if (session.role === "admin") {
+      revalidatePath("/admin/users");
+    } else {
+      revalidatePath("/perfil");
+    }
 
     return { success: "Perfil actualizado correctamente." };
   } catch (err: any) {

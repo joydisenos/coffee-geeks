@@ -1,6 +1,7 @@
 import { getSession } from "@/lib/session";
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
+import { getSiteConfig } from "@/app/actions/siteConfig";
 import ProfileForm from "./ProfileForm";
 import Link from "next/link";
 import Image from "next/image";
@@ -23,6 +24,9 @@ export default async function PerfilPage() {
     cafeteriaName: userData.cafeteriaName ?? "",
     neighborhood: userData.neighborhood ?? "",
     coverImage: userData.coverImage ?? "",
+    gallery: userData.gallery ?? [],
+    locationLat: userData.locationLat ?? null,
+    locationLng: userData.locationLng ?? null,
     competitionCategory: userData.competitionCategory ?? "",
     baristas: (userData.baristas ?? []).map((b: any) => ({
       _id: b._id.toString(),
@@ -31,6 +35,8 @@ export default async function PerfilPage() {
       isHighlighted: b.isHighlighted ?? false,
     })),
   };
+
+  const config = await getSiteConfig();
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center p-4">
@@ -73,16 +79,10 @@ export default async function PerfilPage() {
         {session.role === "cafeteria" && (
           <div className="mb-6 p-4 rounded-xl bg-amber-500/20 border border-amber-500/50 flex justify-between items-center">
             <span className="text-amber-200 text-sm font-medium">☕ Panel de Cafetería</span>
-            {/* TODO: reactivar cuando esté listo
-            <Link href="/perfil/menu" className="text-white text-sm bg-amber-600 hover:bg-amber-500 px-4 py-2 rounded-lg transition-colors font-semibold">
-              Gestionar Menú
-            </Link>
-            */}
           </div>
         )}
 
-
-        <ProfileForm user={user} />
+        <ProfileForm user={user} maxGalleryImages={config.maxGalleryImages} />
       </div>
     </main>
   );

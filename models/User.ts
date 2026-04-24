@@ -40,9 +40,22 @@ const UserSchema = new Schema(
       default: "user",
     },
     // ── Campos exclusivos del rol cafetería ──
+    businessType: {
+      type: String,
+      enum: ["coffee", "hotel", "rest"],
+      default: "coffee",
+    },
+    isActive: { type: Boolean, default: false },
     cafeteriaName: { type: String, trim: true, default: "" },
     neighborhood: { type: String, trim: true, default: "" },
+    description: { type: String, trim: true, default: "" },
+    hours: { type: String, trim: true, default: "" },
+    phone: { type: String, trim: true, default: "" },
+    web: { type: String, trim: true, default: "" },
     coverImage: { type: String, default: "" },
+    gallery: { type: [String], default: [] },
+    locationLat: { type: Number, default: null },
+    locationLng: { type: Number, default: null },
     competitionCategory: {
       type: String,
       enum: ["Filtrado", "Espresso", "Bebida de Autor", ""],

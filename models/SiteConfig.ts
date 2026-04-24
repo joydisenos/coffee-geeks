@@ -15,6 +15,9 @@ const SiteConfigSchema = new Schema(
 
     // Legal
     privacyPolicy: { type: String, default: "" }, // texto plano con saltos de línea
+
+    // Cafeterías
+    maxGalleryImages: { type: Number, default: 3 },
   },
   { timestamps: true }
 );

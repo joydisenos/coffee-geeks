@@ -9,13 +9,36 @@ export default async function AdminUsersPage() {
   // Lean for plain objects
   const rawUsers = await User.find().sort({ createdAt: -1 }).lean();
   
+  const { getSiteConfig } = await import("@/app/actions/siteConfig");
+  const config = await getSiteConfig();
+  
   const users = rawUsers.map((u: any) => ({
     id: u._id.toString(),
+    _id: u._id.toString(),
     name: u.name,
     lastName: u.lastName || "",
     email: u.email,
     role: u.role,
-    createdAt: u.createdAt.toISOString(),
+    createdAt: new Date(u.createdAt).toLocaleDateString("es-PA"),
+    isActive: !!u.isActive,
+    businessType: u.businessType || "coffee",
+    cafeteriaName: u.cafeteriaName ?? "",
+    neighborhood: u.neighborhood ?? "",
+    description: u.description ?? "",
+    hours: u.hours ?? "",
+    phone: u.phone ?? "",
+    web: u.web ?? "",
+    coverImage: u.coverImage ?? "",
+    gallery: u.gallery ?? [],
+    locationLat: u.locationLat ?? null,
+    locationLng: u.locationLng ?? null,
+    competitionCategory: u.competitionCategory ?? "",
+    baristas: (u.baristas ?? []).map((b: any) => ({
+      _id: b._id.toString(),
+      fullName: b.fullName,
+      photo: b.photo ?? "",
+      isHighlighted: b.isHighlighted ?? false,
+    })),
   }));
 
   return (
@@ -25,7 +48,7 @@ export default async function AdminUsersPage() {
         <p className="text-amber-100/60 mt-2 text-lg">Ver, Crear, Editar y Borrar usuarios del sistema.</p>
       </div>
 
-      <UserTableManager initialUsers={users} />
+      <UserTableManager initialUsers={users} maxGalleryImages={config.maxGalleryImages} />
     </div>
   );
 }

@@ -18,6 +18,7 @@ export async function getSiteConfig() {
       contactPhone: "",
       address: "",
       privacyPolicy: "",
+      maxGalleryImages: 3,
     };
   }
   return {
@@ -28,6 +29,7 @@ export async function getSiteConfig() {
     contactPhone: config.contactPhone ?? "",
     address: config.address ?? "",
     privacyPolicy: config.privacyPolicy ?? "",
+    maxGalleryImages: config.maxGalleryImages ?? 3,
   };
 }
 
@@ -49,10 +51,12 @@ export async function updateSiteConfig(state: any, formData: FormData) {
     const address        = formData.get("address")?.toString().trim() ?? "";
     // La política de privacidad NO se hace trim para preservar saltos de línea internos
     const privacyPolicy  = formData.get("privacyPolicy")?.toString() ?? "";
+    const maxGalleryImagesStr = formData.get("maxGalleryImages")?.toString().trim();
+    const maxGalleryImages = maxGalleryImagesStr ? parseInt(maxGalleryImagesStr, 10) : 3;
 
     await SiteConfig.findOneAndUpdate(
       {}, // filtro vacío → singleton
-      { seoTitle, seoDescription, ogImage, contactEmail, contactPhone, address, privacyPolicy },
+      { seoTitle, seoDescription, ogImage, contactEmail, contactPhone, address, privacyPolicy, maxGalleryImages },
       { upsert: true, new: true }
     );
 
