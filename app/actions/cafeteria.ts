@@ -215,7 +215,7 @@ export async function deleteGalleryImage(imageUrl: string, explicitTargetId?: st
 }
 
 // ─── Alternar estado de activación (Solo Admin) ─────────────────────────────────
-export async function toggleCafeteriaStatus(userId: string, currentStatus: boolean) {
+export async function toggleCafeteriaStatus(userId: string) {
   try {
     const session = await getSession();
     if (!session || session.role !== "admin") {
@@ -223,14 +223,19 @@ export async function toggleCafeteriaStatus(userId: string, currentStatus: boole
     }
 
     await dbConnect();
-    await User.findByIdAndUpdate(userId, { isActive: !currentStatus });
+    const user = await User.findById(userId);
+    if (!user) return { error: "Usuario no encontrado." };
+
+    user.isActive = !user.isActive;
+    await user.save();
     
-    revalidatePath("/admin/users");
-    revalidatePath("/home");
-    revalidatePath("/participantes");
-    return { success: `Cafetería ${!currentStatus ? 'activada' : 'desactivada'}.` };
+    revalidatePath("/admin/users", "page");
+    revalidatePath("/home", "page");
+    revalidatePath("/participantes", "page");
+    
+    return { success: `Cafetería ${user.isActive ? 'activada' : 'desactivada'}.` };
   } catch (err) {
-    console.error(err);
-    return { error: "Error al cambiar el estado." };
+    console.error("Error toggling status:", err);
+    return { error: "Error al cambiar el estado en el servidor." };
   }
 }

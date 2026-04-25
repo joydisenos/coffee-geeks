@@ -28,11 +28,11 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
         .perf-cat{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(196,212,232,.6);margin-bottom:4px}
         .perf-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5vw,56px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92}
         .perf-sub{font-family:'Barlow',sans-serif;font-size:14px;color:rgba(255,255,255,.42);margin-top:6px}
-        .bread{background:#5C0E20;border-bottom:1px solid rgba(255,255,255,.06)}
+        .bread{background:#fff;border-bottom:1px solid #eee}
         .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
-        .bread-i a{color:rgba(255,255,255,.45);transition:color .2s;text-decoration:none}
-        .bread-i a:hover{color:#fff}
-        .bread-i span{color:rgba(255,255,255,.25)}
+        .bread-i a{color:#857375;transition:color .2s;text-decoration:none}
+        .bread-i a:hover{color:#9E3A52}
+        .bread-i span{color:#22191A;opacity:.6}
         .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
         .perf-wrap{display:grid;grid-template-columns:1fr 320px;gap:0;align-items:start;padding:40px 0 80px;background:#FFF8F7}
         .perf-main{padding:0 32px 0 0}
@@ -110,9 +110,9 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
         <div className="wrap">
           <div className="bread-i">
             <Link href="/home">Inicio</Link>
-            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "rgba(255,255,255,.3)", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#857375", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
             <Link href="/participantes">Participantes</Link>
-            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "rgba(255,255,255,.3)", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#857375", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
             <span>{shop.cafeteriaName || shop.name}</span>
           </div>
         </div>

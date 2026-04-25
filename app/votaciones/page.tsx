@@ -40,14 +40,18 @@ export default function VotacionesPage() {
         .ph-sello{position:absolute;right:clamp(20px,5vw,60px);top:72px;width:84px;height:84px;opacity:.55;animation:spin3 28s linear infinite}
         @keyframes spin3{to{transform:rotate(360deg)}}
         .ph-cnt{position:relative;z-index:2;padding:44px 0 44px}
+        .ph-flex{display:flex;align-items:center;justify-content:space-between;gap:40px}
+        .ph-txt{flex:1}
         .ph-eye{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(196,212,232,.7);margin-bottom:10px}
         .ph-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,6vw,64px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92;margin-bottom:4px}
         .ph-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:400;text-transform:uppercase;color:rgba(196,212,232,.55)}
-        .bread{background:#5C0E20;border-bottom:1px solid rgba(255,255,255,.06)}
+        .ph-logo{width:clamp(120px,18vw,220px);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.3));animation:float 6s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        .bread{background:#fff;border-bottom:1px solid #eee}
         .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
-        .bread-i a{color:rgba(255,255,255,.45);transition:color .2s;text-decoration:none}
-        .bread-i a:hover{color:#fff}
-        .bread-i span{color:rgba(255,255,255,.25)}
+        .bread-i a{color:#857375;transition:color .2s;text-decoration:none}
+        .bread-i a:hover{color:#9E3A52}
+        .bread-i span{color:#22191A;opacity:.6}
 
         .rk-page{padding:44px 0 64px;background:#F5F0E4}
         .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
@@ -64,7 +68,7 @@ export default function VotacionesPage() {
         .rkr-d{border-left:4px solid #9E3A52}
         .rkr-photo{width:170px;flex-shrink:0;background-size:cover;background-position:center}
         .rkr-logo{width:115px;flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:10px;background:rgba(92,14,32,.03);border-right:1px solid #D6C2C4}
-        .rkr-logo-i{width:86px;height:54px;background:#F8E8EA;border-radius:8px;display:flex;align-items:center;justify-content:center}
+        .rkr-logo-i{width:86px;height:54px;background:#f4efe4;border-radius:8px;display:flex;align-items:center;justify-content:center}
         .rkr-info{flex:1;padding:13px 16px;display:flex;flex-direction:column;justify-content:center}
         .rkr-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;color:#22191A;margin-bottom:1px}
         .rkr-sub{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;color:#9E3A52;margin-bottom:6px}
@@ -81,6 +85,10 @@ export default function VotacionesPage() {
         .load-btn{height:40px;padding:0 24px;border-radius:50px;border:1px solid #857375;background:transparent;color:#9E3A52;font-family:'Barlow',sans-serif;font-size:14px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px}
         .load-btn:hover{background:#9E3A52;color:#fff;border-color:#9E3A52}
         @media(max-width:960px){.rkr-photo{width:110px}}
+        @media(max-width:768px){
+          .ph-flex{flex-direction:column;align-items:flex-start;gap:25px}
+          .ph-logo{width:140px}
+        }
         @media(max-width:640px){.rkr-photo{display:none}}
       `}</style>
 
@@ -92,9 +100,16 @@ export default function VotacionesPage() {
         <div className="ph-sc" />
         <div className="ph-cnt">
           <div className="wrap">
-            <div className="ph-eye">Temporada 2026</div>
-            <h1 className="ph-h1">Votar Ahora</h1>
-            <h2 className="ph-h2">Mi Cafetería Preferida</h2>
+            <div className="ph-flex">
+              <div className="ph-txt">
+                <div className="ph-eye">Temporada 2026</div>
+                <h1 className="ph-h1">Votar Ahora</h1>
+                <h2 className="ph-h2">Mi Cafetería Preferida</h2>
+              </div>
+              <div className="ph-side">
+                <img src="/concurso.webp" alt="Concurso Logo" className="ph-logo" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -104,7 +119,7 @@ export default function VotacionesPage() {
         <div className="wrap">
           <div className="bread-i">
             <Link href="/home">Inicio</Link>
-            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "rgba(255,255,255,.3)", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#857375", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
             <span>Votaciones</span>
           </div>
         </div>

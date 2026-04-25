@@ -20,7 +20,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HomePage() {
+import dbConnect from "@/lib/mongodb";
+import User from "@/models/User";
+
+export default async function HomePage() {
+  await dbConnect();
+  const cafeterias = await User.find({ role: "cafeteria", isActive: true }).lean();
+
+  const SHOPS = cafeterias.map((c: any) => ({
+    id: c._id.toString(),
+    type: c.businessType || "coffee",
+    name: c.cafeteriaName || `${c.name} ${c.lastName}`.trim(),
+    cat: c.competitionCategory || "Cafetería",
+    loc: c.neighborhood || "Panamá",
+    votes: 0,
+    img: c.coverImage || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=75",
+  }));
+
   return (
     <>
       {/* Sticky top navigation */}
@@ -35,7 +51,7 @@ export default function HomePage() {
         <StepsSection />
 
         {/* 3. Cafeterías participantes */}
-        <ShopsSection />
+        <ShopsSection initialShops={SHOPS} />
 
         {/* 4. Ranking en vivo */}
         <RankingSection />

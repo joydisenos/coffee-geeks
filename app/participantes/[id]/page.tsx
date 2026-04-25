@@ -23,11 +23,12 @@ export default async function PerfilPage({ params }: { params: { id: string } })
       return notFound();
     }
 
-    // Convertir _id a string
+    // Serializar profundamente para asegurar que no pasen objetos Mongoose (como ObjectId) al cliente
+    const plainShop = JSON.parse(JSON.stringify(shop));
+
     const shopData = {
-      ...shop,
-      _id: shop._id.toString(),
-      id: shop._id.toString(),
+      ...plainShop,
+      id: plainShop._id,
     };
 
     return <PerfilDetailClient shop={shopData} />;

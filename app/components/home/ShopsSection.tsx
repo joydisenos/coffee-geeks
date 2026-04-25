@@ -1,20 +1,15 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
-import dbConnect from "@/lib/mongodb";
-import User from "@/models/User";
+import { getSlugId } from "@/lib/utils";
+import VoteModal from "@/app/components/VoteModal";
 
-export default async function ShopsSection() {
-  await dbConnect();
-  const cafeterias = await User.find({ role: "cafeteria", isActive: true }).lean();
+export default function ShopsSection({ initialShops }: { initialShops: any[] }) {
+  const [voteModal, setVoteModal] = useState<{ open: boolean; preselected?: string }>({ open: false });
 
-  const SHOPS = cafeterias.map((c: any) => ({
-    id: c._id.toString(),
-    type: c.businessType || "coffee",
-    name: c.cafeteriaName || `${c.name} ${c.lastName}`.trim(),
-    cat: c.competitionCategory || "Cafetería",
-    loc: c.neighborhood || "Panamá",
-    votes: 0, // En el futuro se puede conectar a los votos reales
-    img: c.coverImage || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=75",
-  }));
+  const openVote = (id: string) => setVoteModal({ open: true, preselected: id });
+  const closeVote = () => setVoteModal({ open: false });
+
   return (
     <>
       <style>{`
@@ -70,11 +65,11 @@ export default async function ShopsSection() {
           </div>
 
           <div className="shops-ctrl">
-            <span className="shops-badge">{SHOPS.length} cafeterías registradas</span>
+            <span className="shops-badge">{initialShops.length} cafeterías registradas</span>
           </div>
 
           <div className="shops-grid">
-            {SHOPS.map((shop) => (
+            {initialShops.map((shop: any) => (
               <div className="sc" key={shop.id}>
                 <div className="sc-img" style={{ backgroundImage: `url('${shop.img}')` }}>
                   <span className="sc-badge">{shop.votes} votos</span>
@@ -89,8 +84,14 @@ export default async function ShopsSection() {
                     {shop.loc}
                   </div>
                   <div className="sc-acts">
-                    <button className="scb scb-v">Votar</button>
-                    <button className="scb scb-p">Ver perfil</button>
+                    <button className="scb scb-v" onClick={() => openVote(shop.id)}>Votar</button>
+                    <Link 
+                      href={`/participantes/${getSlugId(shop.name, shop.id)}`} 
+                      className="scb scb-p"
+                      style={{ display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none" }}
+                    >
+                      Ver perfil
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -102,12 +103,18 @@ export default async function ShopsSection() {
           </div>
 
           <div className="spons-row">
-            {SHOPS.slice(0, 5).map((shop) => (
+            {initialShops.slice(0, 5).map((shop: any) => (
               <div className="chip-static" key={shop.id}>{shop.name}</div>
             ))}
           </div>
         </div>
       </section>
+
+      <VoteModal
+        open={voteModal.open}
+        preselected={voteModal.preselected}
+        onClose={closeVote}
+      />
     </>
   );
 }

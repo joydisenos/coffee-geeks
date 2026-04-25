@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import VoteModal from "@/app/components/VoteModal";
 
 /* ─── Coffee Bean SVG ──────────────────────────────────────────────────────
    Una forma de grano de café auténtica: elipse con la línea central curva
@@ -167,7 +169,9 @@ function AnimCounter({ target, duration = 2000, suffix = "" }: { target: number;
 
 /* ─── Main Hero ─────────────────────────────────────────────────────────── */
 export default function CoffeeBeansHero() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const [voteModal, setVoteModal] = useState(false);
   useEffect(() => setMounted(true), []);
 
   const globalCSS = `
@@ -494,13 +498,13 @@ export default function CoffeeBeansHero() {
 
           {/* CTA Buttons */}
           <div className="hero-ctas" style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-            <button className="btn-primary">
+            <button className="btn-primary" onClick={() => setVoteModal(true)}>
               <svg viewBox="0 0 24 24" width={14} height={14} fill="currentColor" style={{ flexShrink: 0 }}>
                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
               </svg>
               Votar ahora
             </button>
-            <button className="btn-secondary">
+            <button className="btn-secondary" onClick={() => router.push("/participantes")}>
               Explorar cafeterías
               <svg viewBox="0 0 24 24" width={13} height={13} fill="none" stroke="currentColor" strokeWidth={2} style={{ flexShrink: 0 }}>
                 <polyline points="9 18 15 12 9 6" />
@@ -553,6 +557,11 @@ export default function CoffeeBeansHero() {
           zIndex: 5,
         }} />
       </div>
+
+      <VoteModal 
+        open={voteModal} 
+        onClose={() => setVoteModal(false)} 
+      />
     </div>
   );
 }

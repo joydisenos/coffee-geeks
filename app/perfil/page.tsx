@@ -54,14 +54,25 @@ export default async function PerfilPage() {
 
       <div className={`z-10 w-full ${session.role === "cafeteria" ? "max-w-2xl" : "max-w-lg"} p-8 md:p-12 rounded-3xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white/20 my-8`}>
 
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-white tracking-wide">Mi Perfil</h1>
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <Link 
+              href="/home" 
+              className="flex items-center gap-1.5 text-xs font-semibold text-white/50 hover:text-white transition-colors mb-1 uppercase tracking-widest"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="w-3 h-3">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+              Volver a la web
+            </Link>
+            <h1 className="text-2xl font-bold text-white tracking-wide">Mi Perfil</h1>
+          </div>
           <form className="inline">
             <button formAction={async () => {
               "use server"
               const { logout } = await import("@/app/actions/auth");
               await logout();
-            }} className="text-sm font-semibold text-red-400 hover:text-red-300 transition-colors">
+            }} className="text-sm font-semibold text-red-400 hover:text-red-300 transition-colors pt-5">
               Cerrar Sesión
             </button>
           </form>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { deleteUser, updateUserAdmin } from "@/app/actions/user";
 import { toggleCafeteriaStatus } from "@/app/actions/cafeteria";
 import { register } from "@/app/actions/auth";
@@ -15,6 +15,7 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -26,15 +27,19 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
     setLoading(false);
   }
 
-  async function handleToggleStatus(id: string, currentStatus: boolean) {
+  async function handleToggleStatus(id: string) {
     setLoading(true);
-    const res = await toggleCafeteriaStatus(id, currentStatus);
+    const res = await toggleCafeteriaStatus(id);
     if (res?.error) {
       alert("Error: " + res.error);
+      setLoading(false);
     } else {
-      router.refresh();
+      // Usamos startTransition para que React procese la actualización de Next.js correctamente
+      startTransition(() => {
+        router.refresh();
+        setLoading(false);
+      });
     }
-    setLoading(false);
   }
 
   const filteredUsers = initialUsers.filter((u) => {
@@ -109,11 +114,11 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                 <td className="px-6 py-5 text-center">
                   {u.role === 'cafeteria' ? (
                     <button 
-                      onClick={() => handleToggleStatus(u.id, u.isActive)}
-                      disabled={loading}
-                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${u.isActive ? 'bg-green-500' : 'bg-neutral-600'} ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                      onClick={() => handleToggleStatus(u.id)}
+                      disabled={loading || isPending}
+                      className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-md border ${u.isActive ? 'bg-green-500/10 text-green-400 border-green-500/50 hover:bg-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20'} ${(loading || isPending) ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:-translate-y-0.5'}`}
                     >
-                      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${u.isActive ? 'translate-x-6' : 'translate-x-1'}`} />
+                      {u.isActive ? '✅ Activa' : '❌ Inactiva'}
                     </button>
                   ) : (
                     <span className="text-neutral-500">-</span>

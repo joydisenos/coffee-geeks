@@ -3,15 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const SHOPS = [
-  { id: "kotowa", name: "Kotowa", sub: "Coffee House", loc: "La Chorrera | Costa Verde", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=400&q=75" },
-  { id: "tosto",  name: "Tosto",  sub: "Coffee Co.", loc: "San Francisco | Panamá",  img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=400&q=75" },
-  { id: "tonos",  name: "Toño's", sub: "Café Bakery", loc: "Colón | Margarita",       img: "https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=400&q=75" },
-  { id: "unido",  name: "Unido",  sub: "Panama Coffee Roasters", loc: "Casco Viejo | Panamá", img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=75" },
-  { id: "radisson", name: "Radisson", sub: "Café & Lobby Bar", loc: "Paitilla | Panamá", img: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=75" },
-  { id: "origin", name: "Origin", sub: "Specialty Coffee", loc: "Boquete | Chiriquí",    img: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=400&q=75" },
-];
-
 interface VoteModalProps {
   open: boolean;
   preselected?: string | null;
@@ -19,10 +10,29 @@ interface VoteModalProps {
 }
 
 export default function VoteModal({ open, preselected, onClose }: VoteModalProps) {
+  const [shops, setShops] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
   const [selected, setSelected] = useState<string | null>(null);
   const [showToast, setShowToast] = useState(false);
   const router = useRouter();
+
+  // Fetch shops
+  useEffect(() => {
+    if (open && shops.length === 0) {
+      setLoading(true);
+      fetch("/api/cafeterias/active")
+        .then((res) => res.json())
+        .then((data) => {
+          setShops(data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Error fetching shops:", err);
+          setLoading(false);
+        });
+    }
+  }, [open, shops.length]);
 
   // sync preselected when modal opens
   useEffect(() => {
@@ -53,7 +63,13 @@ export default function VoteModal({ open, preselected, onClose }: VoteModalProps
   const handleViewProfile = () => {
     if (!selected) return;
     onClose();
-    router.push(`/participantes/${selected}`);
+    // Use the central utility if needed, but the ID in DB is already what we need for the link usually
+    // However, if we want the slugId:
+    const shop = shops.find(s => s.id === selected);
+    if (shop) {
+      // Import getSlugId if needed, but let's see if we can just redirect to the ID
+      router.push(`/participantes/${selected}`); 
+    }
   };
 
   return (
@@ -133,21 +149,27 @@ export default function VoteModal({ open, preselected, onClose }: VoteModalProps
                 <p style={{ fontFamily: "'Barlow',sans-serif", fontSize: 13, color: "#524345", marginBottom: 12 }}>
                   Selecciona la cafetería por la que quieres votar:
                 </p>
-                <div className="shop-opts">
-                  {SHOPS.map((s) => (
-                    <div
-                      key={s.id}
-                      className={`sopt${selected === s.id ? " sel" : ""}`}
-                      onClick={() => setSelected(s.id)}
-                    >
-                      <div className="sopt-img" style={{ backgroundImage: `url('${s.img}')` }} />
-                      <div>
-                        <div className="sopt-name">{s.name}</div>
-                        <div className="sopt-loc">{s.loc}</div>
+                {loading ? (
+                  <div style={{ textAlign: "center", padding: "20px 0", color: "#9E3A52", fontFamily: "'Barlow',sans-serif" }}>
+                    Cargando cafeterías...
+                  </div>
+                ) : (
+                  <div className="shop-opts">
+                    {shops.map((s) => (
+                      <div
+                        key={s.id}
+                        className={`sopt${selected === s.id ? " sel" : ""}`}
+                        onClick={() => setSelected(s.id)}
+                      >
+                        <div className="sopt-img" style={{ backgroundImage: `url('${s.img}')` }} />
+                        <div>
+                          <div className="sopt-name">{s.name}</div>
+                          <div className="sopt-loc">{s.loc}</div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </>
             )}
 
@@ -167,10 +189,10 @@ export default function VoteModal({ open, preselected, onClose }: VoteModalProps
           {/* Footer */}
           {step === 1 && (
             <div className="mod-ft">
-              <button className="mbtn mbs" onClick={handleViewProfile} disabled={!selected}>
+              <button className="mbtn mbs" onClick={handleViewProfile} disabled={!selected || loading}>
                 Ver perfil
               </button>
-              <button className="mbtn mbp" onClick={handleVote} disabled={!selected}>
+              <button className="mbtn mbp" onClick={handleVote} disabled={!selected || loading}>
                 Votar →
               </button>
             </div>
