@@ -90,3 +90,37 @@ export async function updateUserAdmin(userId: string, formData: FormData) {
   
   return { success: "Usuario modificado" };
 }
+
+export async function createUserByAdmin(formData: FormData) {
+  const session = await getSession();
+  if (session?.role !== "admin") return { error: "No autorizado" };
+
+  await dbConnect();
+
+  const name = formData.get("name")?.toString().trim();
+  const lastName = formData.get("lastName")?.toString().trim();
+  const email = formData.get("email")?.toString().trim();
+  const password = formData.get("password")?.toString().trim();
+  const role = formData.get("role")?.toString().trim() || "user";
+
+  if (!name || !email || !password) {
+    return { error: "Todos los campos son obligatorios" };
+  }
+
+  const existing = await User.findOne({ email });
+  if (existing) return { error: "El correo ya está registrado" };
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  await User.create({
+    name,
+    lastName,
+    email,
+    password: hashedPassword,
+    role
+  });
+
+  revalidatePath("/admin/users");
+  return { success: "Usuario creado correctamente" };
+}

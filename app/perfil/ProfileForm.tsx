@@ -27,11 +27,22 @@ function FlashMessage({ msg, type }: { msg: string; type: "success" | "error" })
 
 // ─── Input compartido ─────────────────────────────────────────────────────────
 const inputCls =
-  "w-full px-4 py-3 rounded-xl bg-black/30 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all";
-const labelCls = "text-white/90 text-sm font-medium pl-1";
+  "w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all";
+const labelCls = "text-[#bedcf8] text-sm font-medium pl-1";
 
 // ─── Componente principal ──────────────────────────────────────────────────────
 export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any, maxGalleryImages?: number }) {
+  const [activeTab, setActiveTab] = useState("personal");
+
+  const tabs = [
+    { id: "personal", label: "Información Personal" },
+    ...(user.role === "cafeteria" ? [
+      { id: "cafeteria", label: "Datos de la Cafetería" },
+      { id: "gallery", label: "Galería de Imágenes" },
+      { id: "baristas", label: "Baristas" }
+    ] : [])
+  ];
+
   // ── Perfil básico ──
   const [basicState, basicAction, basicPending] = useActionState(updateProfile, null);
   const [basicMsg, setBasicMsg] = useState("");
@@ -48,7 +59,10 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
   const [cafErr, setCafErr] = useState("");
   const [coverPreview, setCoverPreview] = useState<string>(user.coverImage || "");
   // Estado controlado para que el select NO se limpie tras el submit
-  const [category, setCategory] = useState<string>(user.competitionCategory || "");
+  const [categories, setCategories] = useState<string[]>(
+    Array.isArray(user.competitionCategory) ? user.competitionCategory : (user.competitionCategory ? [user.competitionCategory] : [])
+  );
+  const [businessType, setBusinessType] = useState<string>(user.businessType || "coffee");
 
   useEffect(() => {
     if (cafState?.success) {
@@ -141,58 +155,139 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
     await setHighlightedBarista(baristaId, user._id || user.id);
   }
 
+  // ── Estado controlado para validación en tiempo real ──
+  const [formData, setFormData] = useState({
+    name: user.name || "",
+    lastName: user.lastName || "",
+    email: user.email || "",
+    cafeteriaName: user.cafeteriaName || "",
+    neighborhood: user.neighborhood || "",
+    description: user.description || "",
+    hours: user.hours || "",
+    phone: user.phone || "",
+    web: user.web || ""
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Sincronizar estado cuando los datos del usuario cambian (post-save)
+  useEffect(() => {
+    setFormData({
+      name: user.name || "",
+      lastName: user.lastName || "",
+      email: user.email || "",
+      cafeteriaName: user.cafeteriaName || "",
+      neighborhood: user.neighborhood || "",
+      description: user.description || "",
+      hours: user.hours || "",
+      phone: user.phone || "",
+      web: user.web || ""
+    });
+    setCategories(Array.isArray(user.competitionCategory) ? user.competitionCategory : (user.competitionCategory ? [user.competitionCategory] : []));
+    setBusinessType(user.businessType || "coffee");
+    setCoverPreview(user.coverImage || "");
+    setLocationLat(user.locationLat);
+    setLocationLng(user.locationLng);
+  }, [user]);
+
+  const checkIncomplete = () => {
+    const incomplete = {
+      personal: !formData.name || !formData.email,
+      cafeteria: user.role === "cafeteria" && (!formData.cafeteriaName || !formData.neighborhood || categories.length === 0 || !locationLat || !coverPreview || !businessType),
+      gallery: user.role === "cafeteria" && (!user.gallery || user.gallery.length === 0),
+      baristas: user.role === "cafeteria" && (baristas.length === 0)
+    };
+    return incomplete;
+  };
+
+  const isIncomplete = checkIncomplete();
+
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
+      
+      {/* ─── Navegación por Pestañas ─── */}
+      <div className="flex flex-wrap md:flex-nowrap gap-1.5 mb-2 p-1 rounded-2xl bg-[#3a0008] border border-[#bedcf8]/10">
+        {tabs.map((tab) => {
+          const tabIncomplete = isIncomplete[tab.id as keyof typeof isIncomplete];
+          return (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`relative flex-1 px-3 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all duration-300 whitespace-nowrap ${
+                activeTab === tab.id
+                  ? "bg-[#bedcf8] text-[#4c000a] shadow-lg shadow-[#bedcf8]/10"
+                  : "text-[#bedcf8]/60 hover:text-[#bedcf8] hover:bg-white/5"
+              }`}
+            >
+              {tab.label}
+              {tabIncomplete && (
+                <span className="absolute -top-1 -right-1 flex h-4 w-4">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 text-[10px] items-center justify-center text-white">!</span>
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
 
-      {/* ─────────────────── SECCIÓN: Perfil Básico ─────────────────── */}
-      <section>
-        <h2 className="text-white/80 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
-          Información Personal
-        </h2>
-        <form action={basicAction} className="flex flex-col gap-4">
-          <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
-          <div className="flex flex-col gap-1">
-            <FlashMessage msg={basicErr} type="error" />
-            <FlashMessage msg={basicMsg} type="success" />
-          </div>
+      <div className="mt-2">
+        {/* ─────────────────── SECCIÓN: Perfil Básico ─────────────────── */}
+        {activeTab === "personal" && (
+          <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <h2 className="text-[#bedcf8]/80 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+              Información Personal
+            </h2>
+            <form action={basicAction} className="flex flex-col gap-4">
+              <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
+              <div className="flex flex-col gap-1">
+                <FlashMessage msg={basicErr} type="error" />
+                <FlashMessage msg={basicMsg} type="success" />
+              </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <label className={labelCls} htmlFor="name">Nombre</label>
-              <input id="name" name="name" type="text" required defaultValue={user.name} className={inputCls} />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className={labelCls} htmlFor="lastName">Apellido</label>
-              <input id="lastName" name="lastName" type="text" defaultValue={user.lastName} className={inputCls} />
-            </div>
-          </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls} htmlFor="name">Nombre</label>
+                  <input id="name" name="name" type="text" required value={formData.name} onChange={handleInputChange} className={inputCls} />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls} htmlFor="lastName">Apellido</label>
+                  <input id="lastName" name="lastName" type="text" value={formData.lastName} onChange={handleInputChange} className={inputCls} />
+                </div>
+              </div>
 
-          <div className="flex flex-col gap-2">
-            <label className={labelCls} htmlFor="email">Correo Electrónico</label>
-            <input id="email" name="email" type="email" required defaultValue={user.email} className={inputCls} />
-          </div>
+              <div className="flex flex-col gap-2">
+                <label className={labelCls} htmlFor="email">Correo Electrónico</label>
+                <input id="email" name="email" type="email" required value={formData.email} onChange={handleInputChange} className={inputCls} />
+              </div>
 
-          <div className="flex flex-col gap-2">
-            <label className={labelCls} htmlFor="password">Nueva Contraseña (Opcional)</label>
-            <input id="password" name="password" type="password" minLength={6}
-              placeholder="Deja en blanco para no cambiarla" className={inputCls} />
-          </div>
+              <div className="flex flex-col gap-2">
+                <label className={labelCls} htmlFor="password">Nueva Contraseña (Opcional)</label>
+                <input id="password" name="password" type="password" minLength={6}
+                  placeholder="Deja en blanco para no cambiarla" className={inputCls} />
+              </div>
 
-          <button type="submit" disabled={basicPending}
-            className="mt-2 w-full py-3.5 rounded-xl bg-white text-black font-semibold tracking-wide hover:bg-neutral-200 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
-            {basicPending ? "Guardando..." : "Actualizar Información"}
-          </button>
-        </form>
-      </section>
+              {isIncomplete.personal && (
+                <p className="text-red-400 text-[10px] font-medium flex items-center gap-1.5 pl-1 animate-pulse">
+                  <span>⚠️</span> Por favor, completa los datos obligatorios que faltan.
+                </p>
+              )}
 
-      {/* ─────────────────── SECCIÓN: Cafetería ─────────────────── */}
-      {user.role === "cafeteria" && (
-        <>
-          <div className="border-t border-white/10" />
+              <button type="submit" disabled={basicPending}
+                className="mt-2 w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
+                {basicPending ? "Guardando..." : "Actualizar Información"}
+              </button>
+            </form>
+          </section>
+        )}
 
-          {/* ── Datos del negocio ── */}
-          <section>
-            <h2 className="text-amber-400/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+        {/* ─────────────────── SECCIÓN: Cafetería ─────────────────── */}
+        {user.role === "cafeteria" && activeTab === "cafeteria" && (
+          <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               ☕ Datos de la Cafetería
             </h2>
             <form action={cafAction} className="flex flex-col gap-4">
@@ -206,7 +301,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
               <div className="flex flex-col gap-2">
                 <label className={labelCls} htmlFor="cafeteriaName">Nombre oficial de la cafetería</label>
                 <input id="cafeteriaName" name="cafeteriaName" type="text"
-                  defaultValue={user.cafeteriaName}
+                  value={formData.cafeteriaName}
+                  onChange={handleInputChange}
                   placeholder="Ej: The Brew Lab Panamá"
                   className={inputCls} />
               </div>
@@ -216,10 +312,11 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                 <label className={labelCls} htmlFor="neighborhood">Barrio o ubicación en Panamá</label>
                 <div className="flex gap-2">
                   <input id="neighborhood" name="neighborhood" type="text"
-                    defaultValue={user.neighborhood}
+                    value={formData.neighborhood}
+                    onChange={handleInputChange}
                     placeholder="Ej: Casco Viejo, San Francisco..."
                     className={inputCls} />
-                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-colors border border-white/10 whitespace-nowrap">
+                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-medium text-sm transition-colors border border-[#bedcf8]/10 whitespace-nowrap">
                     Buscar en Mapa
                   </button>
                 </div>
@@ -240,33 +337,70 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
               {/* Categoría de competencia */}
               <div className="flex flex-col gap-2">
-                <label className={labelCls} htmlFor="competitionCategory">Categoría de competencia</label>
-                <select id="competitionCategory" name="competitionCategory"
-                  value={category}
-                  onChange={(e) => setCategory(e.target.value)}
-                  className={`${inputCls} appearance-none cursor-pointer`}>
-                  <option value="" className="bg-neutral-900">Selecciona una categoría</option>
-                  <option value="Filtrado" className="bg-neutral-900">Filtrado</option>
-                  <option value="Espresso" className="bg-neutral-900">Espresso</option>
-                  <option value="Bebida de Autor" className="bg-neutral-900">Bebida de Autor</option>
-                </select>
+                <label className={labelCls}>Categoría de competencia</label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {[
+                    { id: "Filtrado", label: "Filtrado" },
+                    { id: "Espresso", label: "Espresso" },
+                    { id: "Bebida de Autor", label: "Bebida de Autor" }
+                  ].map((opt) => {
+                    const isSelected = categories.includes(opt.id);
+                    return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => {
+                        setCategories(prev => 
+                          prev.includes(opt.id) ? prev.filter(c => c !== opt.id) : [...prev, opt.id]
+                        );
+                      }}
+                      className={`px-4 py-3 rounded-xl text-xs font-bold transition-all border ${
+                        isSelected
+                          ? "bg-[#bedcf8] text-[#4c000a] border-[#bedcf8]"
+                          : "bg-[#bedcf8]/10 text-[#bedcf8] border-[#bedcf8]/20 hover:bg-[#bedcf8]/20"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  )})}
+                </div>
+                {categories.map(cat => (
+                  <input key={cat} type="hidden" name="competitionCategory" value={cat} />
+                ))}
               </div>
 
               {/* Tipo de negocio */}
               <div className="flex flex-col gap-2">
-                <label className={labelCls} htmlFor="businessType">Tipo de Negocio</label>
-                <select id="businessType" name="businessType" defaultValue={user.businessType || "coffee"} className={`${inputCls} appearance-none cursor-pointer`}>
-                  <option value="coffee" className="bg-neutral-900">Coffee Shop</option>
-                  <option value="hotel" className="bg-neutral-900">Hotel</option>
-                  <option value="rest" className="bg-neutral-900">Restaurante</option>
-                </select>
+                <label className={labelCls}>Tipo de Negocio</label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {[
+                    { id: "coffee", label: "Coffee Shop" },
+                    { id: "hotel", label: "Hotel" },
+                    { id: "rest", label: "Restaurante" }
+                  ].map((opt) => (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      onClick={() => setBusinessType(opt.id)}
+                      className={`px-4 py-3 rounded-xl text-xs font-bold transition-all border ${
+                        businessType === opt.id
+                          ? "bg-[#bedcf8] text-[#4c000a] border-[#bedcf8]"
+                          : "bg-[#bedcf8]/10 text-[#bedcf8] border-[#bedcf8]/20 hover:bg-[#bedcf8]/20"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+                <input type="hidden" name="businessType" value={businessType} />
               </div>
 
               {/* Información Adicional */}
               <div className="flex flex-col gap-2">
                 <label className={labelCls} htmlFor="description">Descripción de la Cafetería</label>
                 <textarea id="description" name="description" rows={3}
-                  defaultValue={user.description}
+                  value={formData.description}
+                  onChange={handleInputChange}
                   placeholder="Cuéntanos sobre tu cafetería, historia, especialidades..."
                   className={`${inputCls} resize-none`} />
               </div>
@@ -275,14 +409,16 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                 <div className="flex flex-col gap-2">
                   <label className={labelCls} htmlFor="hours">Horarios de atención</label>
                   <input id="hours" name="hours" type="text"
-                    defaultValue={user.hours}
+                    value={formData.hours}
+                    onChange={handleInputChange}
                     placeholder="Ej: Lun-Vie 8am - 6pm"
                     className={inputCls} />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label className={labelCls} htmlFor="phone">Teléfono</label>
                   <input id="phone" name="phone" type="text"
-                    defaultValue={user.phone}
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     placeholder="Ej: +507 6000-0000"
                     className={inputCls} />
                 </div>
@@ -291,7 +427,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
               <div className="flex flex-col gap-2">
                 <label className={labelCls} htmlFor="web">Sitio web o Instagram</label>
                 <input id="web" name="web" type="text"
-                  defaultValue={user.web}
+                  value={formData.web}
+                  onChange={handleInputChange}
                   placeholder="Ej: instagram.com/tu_cafe"
                   className={inputCls} />
               </div>
@@ -310,27 +447,33 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                     const file = e.target.files?.[0];
                     if (file) setCoverPreview(URL.createObjectURL(file));
                   }}
-                  className="w-full text-sm text-white/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-amber-500/20 file:text-amber-300 file:font-medium file:cursor-pointer hover:file:bg-amber-500/30 transition-all cursor-pointer"
+                  className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/20 file:text-[#bedcf8] file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/30 transition-all cursor-pointer"
                 />
               </div>
 
+              {isIncomplete.cafeteria && (
+                <p className="text-red-400 text-[10px] font-medium flex items-center gap-1.5 pl-1 animate-pulse">
+                  <span>⚠️</span> Por favor, completa los datos obligatorios de la cafetería.
+                </p>
+              )}
+
               <button type="submit" disabled={cafPending}
-                className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold tracking-wide hover:from-amber-400 hover:to-orange-400 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-amber-900/20">
+                className="w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#4c000a]/20">
                 {cafPending ? "Guardando..." : "Guardar Datos de Cafetería"}
               </button>
             </form>
           </section>
+        )}
 
-          <div className="border-t border-white/10" />
-
-          {/* ── Módulo de Galería ── */}
-          <section>
-            <h2 className="text-amber-400/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+        {/* ── Módulo de Galería ── */}
+        {user.role === "cafeteria" && activeTab === "gallery" && (
+          <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               📸 Galería de Imágenes
             </h2>
 
             {user.gallery && user.gallery.length === 0 ? (
-              <p className="text-white/40 text-sm text-center py-4">
+              <p className="text-[#bedcf8]/40 text-sm text-center py-4">
                 Aún no has agregado imágenes a tu galería.
               </p>
             ) : (
@@ -348,7 +491,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
             {(!user.gallery || user.gallery.length < maxGalleryImages) && (
               <div className="p-4 rounded-2xl bg-black/20 border border-white/10">
-                <h3 className="text-white/70 text-xs font-semibold uppercase tracking-wider mb-3">
+                <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-3">
                   Añadir a la galería (Máximo {maxGalleryImages})
                 </h3>
                 <form ref={galleryFormRef} action={galleryAction} className="flex flex-col gap-3">
@@ -359,29 +502,35 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                   </div>
                   <div className="flex flex-col gap-2">
                     <input name="gallery" type="file" accept="image/*" multiple
-                      className="w-full text-sm text-white/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-white/10 file:text-white/70 file:font-medium file:cursor-pointer hover:file:bg-white/20 transition-all cursor-pointer"
+                      className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/10 file:text-[#bedcf8]/70 file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/20 transition-all cursor-pointer"
                     />
                   </div>
                   <button type="submit" disabled={galleryPending}
-                    className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-white/10">
+                    className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
                     {galleryPending ? "Subiendo..." : "Subir Imágenes"}
                   </button>
                 </form>
               </div>
             )}
+
+            {isIncomplete.gallery && (
+              <p className="mt-4 text-red-400 text-[10px] font-medium flex items-center gap-1.5 pl-1 animate-pulse">
+                <span>⚠️</span> Debes subir al menos una imagen a tu galería.
+              </p>
+            )}
           </section>
+        )}
 
-          <div className="border-t border-white/10" />
-
-          {/* ── Módulo de Baristas ── */}
-          <section>
-            <h2 className="text-amber-400/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+        {/* ── Módulo de Baristas ── */}
+        {user.role === "cafeteria" && activeTab === "baristas" && (
+          <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               👤 Baristas
             </h2>
 
             {/* Lista de baristas */}
             {baristas.length === 0 ? (
-              <p className="text-white/40 text-sm text-center py-4">
+              <p className="text-[#bedcf8]/40 text-sm text-center py-4">
                 Aún no has agregado baristas.
               </p>
             ) : (
@@ -389,7 +538,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                 {baristas.map((b) => (
                   <li key={b._id}
                     className={`flex items-center gap-4 p-3 rounded-2xl border transition-all ${b.isHighlighted
-                      ? "bg-amber-500/15 border-amber-500/50"
+                      ? "bg-[#bedcf8]/10 border-[#bedcf8]/50"
                       : "bg-black/20 border-white/10"
                       }`}>
                     {/* Foto */}
@@ -405,9 +554,9 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
                     {/* Nombre + badge */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-white font-medium text-sm truncate">{b.fullName}</p>
+                      <p className="text-[#bedcf8] font-medium text-sm truncate">{b.fullName}</p>
                       {b.isHighlighted && (
-                        <span className="text-xs text-amber-400 font-semibold">★ Destacado</span>
+                        <span className="text-xs text-[#bedcf8] font-semibold">★ Destacado</span>
                       )}
                     </div>
 
@@ -418,7 +567,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                           type="button"
                           onClick={() => handleHighlight(b._id)}
                           title="Marcar como destacado"
-                          className="text-xs px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-amber-300 font-semibold transition-colors">
+                          className="text-xs px-3 py-1.5 rounded-lg bg-[#bedcf8]/20 hover:bg-[#bedcf8]/40 text-[#bedcf8] font-semibold transition-colors">
                           ★ Destacar
                         </button>
                       )}
@@ -437,7 +586,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
             {/* Formulario agregar barista */}
             <div className="p-4 rounded-2xl bg-black/20 border border-white/10">
-              <h3 className="text-white/70 text-xs font-semibold uppercase tracking-wider mb-3">
+              <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-3">
                 Agregar Barista
               </h3>
               <form ref={baristaFormRef} action={baristaAction} className="flex flex-col gap-3">
@@ -466,19 +615,25 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                       const file = e.target.files?.[0];
                       if (file) setBaristaPhotoPreview(URL.createObjectURL(file));
                     }}
-                    className="w-full text-sm text-white/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-white/10 file:text-white/70 file:font-medium file:cursor-pointer hover:file:bg-white/20 transition-all cursor-pointer"
+                    className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/10 file:text-[#bedcf8]/70 file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/20 transition-all cursor-pointer"
                   />
                 </div>
 
                 <button type="submit" disabled={baristaPending}
-                  className="w-full py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-white/10">
+                  className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
                   {baristaPending ? "Agregando..." : "+ Agregar Barista"}
                 </button>
               </form>
             </div>
+
+            {isIncomplete.baristas && (
+              <p className="mt-4 text-red-400 text-[10px] font-medium flex items-center gap-1.5 pl-1 animate-pulse">
+                <span>⚠️</span> Debes agregar al menos un barista a tu cafetería.
+              </p>
+            )}
           </section>
-        </>
-      )}
+        )}
+      </div>
     </div>
   );
 }

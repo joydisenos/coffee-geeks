@@ -46,7 +46,7 @@ export async function updateCafeteriaProfile(state: any, formData: FormData) {
 
     const cafeteriaName = formData.get("cafeteriaName")?.toString().trim() ?? "";
     const neighborhood = formData.get("neighborhood")?.toString().trim() ?? "";
-    const competitionCategory = formData.get("competitionCategory")?.toString().trim() ?? "";
+    const competitionCategory = formData.getAll("competitionCategory").map(c => c.toString().trim()).filter(c => c);
     const description = formData.get("description")?.toString().trim() ?? "";
     const hours = formData.get("hours")?.toString().trim() ?? "";
     const phone = formData.get("phone")?.toString().trim() ?? "";
@@ -165,15 +165,17 @@ export async function uploadGalleryImages(state: any, formData: FormData) {
     const { targetUserId, isAdmin } = await getTargetUser(session, formData);
 
     await dbConnect();
-    const SiteConfig = (await import("@/models/SiteConfig")).default;
-    const config = await SiteConfig.findOne({}).lean();
-    const maxImages = (config as any)?.maxGalleryImages ?? 3;
+    const { getSiteConfig } = await import("@/lib/siteConfig");
+    const config = await getSiteConfig();
+    const maxImages = config.maxGalleryImages;
 
     const user = await User.findById(targetUserId);
+    if (!user) return { error: "Usuario no encontrado." };
+
     const files = formData.getAll("gallery") as File[];
     const validFiles = files.filter(f => f.size > 0);
 
-    if (user.gallery.length + validFiles.length > maxImages) {
+    if ((user.gallery?.length || 0) + validFiles.length > maxImages) {
       return { error: `Solo puedes tener hasta ${maxImages} imágenes en tu galería.` };
     }
 

@@ -4,14 +4,14 @@ import { useActionState, useEffect, useState } from "react";
 import { updateSiteConfig } from "@/app/actions/siteConfig";
 
 const inputCls =
-  "w-full px-4 py-3 rounded-xl bg-black/30 border border-amber-900/30 text-amber-50 placeholder-amber-100/20 focus:outline-none focus:ring-2 focus:ring-amber-600/60 transition-all text-sm";
-const labelCls = "text-amber-200/80 text-xs font-semibold uppercase tracking-widest pl-1";
+  "w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/30 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all text-sm";
+const labelCls = "text-[#bedcf8] text-xs font-semibold uppercase tracking-widest pl-1";
 const sectionCls =
-  "p-6 rounded-2xl bg-gradient-to-br from-[#2a1f18] to-[#120d0a] border border-amber-900/30 shadow-lg space-y-4";
+  "p-6 rounded-2xl bg-[#4c000a] border border-[#bedcf8]/10 shadow-lg space-y-4";
 
 function SectionTitle({ icon, label }: { icon: string; label: string }) {
   return (
-    <h2 className="flex items-center gap-2 text-amber-400 font-bold text-sm uppercase tracking-widest mb-2">
+    <h2 className="flex items-center gap-2 text-[#bedcf8] font-bold text-sm uppercase tracking-widest mb-2">
       <span>{icon}</span> {label}
     </h2>
   );
@@ -36,18 +36,20 @@ export default function SettingsForm({ config }: { config: any }) {
   }, [state]);
 
   return (
-    <form action={formAction} className="flex flex-col gap-6">
+    <form action={formAction} className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       {/* Flash messages */}
-      {successMsg && (
-        <div className="p-4 rounded-xl bg-green-900/30 border border-green-700/50 text-green-300 text-sm font-medium text-center">
-          ✓ {successMsg}
-        </div>
-      )}
-      {errorMsg && (
-        <div className="p-4 rounded-xl bg-red-900/30 border border-red-700/50 text-red-300 text-sm font-medium text-center">
-          ✗ {errorMsg}
-        </div>
-      )}
+      <div className="lg:col-span-2 space-y-4">
+        {successMsg && (
+          <div className="p-4 rounded-xl bg-green-900/30 border border-green-700/50 text-green-300 text-sm font-medium text-center">
+            ✓ {successMsg}
+          </div>
+        )}
+        {errorMsg && (
+          <div className="p-4 rounded-xl bg-red-900/30 border border-red-700/50 text-red-300 text-sm font-medium text-center">
+            ✗ {errorMsg}
+          </div>
+        )}
+      </div>
 
       {/* ── SEO ── */}
       <div className={sectionCls}>
@@ -63,7 +65,7 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="Coffee Geeks Panamá | ..."
             className={inputCls}
           />
-          <p className="text-amber-100/30 text-xs pl-1">Aparece en la pestaña del navegador y resultados de búsqueda.</p>
+          <p className="text-[#bedcf8]/30 text-xs pl-1">Aparece en la pestaña del navegador y resultados de búsqueda.</p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -76,8 +78,8 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="Descripción corta del sitio para buscadores y redes sociales..."
             className={`${inputCls} resize-y`}
           />
-          <p className="text-amber-100/30 text-xs pl-1">
-            Se usa en <code className="text-amber-400/60">&lt;meta name="description"&gt;</code> y en la etiqueta OG de descripción.
+          <p className="text-[#bedcf8]/30 text-xs pl-1">
+            Se usa en <code className="text-[#bedcf8]/60">&lt;meta name="description"&gt;</code> y en la etiqueta OG de descripción.
           </p>
         </div>
 
@@ -91,7 +93,7 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="https://tusitio.com/og-image.jpg  (o ruta relativa /og.jpg)"
             className={inputCls}
           />
-          <p className="text-amber-100/30 text-xs pl-1">
+          <p className="text-[#bedcf8]/30 text-xs pl-1">
             Imagen que aparece cuando se comparte el sitio en redes sociales. Recomendado: 1200×630 px.
           </p>
         </div>
@@ -140,10 +142,10 @@ export default function SettingsForm({ config }: { config: any }) {
       </div>
 
       {/* ── Política de Privacidad ── */}
-      <div className={sectionCls}>
+      <div className={`${sectionCls} lg:col-span-2`}>
         <SectionTitle icon="🔒" label="Política de Privacidad" />
-        <p className="text-amber-100/40 text-xs -mt-2">
-          El texto se mostrará tal cual en la página pública <code className="text-amber-400/60">/privacidad</code>.
+        <p className="text-[#bedcf8]/40 text-xs -mt-2">
+          El texto se mostrará tal cual en la página pública <code className="text-[#bedcf8]/60">/privacidad</code>.
           Respeta los saltos de línea y caracteres especiales.
         </p>
         <div className="flex flex-col gap-2">
@@ -160,7 +162,7 @@ export default function SettingsForm({ config }: { config: any }) {
       </div>
 
       {/* ── Cafeterías ── */}
-      <div className={sectionCls}>
+      <div className={`${sectionCls} lg:col-span-2`}>
         <SectionTitle icon="☕" label="Configuración de Cafeterías" />
 
         <div className="flex flex-col gap-2">
@@ -174,17 +176,32 @@ export default function SettingsForm({ config }: { config: any }) {
             defaultValue={config.maxGalleryImages ?? 3}
             className={inputCls}
           />
-          <p className="text-amber-100/30 text-xs pl-1">Número máximo de imágenes que una cafetería puede subir a su galería (por defecto 3).</p>
+          <p className="text-[#bedcf8]/30 text-xs pl-1">Número máximo de imágenes que una cafetería puede subir a su galería (por defecto 3).</p>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <label className={labelCls} htmlFor="votingEndDate">Fecha de Cierre de Votaciones</label>
+          <input
+            id="votingEndDate"
+            name="votingEndDate"
+            type="text"
+            defaultValue={config.votingEndDate}
+            placeholder="Ej: 30 de Octubre, 2024"
+            className={inputCls}
+          />
+          <p className="text-[#bedcf8]/30 text-xs pl-1">Esta fecha se mostrará en la sección de protagonistas del Home.</p>
         </div>
       </div>
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-bold text-base tracking-wide transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg shadow-amber-900/30 hover:shadow-amber-700/30 hover:-translate-y-0.5"
-      >
-        {pending ? "Guardando..." : "Guardar Configuración"}
-      </button>
+      <div className="lg:col-span-2">
+        <button
+          type="submit"
+          disabled={pending}
+          className="w-full py-4 rounded-2xl bg-[#bedcf8] hover:bg-[#bedcf8]/90 text-[#4c000a] font-bold text-base tracking-wide transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:-translate-y-0.5"
+        >
+          {pending ? "Guardando..." : "Guardar Configuración"}
+        </button>
+      </div>
     </form>
   );
 }

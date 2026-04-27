@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/mongodb";
 import User from "@/models/User";
 import UserTableManager from "./UserTableManager";
+import { getSiteConfig } from "@/lib/siteConfig";
 
 export const dynamic = 'force-dynamic';
 
@@ -9,7 +10,6 @@ export default async function AdminUsersPage() {
   // Lean for plain objects
   const rawUsers = await User.find().sort({ createdAt: -1 }).lean();
   
-  const { getSiteConfig } = await import("@/app/actions/siteConfig");
   const config = await getSiteConfig();
   
   const users = rawUsers.map((u: any) => ({
@@ -44,8 +44,8 @@ export default async function AdminUsersPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-extrabold tracking-tight text-amber-50 drop-shadow-md">Gestión de Usuarios</h1>
-        <p className="text-amber-100/60 mt-2 text-lg">Ver, Crear, Editar y Borrar usuarios del sistema.</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-[#bedcf8] drop-shadow-md">Gestión de Usuarios</h1>
+        <p className="text-[#bedcf8]/60 mt-2 text-lg">Ver, Crear, Editar y Borrar usuarios del sistema.</p>
       </div>
 
       <UserTableManager initialUsers={users} maxGalleryImages={config.maxGalleryImages} />

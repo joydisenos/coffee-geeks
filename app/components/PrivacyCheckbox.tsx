@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 interface Props {
   checked: boolean;
   onChange: (val: boolean) => void;
-  accentColor?: "white" | "amber"; // blanco para /register, ámbar para /register-cafeteria
+  accentColor?: "white" | "amber" | "#bedcf8"; // blanco para /register, ámbar para /register-cafeteria, celeste para admin
 }
 
 export default function PrivacyCheckbox({
@@ -49,10 +49,12 @@ export default function PrivacyCheckbox({
   const linkCls =
     accentColor === "amber"
       ? "text-amber-400 underline underline-offset-2 hover:text-amber-300 font-semibold"
+      : accentColor === "#bedcf8"
+      ? "text-[#bedcf8] underline underline-offset-2 hover:text-[#bedcf8]/80 font-semibold"
       : "text-white underline underline-offset-2 hover:text-white/80 font-semibold";
 
   const checkboxRing =
-    accentColor === "amber" ? "focus:ring-amber-500" : "focus:ring-white/50";
+    accentColor === "amber" ? "focus:ring-amber-500" : accentColor === "#bedcf8" ? "focus:ring-[#bedcf8]/50" : "focus:ring-white/50";
 
   return (
     <>
@@ -65,7 +67,7 @@ export default function PrivacyCheckbox({
           onChange={(e) => onChange(e.target.checked)}
           className={`mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-white/30 bg-black/30 accent-current focus:outline-none focus:ring-2 ${checkboxRing} cursor-pointer transition-all`}
         />
-        <span className="text-xs text-white/70 leading-snug">
+        <span className="text-xs text-[#bedcf8]/70 leading-snug">
           He leído y acepto la{" "}
           <button
             type="button"
@@ -74,7 +76,7 @@ export default function PrivacyCheckbox({
           >
             Política de Privacidad
           </button>{" "}
-          de <strong className="text-white/90">Panama International Firm By YelCaballero</strong>{" "}
+          de <strong className="text-[#bedcf8]">Panama International Firm By YelCaballero</strong>{" "}
           y autorizo el tratamiento de mis datos personales conforme a la normativa vigente.
         </span>
       </label>

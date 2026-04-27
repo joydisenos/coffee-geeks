@@ -83,11 +83,11 @@ export async function register(state: any, formData: FormData) {
   } else {
      if (selectedRole === "cafeteria" || selectedRole === "user") {
         role = selectedRole;
-     } else if (selectedRole === "admin") {
+     } else if (["admin", "juez_local", "juez_internacional"].includes(selectedRole || "")) {
         const { getSession } = await import("@/lib/session");
         const session = await getSession();
         if (session && session.role === "admin") {
-           role = "admin";
+           role = selectedRole!;
         }
      }
   }

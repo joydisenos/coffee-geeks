@@ -98,7 +98,11 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
         <div className="perf-hero-sc" />
         <div className="perf-hero-cnt">
           <div className="wrap">
-            <div className="perf-cat">{shop.competitionCategory || "Cafetería"}</div>
+            <div className="perf-cat">
+              {Array.isArray(shop.competitionCategory) && shop.competitionCategory.length > 0 
+                ? shop.competitionCategory.join(" - ") 
+                : (typeof shop.competitionCategory === 'string' && shop.competitionCategory ? shop.competitionCategory : "Cafetería")}
+            </div>
             <div className="perf-name">{shop.cafeteriaName || `${shop.name} ${shop.lastName}`}</div>
             <div className="perf-sub">{shop.neighborhood || "Panamá"}</div>
           </div>
@@ -212,7 +216,11 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
                 <div className="stk-img" style={{ backgroundImage: `url('${coverImg}')` }} />
                 <div className="stk-body">
                   <div className="stk-name">{shop.cafeteriaName || shop.name}</div>
-                  <div className="stk-sub">{shop.competitionCategory || "Cafetería"}</div>
+                  <div className="stk-sub">
+                    {Array.isArray(shop.competitionCategory) && shop.competitionCategory.length > 0 
+                      ? shop.competitionCategory.join(" - ") 
+                      : (typeof shop.competitionCategory === 'string' && shop.competitionCategory ? shop.competitionCategory : "Cafetería")}
+                  </div>
                   <div className="stk-loc">
                     <svg viewBox="0 0 24 24" style={{ width: 11, height: 11, stroke: "rgba(255,255,255,.4)", fill: "none", strokeWidth: 1.5 }}>
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
@@ -220,20 +228,16 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
                     {shop.neighborhood}
                   </div>
                   <div className="stk-score">
-                    0
-                    <small>Puntaje global</small>
+                    {shop.votesCount || 0}
+                    <small>Votos Totales</small>
                   </div>
                   <button className="stk-vote-btn" onClick={() => setVoteModal(true)}>
                     ⭐ Votar por {shop.cafeteriaName || shop.name}
                   </button>
                   <div className="stk-div" />
                   <div className="stk-stat">
-                    <span className="stk-sl">Votos del público</span>
-                    <span className="stk-sv">0</span>
-                  </div>
-                  <div className="stk-stat">
-                    <span className="stk-sl">Puntaje jurado</span>
-                    <span className="stk-sv">0/100</span>
+                    <span className="stk-sl">Puntaje global</span>
+                    <span className="stk-sv">Procesando...</span>
                   </div>
                   <div className="stk-stat">
                     <span className="stk-sl">Posición actual</span>

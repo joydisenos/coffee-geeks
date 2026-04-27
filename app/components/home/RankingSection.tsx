@@ -1,27 +1,10 @@
-const REST = [
-  { pos: 4, name: "Unido Roasters", cat: "Especialidad · Casco Viejo", votes: 134 },
-  { pos: 5, name: "Radisson Café", cat: "Hotel · Paitilla", votes: 118 },
-  { pos: 6, name: "Origin Coffee", cat: "Micro Roastery · Boquete", votes: 96 },
-  { pos: 7, name: "Pergamino Panama", cat: "Brew Bar · Casco Viejo", votes: 82 },
-];
+interface RankingSectionProps {
+  podium: any[];
+  rest: any[];
+  votingEndDate?: string;
+}
 
-const PODIUM = [
-  {
-    pos: 2, rank: "rs", posLabel: "2",
-    name: "Tosto Coffee", cat: "Especialidad · Brew Bar", votes: "162 votos",
-  },
-  {
-    pos: 1, rank: "rg", posLabel: "1",
-    name: "Kotowa Coffee", cat: "Especialidad · Brew Bar", votes: "175 votos · Líder",
-    isGold: true,
-  },
-  {
-    pos: 3, rank: "rb2", posLabel: "3",
-    name: "Toño's Bakery", cat: "Especialidad · Brew Bar", votes: "148 votos",
-  },
-];
-
-export default function RankingSection() {
+export default function RankingSection({ podium, rest, votingEndDate }: RankingSectionProps) {
   return (
     <>
       <style>{`
@@ -79,30 +62,34 @@ export default function RankingSection() {
             </div>
             <div style={{ textAlign: "right" }}>
               <p className="reg-label">Registro cierra</p>
-              <p className="reg-date">23 Abril · 2026</p>
+              <p className="reg-date">{votingEndDate || "PRÓXIMAMENTE"}</p>
             </div>
           </div>
 
           {/* Podium top 3 */}
           <div className="podium">
-            {PODIUM.map((p) => (
+            {podium.map((p) => (
               <div className={`pc${p.isGold ? " gold" : ""}`} key={p.pos}>
-                <div className={`rb ${p.rank}`}>{p.posLabel}</div>
+                <div className={`rb ${p.rankCls}`}>{p.posLabel}</div>
                 <div className="pc-ico">
-                  <svg viewBox="0 0 24 24" style={{ width: 24, height: 24, fill: "rgba(255,255,255,.3)" }}>
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
-                  </svg>
+                   {p.img ? (
+                      <img src={p.img} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                   ) : (
+                      <svg viewBox="0 0 24 24" style={{ width: 24, height: 24, fill: "rgba(255,255,255,.3)" }}>
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
+                      </svg>
+                   )}
                 </div>
                 <div className="pc-name">{p.name}</div>
                 <div className="pc-cat">{p.cat}</div>
-                <div className="pc-v">{p.votes}</div>
+                <div className="pc-v">{p.votes} {p.isGold ? '· Líder' : ''}</div>
               </div>
             ))}
           </div>
 
-          {/* Places 4-7 */}
+          {/* Places 4+ */}
           <div className="rank-rest">
-            {REST.map((r) => (
+            {rest.map((r) => (
               <div className="rr" key={r.pos}>
                 <div className="rr-pos">{r.pos}</div>
                 <div className="rr-info">
@@ -118,7 +105,7 @@ export default function RankingSection() {
           <div className="vote-cta">
             <div>
               <h4>¿Ya visitaste alguna cafetería participante?</h4>
-              <p>Registra tu visita y emite tu voto antes del 23 de abril.</p>
+              <p>Registra tu visita y emite tu voto antes del {votingEndDate || "final del evento"}.</p>
             </div>
             <button className="btn-dark">Emitir mi voto →</button>
           </div>
@@ -127,3 +114,4 @@ export default function RankingSection() {
     </>
   );
 }
+

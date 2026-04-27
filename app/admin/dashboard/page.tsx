@@ -12,52 +12,52 @@ export default async function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-4xl font-extrabold tracking-tight text-amber-50 drop-shadow-md">
+      <h1 className="text-4xl font-extrabold tracking-tight text-[#bedcf8] drop-shadow-md">
         Dashboard General
       </h1>
-      <p className="text-amber-100/60 text-lg">
+      <p className="text-[#bedcf8]/60 text-lg">
         Resumen de la plataforma y métricas clave.
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
         {/* Card Total Users */}
-        <div className="p-8 rounded-3xl bg-gradient-to-br from-[#2a1f18] to-[#120d0a] border border-amber-900/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(217,119,6,0.15)] transition-all duration-300">
+        <div className="p-8 rounded-3xl bg-[#4c000a] border border-[#bedcf8]/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[#bedcf8]/5 transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
-            <span className="text-xs font-bold text-amber-500/80 uppercase tracking-[0.2em]">
+            <span className="text-xs font-bold text-[#bedcf8]/70 uppercase tracking-[0.2em]">
               Total Usuarios
             </span>
           </div>
-          <div className="text-6xl font-black text-amber-50 drop-shadow-lg">{totalUsers}</div>
+          <div className="text-6xl font-black text-[#bedcf8] drop-shadow-lg">{totalUsers}</div>
         </div>
 
         {/* Card Admins */}
-        <div className="p-8 rounded-3xl bg-gradient-to-br from-amber-900/30 to-[#120d0a] border border-amber-700/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(217,119,6,0.15)] transition-all duration-300">
+        <div className="p-8 rounded-3xl bg-[#4c000a] border border-[#bedcf8]/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[#bedcf8]/5 transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
-            <span className="text-xs font-bold text-amber-400 uppercase tracking-[0.2em]">
+            <span className="text-xs font-bold text-[#bedcf8]/70 uppercase tracking-[0.2em]">
               Administradores
             </span>
           </div>
-          <div className="text-6xl font-black text-amber-200 drop-shadow-lg">{adminUsers}</div>
+          <div className="text-6xl font-black text-[#bedcf8] drop-shadow-lg">{adminUsers}</div>
         </div>
 
         {/* Card Regulares */}
-        <div className="p-8 rounded-3xl bg-gradient-to-br from-orange-900/20 to-[#120d0a] border border-orange-800/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(217,119,6,0.15)] transition-all duration-300">
+        <div className="p-8 rounded-3xl bg-[#4c000a] border border-[#bedcf8]/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[#bedcf8]/5 transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
-             <span className="text-xs font-bold text-orange-400 uppercase tracking-[0.2em]">
+             <span className="text-xs font-bold text-[#bedcf8]/70 uppercase tracking-[0.2em]">
               Usuarios Normales
             </span>
           </div>
-          <div className="text-6xl font-black text-orange-200 drop-shadow-lg">{regularUsers}</div>
+          <div className="text-6xl font-black text-[#bedcf8] drop-shadow-lg">{regularUsers}</div>
         </div>
 
         {/* Card Cafeterias */}
-        <div className="p-8 rounded-3xl bg-gradient-to-br from-green-900/20 to-[#120d0a] border border-green-800/30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[0_15px_40px_rgba(217,119,6,0.15)] transition-all duration-300">
+        <div className="p-8 rounded-3xl bg-[#4c000a] border border-[#bedcf8]/10 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col justify-between hover:-translate-y-1 hover:shadow-[#bedcf8]/5 transition-all duration-300">
           <div className="flex justify-between items-start mb-6">
-             <span className="text-xs font-bold text-green-400 uppercase tracking-[0.2em]">
+             <span className="text-xs font-bold text-[#bedcf8]/70 uppercase tracking-[0.2em]">
               Cafeterías
             </span>
           </div>
-          <div className="text-6xl font-black text-green-200 drop-shadow-lg">{cafeteriaUsers}</div>
+          <div className="text-6xl font-black text-[#bedcf8] drop-shadow-lg">{cafeteriaUsers}</div>
         </div>
       </div>
     </div>

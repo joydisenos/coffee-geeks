@@ -1,4 +1,5 @@
 import mongoose, { Schema, model, models } from "mongoose";
+// Model updated with new roles: juez_local, juez_internacional
 
 const BaristaSchema = new Schema({
   fullName: { type: String, required: true, trim: true },
@@ -36,7 +37,7 @@ const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["admin", "user", "cafeteria"],
+      enum: ["admin", "user", "cafeteria", "juez_local", "juez_internacional"],
       default: "user",
     },
     // ── Campos exclusivos del rol cafetería ──
@@ -57,11 +58,13 @@ const UserSchema = new Schema(
     locationLat: { type: Number, default: null },
     locationLng: { type: Number, default: null },
     competitionCategory: {
-      type: String,
-      enum: ["Filtrado", "Espresso", "Bebida de Autor", ""],
-      default: "",
+      type: [String],
+      enum: ["Filtrado", "Espresso", "Bebida de Autor"],
+      default: [],
     },
     baristas: { type: [BaristaSchema], default: [] },
+    advancedToRound2: { type: Boolean, default: false },
+
   },
   {
     timestamps: true,
@@ -76,5 +79,10 @@ UserSchema.methods.toJSON = function () {
   return obj;
 };
 
-const User = models.User || model("User", UserSchema);
+// Force model re-registration in development to pick up schema changes
+if (models && models.User) {
+  delete models.User;
+}
+
+const User = model("User", UserSchema);
 export default User;

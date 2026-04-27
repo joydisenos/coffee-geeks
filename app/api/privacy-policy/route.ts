@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSiteConfig } from "@/app/actions/siteConfig";
+import { getSiteConfig } from "@/lib/siteConfig";
 
 // Endpoint público que devuelve solo la política de privacidad
 export async function GET() {

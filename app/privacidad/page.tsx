@@ -1,4 +1,4 @@
-import { getSiteConfig } from "@/app/actions/siteConfig";
+import { getSiteConfig } from "@/lib/siteConfig";
 import Image from "next/image";
 import Link from "next/link";
 
