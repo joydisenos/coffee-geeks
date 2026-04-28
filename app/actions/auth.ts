@@ -5,6 +5,8 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
+import { sendEmail } from "@/lib/email";
+import { getWelcomeEmailTemplate } from "@/lib/email-templates";
 
 // Utility para sanitizar inputs rápidos contra inyecciones absurdas
 function sanitizeString(input: any) {
@@ -100,6 +102,18 @@ export async function register(state: any, formData: FormData) {
     role,
   });
 
+  // Enviamos correo de bienvenida
+  try {
+    await sendEmail({
+      to: newUser.email,
+      subject: "¡Bienvenido a Coffee Geeks!",
+      html: getWelcomeEmailTemplate(newUser.name),
+    });
+  } catch (emailError) {
+    console.error("Error sending registration email:", emailError);
+    // No bloqueamos el registro si falla el correo
+  }
+
   // Logeamos al usuario tras su registro
   await createSession(newUser._id.toString(), newUser.role);
 
@@ -143,6 +157,17 @@ export async function registerCafeteria(state: any, formData: FormData) {
     password: hashedPassword,
     role,
   });
+
+  // Enviamos correo de bienvenida
+  try {
+    await sendEmail({
+      to: newUser.email,
+      subject: "¡Bienvenido a Coffee Geeks!",
+      html: getWelcomeEmailTemplate(newUser.name),
+    });
+  } catch (emailError) {
+    console.error("Error sending registration email (cafeteria):", emailError);
+  }
 
   await createSession(newUser._id.toString(), newUser.role);
 
