@@ -49,7 +49,7 @@ export default async function PerfilPage() {
       {/* Background Image */}
       <div className="absolute inset-0 -z-10 fixed">
         <Image
-          src="/background.webp"
+          src="/fondo.webp"
           alt="Background"
           fill
           priority

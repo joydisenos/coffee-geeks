@@ -13,7 +13,7 @@ export default function LoginPage() {
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/background.webp"
+          src="/fondo.webp"
           alt="Background"
           fill
           priority
@@ -23,10 +23,10 @@ export default function LoginPage() {
       </div>
 
       <div className="z-10 w-full max-w-md p-8 md:p-12 rounded-3xl bg-[#4c000a] backdrop-blur-lg shadow-2xl border border-[#bedcf8]/20 mx-4">
-        
-        <div className="flex justify-center mb-8">
+
+        <div className="flex justify-center mb-0">
           <Link href="/">
-            <div className="relative w-32 h-32 drop-shadow-[0_0_15px_rgba(190,220,248,0.3)]">
+            <div className="relative w-50 h-50 drop-shadow-[0_0_15px_rgba(190,220,248,0.3)]">
               <Image
                 src="/logo-cel.webp"
                 alt="Coffee Geeks Panamá Logo"

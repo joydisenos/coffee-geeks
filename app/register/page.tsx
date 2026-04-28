@@ -15,7 +15,7 @@ export default function RegisterPage() {
       {/* Background Image */}
       <div className="absolute inset-0 -z-10 fixed">
         <Image
-          src="/background.webp"
+          src="/fondo.webp"
           alt="Background"
           fill
           priority
@@ -26,9 +26,9 @@ export default function RegisterPage() {
 
       <div className="z-10 w-full max-w-md p-8 md:p-12 rounded-3xl bg-[#4c000a] backdrop-blur-lg shadow-2xl border border-[#bedcf8]/20 mx-4">
 
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-0">
           <Link href="/">
-            <div className="relative w-24 h-24 drop-shadow-[0_0_15px_rgba(190,220,248,0.3)]">
+            <div className="relative w-50 h-50 drop-shadow-[0_0_15px_rgba(190,220,248,0.3)]">
               <Image
                 src="/logo-cel.webp"
                 alt="Coffee Geeks Panamá Logo"
@@ -43,9 +43,18 @@ export default function RegisterPage() {
         <h1 className="text-2xl font-bold text-center text-[#bedcf8] mb-2 tracking-wide">
           Crear Cuenta
         </h1>
-        <p className="text-center text-[#bedcf8]/70 mb-6 text-sm">
+        <p className="text-center text-[#bedcf8]/70 mb-2 text-sm">
           Únete a la comunidad de Coffee Geeks
         </p>
+
+        <div className="mt-0 mb-6 text-center text-sm text-[#bedcf8]/70 flex flex-col gap-4">
+          <p>
+            ¿Eres participante?{" "}
+            <Link href="/register-participantes" className="text-[#bedcf8] font-semibold hover:underline">
+              Registrate aquí
+            </Link>
+          </p>
+        </div>
 
         {state?.error && (
           <div className="mb-4 p-3 rounded bg-red-500/20 border border-red-500/50 text-red-200 text-sm text-center">
