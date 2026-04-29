@@ -195,7 +195,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
       cafeteria: user.role === "cafeteria" && (!formData.cafeteriaName || !formData.ruc || categories.length === 0 || !businessType),
       ubicacion: user.role === "cafeteria" && (!formData.neighborhood || !locationLat),
       baristas: user.role === "cafeteria" && (baristas.length === 0),
-      imagenes: user.role === "cafeteria" && (!coverPreview || !user.gallery || user.gallery.length === 0)
+      imagenes: user.role === "cafeteria" && (!coverPreview || !user.gallery || user.gallery.length === 0),
+      gallery: user.role === "cafeteria" && (!user.gallery || user.gallery.length === 0)
     };
     return incomplete;
   };
