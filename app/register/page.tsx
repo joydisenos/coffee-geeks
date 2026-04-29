@@ -62,9 +62,23 @@ export default function RegisterPage() {
           </div>
         )}
 
-        <form action={formAction} className="flex flex-col gap-4">
+        <form action={async (formData) => {
+          if (typeof window !== "undefined" && (window as any).grecaptcha) {
+            try {
+              const token = await (window as any).grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register' });
+              formData.set("recaptchaToken", token);
+            } catch (err) {
+              console.error("reCAPTCHA error:", err);
+            }
+          }
+          formAction(formData);
+        }} className="flex flex-col gap-4">
+          {/* Script de reCAPTCHA v3 */}
+          <script src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`} async defer></script>
+          
           {/* Rol fijo: user */}
           <input type="hidden" name="role" value="user" />
+          <input type="hidden" name="recaptchaToken" value="" />
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">

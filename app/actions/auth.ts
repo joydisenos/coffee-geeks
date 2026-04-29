@@ -16,6 +16,21 @@ function sanitizeString(input: any) {
   return input.trim();
 }
 
+async function verifyRecaptcha(token: string) {
+  if (!token) return false;
+  try {
+    const response = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${token}`,
+      { method: "POST" }
+    );
+    const data = await response.json();
+    return data.success && data.score >= 0.5; // Score threshold for v3
+  } catch (error) {
+    console.error("reCAPTCHA verification error:", error);
+    return false;
+  }
+}
+
 export async function login(state: any, formData: FormData) {
   await dbConnect();
 
@@ -61,6 +76,11 @@ export async function register(state: any, formData: FormData) {
 
   if (!name || !email || !password) {
     return { error: "Nombre, email y contraseña son obligatorios." };
+  }
+
+  const recaptchaToken = formData.get("recaptchaToken")?.toString();
+  if (process.env.RECAPTCHA_SECRET_KEY && !(await verifyRecaptcha(recaptchaToken || ""))) {
+    return { error: "Fallo en la verificación de seguridad (reCAPTCHA)." };
   }
 
   if (password.length < 6) {
@@ -133,6 +153,11 @@ export async function registerCafeteria(state: any, formData: FormData) {
 
   if (!name || !email || !password) {
     return { error: "Nombre, email y contraseña son obligatorios." };
+  }
+
+  const recaptchaToken = formData.get("recaptchaToken")?.toString();
+  if (process.env.RECAPTCHA_SECRET_KEY && !(await verifyRecaptcha(recaptchaToken || ""))) {
+    return { error: "Fallo en la verificación de seguridad (reCAPTCHA)." };
   }
 
   if (password.length < 6) {

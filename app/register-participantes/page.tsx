@@ -62,7 +62,19 @@ export default function RegisterParticipantesPage() {
           </div>
         )}
 
-        <form action={formAction} className="flex flex-col gap-4">
+        <form action={async (formData) => {
+          if (typeof window !== "undefined" && (window as any).grecaptcha) {
+            try {
+              const token = await (window as any).grecaptcha.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, { action: 'register_cafeteria' });
+              formData.set("recaptchaToken", token);
+            } catch (err) {
+              console.error("reCAPTCHA error:", err);
+            }
+          }
+          formAction(formData);
+        }} className="flex flex-col gap-4">
+          <script src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`} async defer></script>
+          <input type="hidden" name="recaptchaToken" value="" />
 
           <div className="flex flex-col gap-2">
             <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="name">

@@ -11,19 +11,10 @@ import {
   deleteGalleryImage,
 } from "@/app/actions/cafeteria";
 import MapPicker from "@/app/components/MapPicker";
+import FlashMessage from "@/app/components/FlashMessage";
 import Image from "next/image";
 
-// ─── Sub-componente: mensaje flash ────────────────────────────────────────────
-function FlashMessage({ msg, type }: { msg: string; type: "success" | "error" }) {
-  if (!msg) return null;
-  const cls =
-    type === "success"
-      ? "bg-green-500/20 border-green-500/50 text-green-200"
-      : "bg-red-500/20 border-red-500/50 text-red-200";
-  return (
-    <div className={`p-3 rounded border text-sm text-center ${cls}`}>{msg}</div>
-  );
-}
+
 
 // ─── Input compartido ─────────────────────────────────────────────────────────
 const inputCls =
@@ -37,9 +28,10 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
   const tabs = [
     { id: "personal", label: "Información Personal" },
     ...(user.role === "cafeteria" ? [
-      { id: "cafeteria", label: "Datos de la Cafetería" },
-      { id: "gallery", label: "Galería de Imágenes" },
-      { id: "baristas", label: "Baristas" }
+      { id: "cafeteria", label: "Datos Cafetería" },
+      { id: "ubicacion", label: "Ubicación" },
+      { id: "baristas", label: "Baristas" },
+      { id: "imagenes", label: "Imágenes" }
     ] : [])
   ];
 
@@ -161,6 +153,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
     lastName: user.lastName || "",
     email: user.email || "",
     cafeteriaName: user.cafeteriaName || "",
+    legalRepresentative: user.legalRepresentative || "",
+    ruc: user.ruc || "",
     neighborhood: user.neighborhood || "",
     description: user.description || "",
     hours: user.hours || "",
@@ -180,6 +174,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
       lastName: user.lastName || "",
       email: user.email || "",
       cafeteriaName: user.cafeteriaName || "",
+      legalRepresentative: user.legalRepresentative || "",
+      ruc: user.ruc || "",
       neighborhood: user.neighborhood || "",
       description: user.description || "",
       hours: user.hours || "",
@@ -196,9 +192,10 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
   const checkIncomplete = () => {
     const incomplete = {
       personal: !formData.name || !formData.email,
-      cafeteria: user.role === "cafeteria" && (!formData.cafeteriaName || !formData.neighborhood || categories.length === 0 || !locationLat || !coverPreview || !businessType),
-      gallery: user.role === "cafeteria" && (!user.gallery || user.gallery.length === 0),
-      baristas: user.role === "cafeteria" && (baristas.length === 0)
+      cafeteria: user.role === "cafeteria" && (!formData.cafeteriaName || !formData.ruc || categories.length === 0 || !businessType),
+      ubicacion: user.role === "cafeteria" && (!formData.neighborhood || !locationLat),
+      baristas: user.role === "cafeteria" && (baristas.length === 0),
+      imagenes: user.role === "cafeteria" && (!coverPreview || !user.gallery || user.gallery.length === 0)
     };
     return incomplete;
   };
@@ -297,43 +294,49 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                 <FlashMessage msg={cafMsg} type="success" />
               </div>
 
-              {/* Nombre oficial */}
+              {/* Nombre comercial */}
               <div className="flex flex-col gap-2">
-                <label className={labelCls} htmlFor="cafeteriaName">Nombre oficial de la cafetería</label>
+                <label className={labelCls} htmlFor="cafeteriaName">Nombre Comercial *</label>
                 <input id="cafeteriaName" name="cafeteriaName" type="text"
+                  required
                   value={formData.cafeteriaName}
                   onChange={handleInputChange}
                   placeholder="Ej: The Brew Lab Panamá"
                   className={inputCls} />
               </div>
 
-              {/* Barrio / ubicación */}
-              <div className="flex flex-col gap-2">
-                <label className={labelCls} htmlFor="neighborhood">Barrio o ubicación en Panamá</label>
-                <div className="flex gap-2">
-                  <input id="neighborhood" name="neighborhood" type="text"
-                    value={formData.neighborhood}
+              {/* Representante Legal & RUC */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls} htmlFor="legalRepresentative">Representante Legal (Op)</label>
+                  <input id="legalRepresentative" name="legalRepresentative" type="text"
+                    value={formData.legalRepresentative}
                     onChange={handleInputChange}
-                    placeholder="Ej: Casco Viejo, San Francisco..."
+                    placeholder="Ej: Juan Pérez"
                     className={inputCls} />
-                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-medium text-sm transition-colors border border-[#bedcf8]/10 whitespace-nowrap">
-                    Buscar en Mapa
-                  </button>
                 </div>
-                {mapMsg && <p className="text-amber-400 text-xs pl-1">{mapMsg}</p>}
-                <div className="mt-2 relative z-0">
-                   <MapPicker 
-                     initialLat={locationLat} 
-                     initialLng={locationLng} 
-                     onLocationChange={(lat, lng) => {
-                       setLocationLat(lat);
-                       setLocationLng(lng);
-                     }} 
-                   />
+                <div className="flex flex-col gap-2">
+                  <label className={labelCls} htmlFor="ruc">RUC *</label>
+                  <input id="ruc" name="ruc" type="text"
+                    required
+                    value={formData.ruc}
+                    onChange={(e) => {
+                      let val = e.target.value.toUpperCase();
+                      // Regex para formato X-XXX-XXX (simplificado)
+                      if (val.length <= 9) {
+                        setFormData(prev => ({ ...prev, ruc: val }));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const rucRegex = /^[\w\d]-[\w\d]{3,4}-[\w\d]{3,4}$/;
+                      // No bloqueamos pero podemos avisar o el server validará
+                    }}
+                    placeholder="Ej: 8-888-888"
+                    className={inputCls} />
                 </div>
-                <input type="hidden" name="locationLat" value={locationLat ?? ""} />
-                <input type="hidden" name="locationLng" value={locationLng ?? ""} />
               </div>
+
+              {/* Barrio y Mapa movidos a Tab Ubicación */}
 
               {/* Categoría de competencia */}
               <div className="flex flex-col gap-2">
@@ -433,23 +436,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                   className={inputCls} />
               </div>
 
-              {/* Foto de portada */}
-              <div className="flex flex-col gap-2">
-                <label className={labelCls} htmlFor="coverImage">Foto de portada</label>
-                {coverPreview && (
-                  <div className="relative w-full h-40 rounded-xl overflow-hidden border border-white/10 mb-1">
-                    <Image src={coverPreview} alt="Portada" fill className="object-cover" />
-                  </div>
-                )}
-                <input
-                  id="coverImage" name="coverImage" type="file" accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files?.[0];
-                    if (file) setCoverPreview(URL.createObjectURL(file));
-                  }}
-                  className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/20 file:text-[#bedcf8] file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/30 transition-all cursor-pointer"
-                />
-              </div>
+              {/* Foto de portada movida a Tab Imágenes */}
 
               {isIncomplete.cafeteria && (
                 <p className="text-red-400 text-[10px] font-medium flex items-center gap-1.5 pl-1 animate-pulse">
@@ -465,12 +452,131 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
           </section>
         )}
 
-        {/* ── Módulo de Galería ── */}
-        {user.role === "cafeteria" && activeTab === "gallery" && (
+        {/* ─────────────────── SECCIÓN: Ubicación ─────────────────── */}
+        {user.role === "cafeteria" && activeTab === "ubicacion" && (
           <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
             <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
-              📸 Galería de Imágenes
+              📍 Ubicación de la Cafetería
             </h2>
+            <form action={cafAction} className="flex flex-col gap-4">
+              <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
+              {/* Sincronizar datos que no están en este tab */}
+              <input type="hidden" name="cafeteriaName" value={formData.cafeteriaName} />
+              <input type="hidden" name="legalRepresentative" value={formData.legalRepresentative} />
+              <input type="hidden" name="ruc" value={formData.ruc} />
+              <input type="hidden" name="businessType" value={businessType} />
+              <input type="hidden" name="description" value={formData.description} />
+              <input type="hidden" name="hours" value={formData.hours} />
+              <input type="hidden" name="phone" value={formData.phone} />
+              <input type="hidden" name="web" value={formData.web} />
+              {categories.map(cat => <input key={cat} type="hidden" name="competitionCategory" value={cat} />)}
+              
+              <div className="flex flex-col gap-1">
+                <FlashMessage msg={cafErr} type="error" />
+                <FlashMessage msg={cafMsg} type="success" />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className={labelCls} htmlFor="neighborhood">Barrio o ubicación en Panamá *</label>
+                <div className="flex gap-2">
+                  <input id="neighborhood" name="neighborhood" type="text"
+                    required
+                    value={formData.neighborhood}
+                    onChange={handleInputChange}
+                    placeholder="Ej: Casco Viejo, San Francisco..."
+                    className={inputCls} />
+                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-medium text-sm transition-colors border border-[#bedcf8]/10 whitespace-nowrap">
+                    Buscar en Mapa
+                  </button>
+                </div>
+                {mapMsg && <p className="text-amber-400 text-xs pl-1">{mapMsg}</p>}
+                <div className="mt-2 relative z-0">
+                   <MapPicker 
+                     initialLat={locationLat} 
+                     initialLng={locationLng} 
+                     onLocationChange={(lat, lng) => {
+                       setLocationLat(lat);
+                       setLocationLng(lng);
+                     }} 
+                   />
+                </div>
+                <input type="hidden" name="locationLat" value={locationLat ?? ""} />
+                <input type="hidden" name="locationLng" value={locationLng ?? ""} />
+              </div>
+
+              {isIncomplete.ubicacion && (
+                <p className="text-red-400 text-[10px] font-medium flex items-center gap-1.5 pl-1 animate-pulse">
+                  <span>⚠️</span> Por favor, indica el barrio y marca la ubicación en el mapa.
+                </p>
+              )}
+
+              <button type="submit" disabled={cafPending}
+                className="w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#4c000a]/20">
+                {cafPending ? "Guardando Ubicación..." : "Guardar Ubicación"}
+              </button>
+            </form>
+          </section>
+        )}
+
+        {/* ── Módulo de Imágenes ── */}
+        {user.role === "cafeteria" && activeTab === "imagenes" && (
+          <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
+            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+              📸 Imágenes de la Cafetería
+            </h2>
+
+            {/* Foto de portada */}
+            <div className="mb-8 p-4 rounded-2xl bg-black/20 border border-white/10">
+              <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-4 pl-1">
+                Foto de Portada *
+              </h3>
+              <form action={cafAction} className="flex flex-col gap-4">
+                <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
+                {/* Sincronizar datos */}
+                <input type="hidden" name="cafeteriaName" value={formData.cafeteriaName} />
+                <input type="hidden" name="legalRepresentative" value={formData.legalRepresentative} />
+                <input type="hidden" name="ruc" value={formData.ruc} />
+                <input type="hidden" name="businessType" value={businessType} />
+                <input type="hidden" name="neighborhood" value={formData.neighborhood} />
+                <input type="hidden" name="locationLat" value={locationLat ?? ""} />
+                <input type="hidden" name="locationLng" value={locationLng ?? ""} />
+                {categories.map(cat => <input key={cat} type="hidden" name="competitionCategory" value={cat} />)}
+
+                <div className="flex flex-col gap-2">
+                  {coverPreview && (
+                    <div className="relative w-full h-40 rounded-xl overflow-hidden border border-white/10 mb-2">
+                      <Image src={coverPreview} alt="Portada" fill className="object-cover" />
+                    </div>
+                  )}
+                  <input
+                    id="coverImage" name="coverImage" type="file" accept="image/jpeg,image/png,image/webp"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        if (file.size > 2 * 1024 * 1024) {
+                          alert("La imagen no debe exceder los 2MB");
+                          e.target.value = "";
+                          return;
+                        }
+                        setCoverPreview(URL.createObjectURL(file));
+                      }
+                    }}
+                    className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/20 file:text-[#bedcf8] file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/30 transition-all cursor-pointer"
+                  />
+                  <p className="text-[10px] text-[#bedcf8]/40 pl-1 italic">Máximo 2MB. Formatos: .jpg, .png, .webp</p>
+                </div>
+
+                <button type="submit" disabled={cafPending}
+                  className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
+                  {cafPending ? "Guardando..." : "Actualizar Foto de Portada"}
+                </button>
+              </form>
+            </div>
+
+            <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-4 pl-1">
+              Galería (Máximo {maxGalleryImages}) *
+            </h3>
+
 
             {user.gallery && user.gallery.length === 0 ? (
               <p className="text-[#bedcf8]/40 text-sm text-center py-4">
@@ -501,9 +607,20 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                     <FlashMessage msg={galleryMsg} type="success" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <input name="gallery" type="file" accept="image/*" multiple
+                    <input name="gallery" type="file" accept="image/jpeg,image/png,image/webp" multiple
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        for (const file of files) {
+                          if (file.size > 2 * 1024 * 1024) {
+                            alert(`La imagen ${file.name} excede los 2MB`);
+                            e.target.value = "";
+                            return;
+                          }
+                        }
+                      }}
                       className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/10 file:text-[#bedcf8]/70 file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/20 transition-all cursor-pointer"
                     />
+                    <p className="text-[10px] text-[#bedcf8]/40 pl-1 italic text-center">Formatos: .jpg, .png, .webp (Máx. 2MB cada una)</p>
                   </div>
                   <button type="submit" disabled={galleryPending}
                     className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
@@ -610,13 +727,21 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                       <Image src={baristaPhotoPreview} alt="Preview" fill className="object-cover" />
                     </div>
                   )}
-                  <input id="baristaPhoto" name="photo" type="file" accept="image/*"
+                  <input id="baristaPhoto" name="photo" type="file" accept="image/jpeg,image/png,image/webp"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
-                      if (file) setBaristaPhotoPreview(URL.createObjectURL(file));
+                      if (file) {
+                        if (file.size > 2 * 1024 * 1024) {
+                          alert("La foto del barista no debe exceder los 2MB");
+                          e.target.value = "";
+                          return;
+                        }
+                        setBaristaPhotoPreview(URL.createObjectURL(file));
+                      }
                     }}
                     className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/10 file:text-[#bedcf8]/70 file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/20 transition-all cursor-pointer"
                   />
+                  <p className="text-[10px] text-[#bedcf8]/40 pl-1 italic">Máximo 2MB. Formatos: .jpg, .png, .webp</p>
                 </div>
 
                 <button type="submit" disabled={baristaPending}

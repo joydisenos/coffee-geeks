@@ -57,6 +57,8 @@ const UserSchema = new Schema(
     gallery: { type: [String], default: [] },
     locationLat: { type: Number, default: null },
     locationLng: { type: Number, default: null },
+    legalRepresentative: { type: String, trim: true, default: "" },
+    ruc: { type: String, trim: true, default: "" },
     competitionCategory: {
       type: [String],
       enum: ["Filtrado", "Espresso", "Bebida de Autor"],
@@ -64,6 +66,48 @@ const UserSchema = new Schema(
     },
     baristas: { type: [BaristaSchema], default: [] },
     advancedToRound2: { type: Boolean, default: false },
+
+    // ── Campos Detallados (Solo Admin/Participante Detallado) ──
+    legalRepresentativePosition: { type: String, default: "" },
+    yearsOfExistence: { type: Number, default: 0 },
+    legalName: { type: String, default: "" },
+    operationNotice: { type: String, default: "" },
+    province: { type: String, default: "" },
+    branchesCount: { type: Number, default: 1 },
+    sellsPanamanianCoffee: { type: Boolean, default: false },
+    farmName: { type: String, default: "" },
+    coffeeVarieties: { type: [String], default: [] },
+    machineBrand: { type: String, default: "" },
+    grinderBrand: { type: String, default: "" },
+    roastsOwnCoffee: { type: Boolean, default: false },
+    makesOwnProfile: { type: Boolean, default: false },
+    coffeeExperiences: { type: String, default: "" },
+    wantsToInternationalize: { type: Boolean, default: false },
+    targetMarkets: { type: String, default: "" },
+    totalBaristas: { type: Number, default: 0 },
+    acceptsNotifications: { type: Boolean, default: true },
+
+    // Detalle de Baristas
+    mainBaristaName: { type: String, default: "" },
+    mainBaristaTraining: { type: String, default: "" },
+    mainBaristaSpecialty: { type: String, default: "" },
+    mainBaristaYearsExp: { type: Number, default: 0 },
+    mainBaristaCertified: { type: Boolean, default: false },
+    mainBaristaSCA: { type: Boolean, default: false },
+    femaleBaristasCount: { type: Number, default: 0 },
+    maleBaristasCount: { type: Number, default: 0 },
+    trainingLevel: { 
+      type: String, 
+      enum: ["", "básico", "intermedio", "avanzado"], 
+      default: "" 
+    },
+    hasCertifiedTraining: { type: Boolean, default: false },
+    trainingSCA: { type: Boolean, default: false },
+    trainingInstructor: { type: String, default: "" },
+    interestInCertification: { type: Boolean, default: false },
+    certificationInterests: { type: [String], default: [] },
+    wantsToJoinCommittee: { type: Boolean, default: false },
+    hasDisabledStaff: { type: Boolean, default: false },
 
   },
   {

@@ -32,6 +32,8 @@ export default async function PerfilPage() {
     gallery: userData.gallery ?? [],
     locationLat: userData.locationLat ?? null,
     locationLng: userData.locationLng ?? null,
+    legalRepresentative: userData.legalRepresentative ?? "",
+    ruc: userData.ruc ?? "",
     competitionCategory: userData.competitionCategory ?? "",
     businessType: userData.businessType ?? "coffee",
     baristas: (userData.baristas ?? []).map((b: any) => ({

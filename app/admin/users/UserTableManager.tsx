@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import { deleteUser, updateUserAdmin, createUserByAdmin } from "@/app/actions/user";
 import { toggleCafeteriaStatus } from "@/app/actions/cafeteria";
 import { register } from "@/app/actions/auth";
 import AdminMenuModal from "./AdminMenuModal";
 import ProfileForm from "@/app/perfil/ProfileForm";
+import DetailedCafeteriaForm from "./DetailedCafeteriaForm";
 import { useRouter } from "next/navigation";
 
 export default function UserTableManager({ initialUsers, maxGalleryImages }: { initialUsers: any[], maxGalleryImages?: number }) {
   const router = useRouter();
   const [editingUser, setEditingUser] = useState<any>(null);
+  const [detailedUser, setDetailedUser] = useState<any>(null);
   const [managingMenu, setManagingMenu] = useState<any>(null);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
@@ -19,6 +21,16 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
 
   const [roleFilter, setRoleFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+
+  // Sincronizar el usuario detallado si cambian los props (después de router.refresh)
+  useEffect(() => {
+    if (detailedUser) {
+      const updated = initialUsers.find(u => u.id === (detailedUser.id || detailedUser._id));
+      if (updated && updated.updatedAt !== detailedUser.updatedAt) {
+        setDetailedUser(updated);
+      }
+    }
+  }, [initialUsers, detailedUser]);
 
   async function handleDelete(id: string) {
     if (!confirm("¿Está seguro de que desea eliminar este usuario?")) return;
@@ -145,14 +157,17 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                    
                    {openDropdown === u.id && (
                       <div className="absolute right-6 top-14 z-50 bg-[#4c000a] border border-[#bedcf8]/20 rounded-xl shadow-2xl py-2 w-40 flex flex-col text-left animate-fade-in-up">
-                         {u.role === "cafeteria" && (
-                           <button onClick={() => { setManagingMenu(u); setOpenDropdown(null); }} className="px-4 py-2.5 text-green-400 hover:bg-white/5 text-left text-sm transition-colors border-b border-white/5" disabled={loading}>
-                             ☕ Ver Menú
-                           </button>
-                         )}
                          <button onClick={() => { setEditingUser(u); setOpenDropdown(null); }} className="px-4 py-2.5 text-orange-400 hover:bg-white/5 text-left text-sm transition-colors border-b border-white/5" disabled={loading}>
                            ✏️ Editar Perfil
                          </button>
+                         {u.role === "cafeteria" && (
+                           <>
+                             <button onClick={() => { setDetailedUser(u); setOpenDropdown(null); }} className="px-4 py-2.5 text-blue-400 hover:bg-white/5 text-left text-sm transition-colors border-b border-white/5" disabled={loading}>
+                               🔍 Detallado
+                             </button>
+                           </>
+                         )}
+                         
                          <button onClick={() => { handleDelete(u.id); setOpenDropdown(null); }} className="px-4 py-2.5 text-red-400 hover:bg-red-500/10 text-left text-sm transition-colors" disabled={loading}>
                            🗑️ Borrar
                          </button>
@@ -277,6 +292,14 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
             onClose={() => setManagingMenu(null)} 
          />
       )}
+       {/* MODAL DETALLADO CAFETERIA */}
+       {detailedUser && (
+         <DetailedCafeteriaForm 
+            key={detailedUser.id + (detailedUser.updatedAt || "")}
+            user={detailedUser} 
+            onClose={() => setDetailedUser(null)} 
+         />
+       )}
     </div>
   );
 }
