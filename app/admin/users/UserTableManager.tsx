@@ -70,7 +70,7 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
           <select 
             value={roleFilter} 
             onChange={(e) => setRoleFilter(e.target.value)}
-            className="bg-[#bedcf8] border border-[#bedcf8]/20 text-[#4c000a] px-4 py-2.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50"
+            className="bg-[#cddbf2] border border-[#cddbf2]/20 text-[#38050e] px-4 py-2.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50"
           >
             <option value="all">Todos los Roles</option>
             <option value="user">Usuario</option>
@@ -84,7 +84,7 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
             <select 
               value={statusFilter} 
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-[#bedcf8] border border-[#bedcf8]/20 text-[#4c000a] px-4 py-2.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50"
+              className="bg-[#cddbf2] border border-[#cddbf2]/20 text-[#38050e] px-4 py-2.5 rounded-xl font-medium focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50"
             >
               <option value="all">Todos los Estados</option>
               <option value="active">Activas</option>
@@ -95,15 +95,15 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
 
         <button
           onClick={() => setCreating(true)}
-          className="bg-[#bedcf8] hover:bg-[#bedcf8]/90 text-[#4c000a] px-5 py-2.5 rounded-xl font-bold shadow-lg transition-all duration-300 hover:-translate-y-0.5 tracking-wide whitespace-nowrap"
+          className="bg-[#cddbf2] hover:bg-[#cddbf2]/90 text-[#38050e] px-5 py-2.5 rounded-xl font-bold shadow-lg transition-all duration-300 hover:-translate-y-0.5 tracking-wide whitespace-nowrap"
         >
           + Agregar Usuario
         </button>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-[#bedcf8]/20 bg-[#4c000a] backdrop-blur-md shadow-2xl">
-        <table className="w-full text-left text-sm text-[#bedcf8]">
-          <thead className="bg-[#3a0008] text-xs uppercase text-[#bedcf8]/70 font-bold tracking-wider border-b border-[#bedcf8]/10">
+      <div className="overflow-x-auto rounded-2xl border border-[#cddbf2]/20 bg-[#38050e] backdrop-blur-md shadow-2xl">
+        <table className="w-full text-left text-sm text-[#cddbf2]">
+          <thead className="bg-[#2a040b] text-xs uppercase text-[#cddbf2]/70 font-bold tracking-wider border-b border-[#cddbf2]/10">
             <tr>
               <th className="px-6 py-5">Nombre / Apellido</th>
               <th className="px-6 py-5">Email</th>
@@ -116,17 +116,17 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
           <tbody>
             {filteredUsers.map((u) => (
               <tr key={u.id} className="border-b border-white/5 hover:bg-white/5 transition-colors duration-200">
-                <td className="px-6 py-5 font-semibold text-[#bedcf8]">
+                <td className="px-6 py-5 font-semibold text-[#cddbf2]">
                   {u.name} {u.lastName}
                 </td>
                 <td className="px-6 py-5 font-medium">{u.email}</td>
                 <td className="px-6 py-5">
                   <span className={`px-3 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase shadow-inner ${
-                    u.role === 'admin' ? 'bg-[#bedcf8]/20 text-[#bedcf8] border border-[#bedcf8]/30' : 
+                    u.role === 'admin' ? 'bg-[#cddbf2]/20 text-[#cddbf2] border border-[#cddbf2]/30' : 
                     u.role === 'cafeteria' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 
                     u.role === 'juez_local' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
                     u.role === 'juez_internacional' ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30' :
-                    'bg-[#3a0008] text-[#bedcf8]/60 border border-[#bedcf8]/10'}`}>
+                    'bg-[#2a040b] text-[#cddbf2]/60 border border-[#cddbf2]/10'}`}>
                     {u.role === 'cafeteria' ? 'Participante' : 
                      u.role === 'juez_local' ? 'Juez Local' : 
                      u.role === 'juez_internacional' ? 'Juez Int.' : 
@@ -146,17 +146,17 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                     <span className="text-neutral-500">-</span>
                   )}
                 </td>
-                <td className="px-6 py-5 text-[#bedcf8]/50 font-medium">{u.createdAt}</td>
+                <td className="px-6 py-5 text-[#cddbf2]/50 font-medium">{u.createdAt}</td>
                 <td className="px-6 py-5 text-right font-bold tracking-wide relative">
                    <button 
                       onClick={() => setOpenDropdown(openDropdown === u.id ? null : u.id)} 
-                      className="text-[#bedcf8] hover:bg-[#bedcf8]/10 px-3 py-1.5 bg-[#4c000a] rounded-xl border border-[#bedcf8]/20 transition-colors"
+                      className="text-[#cddbf2] hover:bg-[#cddbf2]/10 px-3 py-1.5 bg-[#38050e] rounded-xl border border-[#cddbf2]/20 transition-colors"
                    >
                       Opciones ▾
                    </button>
                    
                    {openDropdown === u.id && (
-                      <div className="absolute right-6 top-14 z-50 bg-[#4c000a] border border-[#bedcf8]/20 rounded-xl shadow-2xl py-2 w-40 flex flex-col text-left animate-fade-in-up">
+                      <div className="absolute right-6 top-14 z-50 bg-[#38050e] border border-[#cddbf2]/20 rounded-xl shadow-2xl py-2 w-40 flex flex-col text-left animate-fade-in-up">
                          <button onClick={() => { setEditingUser(u); setOpenDropdown(null); }} className="px-4 py-2.5 text-orange-400 hover:bg-white/5 text-left text-sm transition-colors border-b border-white/5" disabled={loading}>
                            ✏️ Editar Perfil
                          </button>
@@ -178,7 +178,7 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
             ))}
             {filteredUsers.length === 0 && (
               <tr>
-                 <td colSpan={6} className="text-center py-10 text-[#bedcf8]/70 font-medium tracking-wide">No se encontraron usuarios con esos filtros.</td>
+                 <td colSpan={6} className="text-center py-10 text-[#cddbf2]/70 font-medium tracking-wide">No se encontraron usuarios con esos filtros.</td>
               </tr>
             )}
           </tbody>
@@ -188,8 +188,8 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
       {/* MODAL CREAR */}
       {creating && (
          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-           <div className="bg-[#4c000a] border border-[#bedcf8]/20 rounded-3xl p-8 w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-fade-in-up duration-300">
-              <h2 className="text-2xl font-black mb-6 text-[#bedcf8] tracking-wide border-b border-[#bedcf8]/10 pb-4">Nuevo Usuario</h2>
+           <div className="bg-[#38050e] border border-[#cddbf2]/20 rounded-3xl p-8 w-full max-w-md shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-fade-in-up duration-300">
+              <h2 className="text-2xl font-black mb-6 text-[#cddbf2] tracking-wide border-b border-[#cddbf2]/10 pb-4">Nuevo Usuario</h2>
               <form action={async (fd) => {
                  setLoading(true);
                  const res = await createUserByAdmin(fd);
@@ -202,20 +202,20 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                  setLoading(false);
               }} className="space-y-5">
                  <div>
-                   <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Nombre</label>
-                   <input required name="name" className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow" />
+                   <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Nombre</label>
+                   <input required name="name" className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow" />
                  </div>
                  <div>
-                   <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Email</label>
-                   <input required type="email" name="email" className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow" />
+                   <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Email</label>
+                   <input required type="email" name="email" className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow" />
                  </div>
                  <div>
-                   <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Contraseña</label>
-                   <input required type="password" name="password" minLength={6} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow" />
+                   <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Contraseña</label>
+                   <input required type="password" name="password" minLength={6} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow" />
                  </div>
                  <div>
-                   <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Rol</label>
-                   <select name="role" defaultValue="user" className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow">
+                   <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Rol</label>
+                   <select name="role" defaultValue="user" className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow">
                        <option value="user">Usuario</option>
                        <option value="cafeteria">Participante</option>
                        <option value="juez_local">Juez Local</option>
@@ -224,8 +224,8 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                    </select>
                  </div>
                  <div className="flex justify-end gap-4 mt-8">
-                   <button type="button" onClick={() => setCreating(false)} className="px-5 py-2.5 rounded-xl bg-[#3a0008] hover:bg-[#4a000a] border border-[#bedcf8]/10 text-[#bedcf8] font-bold transition-colors">Cancelar</button>
-                   <button type="submit" disabled={loading} className="px-5 py-2.5 rounded-xl bg-[#bedcf8] hover:bg-[#bedcf8]/90 text-[#4c000a] font-bold shadow-lg transition-colors">Guardar Usuario</button>
+                   <button type="button" onClick={() => setCreating(false)} className="px-5 py-2.5 rounded-xl bg-[#2a040b] hover:bg-[#38050e] border border-[#cddbf2]/10 text-[#cddbf2] font-bold transition-colors">Cancelar</button>
+                   <button type="submit" disabled={loading} className="px-5 py-2.5 rounded-xl bg-[#cddbf2] hover:bg-[#cddbf2]/90 text-[#38050e] font-bold shadow-lg transition-colors">Guardar Usuario</button>
                  </div>
               </form>
            </div>
@@ -235,10 +235,10 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
       {/* MODAL EDITAR */}
       {editingUser && (
          <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-           <div className="bg-[#4c000a] border border-[#bedcf8]/20 rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-fade-in-up duration-300">
-              <div className="flex justify-between items-center mb-6 border-b border-[#bedcf8]/10 pb-4">
-                <h2 className="text-2xl font-black text-[#bedcf8] tracking-wide">Editar Usuario</h2>
-                <button onClick={() => setEditingUser(null)} className="text-[#bedcf8] hover:text-white font-bold text-xl px-2">✕</button>
+           <div className="bg-[#38050e] border border-[#cddbf2]/20 rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-[0_20px_50px_rgba(0,0,0,0.7)] animate-fade-in-up duration-300">
+              <div className="flex justify-between items-center mb-6 border-b border-[#cddbf2]/10 pb-4">
+                <h2 className="text-2xl font-black text-[#cddbf2] tracking-wide">Editar Usuario</h2>
+                <button onClick={() => setEditingUser(null)} className="text-[#cddbf2] hover:text-white font-bold text-xl px-2">✕</button>
               </div>
               
               {editingUser.role === 'cafeteria' ? (
@@ -253,16 +253,16 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                    setLoading(false);
                 }} className="space-y-5">
                    <div>
-                     <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Nombre</label>
-                     <input required name="name" defaultValue={editingUser.name} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow" />
+                     <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Nombre</label>
+                     <input required name="name" defaultValue={editingUser.name} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow" />
                    </div>
                    <div>
-                     <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Email</label>
-                     <input required type="email" name="email" defaultValue={editingUser.email} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow" />
+                     <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Email</label>
+                     <input required type="email" name="email" defaultValue={editingUser.email} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow" />
                    </div>
                    <div>
-                     <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Rol</label>
-                     <select name="role" defaultValue={editingUser.role} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow">
+                     <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Rol</label>
+                     <select name="role" defaultValue={editingUser.role} className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow">
                          <option value="user">Usuario</option>
                          <option value="cafeteria">Participante</option>
                          <option value="juez_local">Juez Local</option>
@@ -271,12 +271,12 @@ export default function UserTableManager({ initialUsers, maxGalleryImages }: { i
                      </select>
                    </div>
                    <div>
-                     <label className="text-sm font-bold text-[#bedcf8] uppercase tracking-widest">Nueva Contraseña (Opcional)</label>
-                     <input type="password" name="password" minLength={6} placeholder="Dejar en blanco para no cambiar..." className="w-full mt-2 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow" />
+                     <label className="text-sm font-bold text-[#cddbf2] uppercase tracking-widest">Nueva Contraseña (Opcional)</label>
+                     <input type="password" name="password" minLength={6} placeholder="Dejar en blanco para no cambiar..." className="w-full mt-2 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow" />
                    </div>
                    <div className="flex justify-end gap-4 mt-8">
-                     <button type="button" onClick={() => setEditingUser(null)} className="px-5 py-2.5 rounded-xl bg-[#3a0008] hover:bg-[#4a000a] border border-[#bedcf8]/10 text-[#bedcf8] font-bold transition-colors">Cancelar</button>
-                     <button type="submit" disabled={loading} className="px-5 py-2.5 rounded-xl bg-[#bedcf8] hover:bg-[#bedcf8]/90 text-[#4c000a] font-bold shadow-lg transition-colors">Actualizar Info</button>
+                     <button type="button" onClick={() => setEditingUser(null)} className="px-5 py-2.5 rounded-xl bg-[#2a040b] hover:bg-[#38050e] border border-[#cddbf2]/10 text-[#cddbf2] font-bold transition-colors">Cancelar</button>
+                     <button type="submit" disabled={loading} className="px-5 py-2.5 rounded-xl bg-[#cddbf2] hover:bg-[#cddbf2]/90 text-[#38050e] font-bold shadow-lg transition-colors">Actualizar Info</button>
                    </div>
                 </form>
               )}

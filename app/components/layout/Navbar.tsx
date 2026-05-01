@@ -55,18 +55,18 @@ export default function Navbar() {
       <style>{`
         .tbar {
           position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-          background: #3D0814;
+          background: #38050e;
           transition: box-shadow .3s;
         }
         .tbar.up { box-shadow: 0 4px 8px 3px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.12); }
         .tbar-i { display: flex; align-items: stretch; height: 58px; }
         .tb-brand {
           display: flex; align-items: center; gap: 10px;
-          padding: 0 18px 0 24px; background: #5C0E20; flex-shrink: 0;
+          padding: 0 18px 0 24px; background: #a36a3e; flex-shrink: 0;
           cursor: pointer; border-right: 1px solid rgba(255,255,255,.07);
           transition: background .2s; text-decoration: none;
         }
-        .tb-brand:hover { background: #8B1A30; }
+        .tb-brand:hover { background: #2a040b }
         .tb-brand img { height: 30px; width: auto; }
         .tb-bname {
           font-family: 'Barlow Condensed', sans-serif;
@@ -84,7 +84,7 @@ export default function Navbar() {
           cursor: pointer; text-decoration: none; user-select: none;
         }
         .tb-a:hover { color: rgba(255,255,255,.9); background: rgba(255,255,255,.07); }
-        .tb-a.active { color: #C4D4E8; background: rgba(196,212,232,.12); }
+        .tb-a.active { color: #cddbf2; background: rgba(205,219,242,.12); }
         .tb-act { display: flex; align-items: center; gap: 4px; padding: 0 18px 0 8px; }
         .ibtn {
           width: 38px; height: 38px; border-radius: 50px;
@@ -98,7 +98,7 @@ export default function Navbar() {
           display: inline-flex; align-items: center; justify-content: center; gap: 8px;
           height: 32px; padding: 0 14px; border-radius: 50px;
           font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 500;
-          background: #C4D4E8; color: #3D0814; border: none;
+          background: #cddbf2; color: #38050e; border: none;
           cursor: pointer; transition: all .2s; white-space: nowrap;
         }
         .btn-vote:hover { background: #8AAFD4; color: #fff; }
@@ -109,7 +109,7 @@ export default function Navbar() {
         /* ── Search Modal ── */
         .search-modal {
           position: fixed; inset: 0; z-index: 300;
-          background: rgba(61, 8, 20, .95);
+          background: #38050e;
           backdrop-filter: blur(8px);
           display: flex; align-items: center; justify-content: center;
           opacity: 0; pointer-events: none; transition: opacity .3s;
@@ -135,7 +135,7 @@ export default function Navbar() {
           font-size: 1.5rem; color: #fff; outline: none;
           transition: border-color .3s;
         }
-        .sm-input:focus { border-color: #C4D4E8; }
+        .sm-input:focus { border-color: #cddbf2; }
         .sm-input::placeholder { color: rgba(255, 255, 255, .3); }
         .sm-hint {
           display: block; margin-top: 12px; font-family: 'Barlow', sans-serif;

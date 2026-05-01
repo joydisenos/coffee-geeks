@@ -18,8 +18,8 @@ import Image from "next/image";
 
 // ─── Input compartido ─────────────────────────────────────────────────────────
 const inputCls =
-  "w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all";
-const labelCls = "text-[#bedcf8] text-sm font-medium pl-1";
+  "w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all";
+const labelCls = "text-[#cddbf2] text-sm font-medium pl-1";
 
 // ─── Componente principal ──────────────────────────────────────────────────────
 export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any, maxGalleryImages?: number }) {
@@ -207,7 +207,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
     <div className="flex flex-col gap-6">
       
       {/* ─── Navegación por Pestañas ─── */}
-      <div className="flex flex-wrap md:flex-nowrap gap-1.5 mb-2 p-1 rounded-2xl bg-[#3a0008] border border-[#bedcf8]/10">
+      <div className="flex flex-wrap md:flex-nowrap gap-1.5 mb-2 p-1 rounded-2xl bg-[#2a040b] border border-[#cddbf2]/10">
         {tabs.map((tab) => {
           const tabIncomplete = isIncomplete[tab.id as keyof typeof isIncomplete];
           return (
@@ -216,8 +216,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
               onClick={() => setActiveTab(tab.id)}
               className={`relative flex-1 px-3 py-2.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all duration-300 whitespace-nowrap ${
                 activeTab === tab.id
-                  ? "bg-[#bedcf8] text-[#4c000a] shadow-lg shadow-[#bedcf8]/10"
-                  : "text-[#bedcf8]/60 hover:text-[#bedcf8] hover:bg-white/5"
+                  ? "bg-[#cddbf2] text-[#38050e] shadow-lg shadow-[#cddbf2]/10"
+                  : "text-[#cddbf2]/60 hover:text-[#cddbf2] hover:bg-white/5"
               }`}
             >
               {tab.label}
@@ -236,7 +236,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
         {/* ─────────────────── SECCIÓN: Perfil Básico ─────────────────── */}
         {activeTab === "personal" && (
           <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <h2 className="text-[#bedcf8]/80 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+            <h2 className="text-[#cddbf2]/80 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               Información Personal
             </h2>
             <form action={basicAction} className="flex flex-col gap-4">
@@ -275,7 +275,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
               )}
 
               <button type="submit" disabled={basicPending}
-                className="mt-2 w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
+                className="mt-2 w-full py-3.5 rounded-xl bg-[#cddbf2] text-[#38050e] font-semibold tracking-wide hover:bg-[#cddbf2]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed">
                 {basicPending ? "Guardando..." : "Actualizar Información"}
               </button>
             </form>
@@ -285,7 +285,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
         {/* ─────────────────── SECCIÓN: Cafetería ─────────────────── */}
         {user.role === "cafeteria" && activeTab === "cafeteria" && (
           <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+            <h2 className="text-[#cddbf2]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               ☕ Datos de la Cafetería
             </h2>
             <form action={cafAction} className="flex flex-col gap-4">
@@ -360,8 +360,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                       }}
                       className={`px-4 py-3 rounded-xl text-xs font-bold transition-all border ${
                         isSelected
-                          ? "bg-[#bedcf8] text-[#4c000a] border-[#bedcf8]"
-                          : "bg-[#bedcf8]/10 text-[#bedcf8] border-[#bedcf8]/20 hover:bg-[#bedcf8]/20"
+                          ? "bg-[#cddbf2] text-[#38050e] border-[#cddbf2]"
+                          : "bg-[#cddbf2]/10 text-[#cddbf2] border-[#cddbf2]/20 hover:bg-[#cddbf2]/20"
                       }`}
                     >
                       {opt.label}
@@ -388,8 +388,8 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                       onClick={() => setBusinessType(opt.id)}
                       className={`px-4 py-3 rounded-xl text-xs font-bold transition-all border ${
                         businessType === opt.id
-                          ? "bg-[#bedcf8] text-[#4c000a] border-[#bedcf8]"
-                          : "bg-[#bedcf8]/10 text-[#bedcf8] border-[#bedcf8]/20 hover:bg-[#bedcf8]/20"
+                          ? "bg-[#cddbf2] text-[#38050e] border-[#cddbf2]"
+                          : "bg-[#cddbf2]/10 text-[#cddbf2] border-[#cddbf2]/20 hover:bg-[#cddbf2]/20"
                       }`}
                     >
                       {opt.label}
@@ -446,7 +446,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
               )}
 
               <button type="submit" disabled={cafPending}
-                className="w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#4c000a]/20">
+                className="w-full py-3.5 rounded-xl bg-[#cddbf2] text-[#38050e] font-semibold tracking-wide hover:bg-[#cddbf2]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#38050e]/20">
                 {cafPending ? "Guardando..." : "Guardar Datos de Cafetería"}
               </button>
             </form>
@@ -456,7 +456,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
         {/* ─────────────────── SECCIÓN: Ubicación ─────────────────── */}
         {user.role === "cafeteria" && activeTab === "ubicacion" && (
           <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+            <h2 className="text-[#cddbf2]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               📍 Ubicación de la Cafetería
             </h2>
             <form action={cafAction} className="flex flex-col gap-4">
@@ -486,7 +486,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                     onChange={handleInputChange}
                     placeholder="Ej: Casco Viejo, San Francisco..."
                     className={inputCls} />
-                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-medium text-sm transition-colors border border-[#bedcf8]/10 whitespace-nowrap">
+                  <button type="button" onClick={handleGeocode} className="px-4 py-2 rounded-xl bg-[#cddbf2]/10 hover:bg-[#cddbf2]/20 text-[#cddbf2] font-medium text-sm transition-colors border border-[#cddbf2]/10 whitespace-nowrap">
                     Buscar en Mapa
                   </button>
                 </div>
@@ -512,7 +512,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
               )}
 
               <button type="submit" disabled={cafPending}
-                className="w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#4c000a]/20">
+                className="w-full py-3.5 rounded-xl bg-[#cddbf2] text-[#38050e] font-semibold tracking-wide hover:bg-[#cddbf2]/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-[#38050e]/20">
                 {cafPending ? "Guardando Ubicación..." : "Guardar Ubicación"}
               </button>
             </form>
@@ -522,13 +522,13 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
         {/* ── Módulo de Imágenes ── */}
         {user.role === "cafeteria" && activeTab === "imagenes" && (
           <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+            <h2 className="text-[#cddbf2]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               📸 Imágenes de la Cafetería
             </h2>
 
             {/* Foto de portada */}
             <div className="mb-8 p-4 rounded-2xl bg-black/20 border border-white/10">
-              <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-4 pl-1">
+              <h3 className="text-[#cddbf2]/70 text-xs font-semibold uppercase tracking-wider mb-4 pl-1">
                 Foto de Portada *
               </h3>
               <form action={cafAction} className="flex flex-col gap-4">
@@ -562,25 +562,25 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                         setCoverPreview(URL.createObjectURL(file));
                       }
                     }}
-                    className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/20 file:text-[#bedcf8] file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/30 transition-all cursor-pointer"
+                    className="w-full text-sm text-[#cddbf2]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#cddbf2]/20 file:text-[#cddbf2] file:font-medium file:cursor-pointer hover:file:bg-[#cddbf2]/30 transition-all cursor-pointer"
                   />
-                  <p className="text-[10px] text-[#bedcf8]/40 pl-1 italic">Máximo 2MB. Formatos: .jpg, .png, .webp</p>
+                  <p className="text-[10px] text-[#cddbf2]/40 pl-1 italic">Máximo 2MB. Formatos: .jpg, .png, .webp</p>
                 </div>
 
                 <button type="submit" disabled={cafPending}
-                  className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
+                  className="w-full py-3 rounded-xl bg-[#cddbf2]/10 hover:bg-[#cddbf2]/20 text-[#cddbf2] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#cddbf2]/10">
                   {cafPending ? "Guardando..." : "Actualizar Foto de Portada"}
                 </button>
               </form>
             </div>
 
-            <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-4 pl-1">
+            <h3 className="text-[#cddbf2]/70 text-xs font-semibold uppercase tracking-wider mb-4 pl-1">
               Galería (Máximo {maxGalleryImages}) *
             </h3>
 
 
             {user.gallery && user.gallery.length === 0 ? (
-              <p className="text-[#bedcf8]/40 text-sm text-center py-4">
+              <p className="text-[#cddbf2]/40 text-sm text-center py-4">
                 Aún no has agregado imágenes a tu galería.
               </p>
             ) : (
@@ -598,9 +598,9 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
             {(!user.gallery || user.gallery.length < maxGalleryImages) && (
               <div className="p-4 rounded-2xl bg-black/20 border border-white/10">
-                <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-3">
-                  Añadir a la galería (Máximo {maxGalleryImages})
-                </h3>
+              <h3 className="text-[#cddbf2]/70 text-xs font-semibold uppercase tracking-wider mb-3">
+                Añadir a la galería (Máximo {maxGalleryImages})
+              </h3>
                 <form ref={galleryFormRef} action={galleryAction} className="flex flex-col gap-3">
                   <input type="hidden" name="targetUserId" value={user._id || user.id || ""} />
                   <div className="flex flex-col gap-1">
@@ -619,12 +619,12 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                           }
                         }
                       }}
-                      className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/10 file:text-[#bedcf8]/70 file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/20 transition-all cursor-pointer"
+                      className="w-full text-sm text-[#cddbf2]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#cddbf2]/10 file:text-[#cddbf2]/70 file:font-medium file:cursor-pointer hover:file:bg-[#cddbf2]/20 transition-all cursor-pointer"
                     />
-                    <p className="text-[10px] text-[#bedcf8]/40 pl-1 italic text-center">Formatos: .jpg, .png, .webp (Máx. 2MB cada una)</p>
+                    <p className="text-[10px] text-[#cddbf2]/40 pl-1 italic text-center">Formatos: .jpg, .png, .webp (Máx. 2MB cada una)</p>
                   </div>
                   <button type="submit" disabled={galleryPending}
-                    className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
+                    className="w-full py-3 rounded-xl bg-[#cddbf2]/10 hover:bg-[#cddbf2]/20 text-[#cddbf2] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#cddbf2]/10">
                     {galleryPending ? "Subiendo..." : "Subir Imágenes"}
                   </button>
                 </form>
@@ -642,13 +642,13 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
         {/* ── Módulo de Baristas ── */}
         {user.role === "cafeteria" && activeTab === "baristas" && (
           <section className="animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <h2 className="text-[#bedcf8]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
+            <h2 className="text-[#cddbf2]/90 text-xs font-semibold uppercase tracking-widest mb-4 pl-1">
               👤 Baristas
             </h2>
 
             {/* Lista de baristas */}
             {baristas.length === 0 ? (
-              <p className="text-[#bedcf8]/40 text-sm text-center py-4">
+              <p className="text-[#cddbf2]/40 text-sm text-center py-4">
                 Aún no has agregado baristas.
               </p>
             ) : (
@@ -656,7 +656,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                 {baristas.map((b) => (
                   <li key={b._id}
                     className={`flex items-center gap-4 p-3 rounded-2xl border transition-all ${b.isHighlighted
-                      ? "bg-[#bedcf8]/10 border-[#bedcf8]/50"
+                      ? "bg-[#cddbf2]/10 border-[#cddbf2]/50"
                       : "bg-black/20 border-white/10"
                       }`}>
                     {/* Foto */}
@@ -672,9 +672,9 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
                     {/* Nombre + badge */}
                     <div className="flex-1 min-w-0">
-                      <p className="text-[#bedcf8] font-medium text-sm truncate">{b.fullName}</p>
+                      <p className="text-[#cddbf2] font-medium text-sm truncate">{b.fullName}</p>
                       {b.isHighlighted && (
-                        <span className="text-xs text-[#bedcf8] font-semibold">★ Destacado</span>
+                        <span className="text-xs text-[#cddbf2] font-semibold">★ Destacado</span>
                       )}
                     </div>
 
@@ -685,7 +685,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                           type="button"
                           onClick={() => handleHighlight(b._id)}
                           title="Marcar como destacado"
-                          className="text-xs px-3 py-1.5 rounded-lg bg-[#bedcf8]/20 hover:bg-[#bedcf8]/40 text-[#bedcf8] font-semibold transition-colors">
+                          className="text-xs px-3 py-1.5 rounded-lg bg-[#cddbf2]/20 hover:bg-[#cddbf2]/40 text-[#cddbf2] font-semibold transition-colors">
                           ★ Destacar
                         </button>
                       )}
@@ -704,7 +704,7 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
 
             {/* Formulario agregar barista */}
             <div className="p-4 rounded-2xl bg-black/20 border border-white/10">
-              <h3 className="text-[#bedcf8]/70 text-xs font-semibold uppercase tracking-wider mb-3">
+              <h3 className="text-[#cddbf2]/70 text-xs font-semibold uppercase tracking-wider mb-3">
                 Agregar Barista
               </h3>
               <form ref={baristaFormRef} action={baristaAction} className="flex flex-col gap-3">
@@ -740,13 +740,13 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
                         setBaristaPhotoPreview(URL.createObjectURL(file));
                       }
                     }}
-                    className="w-full text-sm text-[#bedcf8]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#bedcf8]/10 file:text-[#bedcf8]/70 file:font-medium file:cursor-pointer hover:file:bg-[#bedcf8]/20 transition-all cursor-pointer"
+                    className="w-full text-sm text-[#cddbf2]/60 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-[#cddbf2]/10 file:text-[#cddbf2]/70 file:font-medium file:cursor-pointer hover:file:bg-[#cddbf2]/20 transition-all cursor-pointer"
                   />
-                  <p className="text-[10px] text-[#bedcf8]/40 pl-1 italic">Máximo 2MB. Formatos: .jpg, .png, .webp</p>
+                  <p className="text-[10px] text-[#cddbf2]/40 pl-1 italic">Máximo 2MB. Formatos: .jpg, .png, .webp</p>
                 </div>
 
                 <button type="submit" disabled={baristaPending}
-                  className="w-full py-3 rounded-xl bg-[#bedcf8]/10 hover:bg-[#bedcf8]/20 text-[#bedcf8] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#bedcf8]/10">
+                  className="w-full py-3 rounded-xl bg-[#cddbf2]/10 hover:bg-[#cddbf2]/20 text-[#cddbf2] font-semibold text-sm transition-all disabled:opacity-70 disabled:cursor-not-allowed border border-[#cddbf2]/10">
                   {baristaPending ? "Agregando..." : "+ Agregar Barista"}
                 </button>
               </form>

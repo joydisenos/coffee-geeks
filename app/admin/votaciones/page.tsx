@@ -14,10 +14,10 @@ export default async function AdminVotacionesPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex justify-between items-center bg-[#4c000a] backdrop-blur-md p-6 rounded-2xl border border-[#bedcf8]/10">
+      <div className="flex justify-between items-center bg-[#38050e] backdrop-blur-md p-6 rounded-2xl border border-[#cddbf2]/10">
         <div>
-          <h1 className="text-3xl font-black text-[#bedcf8] tracking-wide mb-2">Panel de Votaciones</h1>
-          <p className="text-[#bedcf8]/60 font-medium">Gestiona el flujo del evento y revisa los resultados en tiempo real.</p>
+          <h1 className="text-3xl font-black text-[#cddbf2] tracking-wide mb-2">Panel de Votaciones</h1>
+          <p className="text-[#cddbf2]/60 font-medium">Gestiona el flujo del evento y revisa los resultados en tiempo real.</p>
         </div>
       </div>
 

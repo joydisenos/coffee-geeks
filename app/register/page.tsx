@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { register } from "@/app/actions/auth";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import PrivacyCheckbox from "@/app/components/PrivacyCheckbox";
 
 export default function RegisterPage() {
   const [state, formAction, pending] = useActionState(register, null);
+  const [isPending, startTransition] = useTransition();
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   return (
@@ -24,7 +25,7 @@ export default function RegisterPage() {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
       </div>
 
-      <div className="z-10 w-full max-w-md p-8 md:p-12 rounded-3xl bg-[#4c000a] backdrop-blur-lg shadow-2xl border border-[#bedcf8]/20 mx-4">
+      <div className="z-10 w-full max-w-md p-8 md:p-12 rounded-3xl bg-[#38050e] backdrop-blur-lg shadow-2xl border border-[#cddbf2]/20 mx-4">
 
         <div className="flex justify-center mb-0">
           <Link href="/">
@@ -40,17 +41,17 @@ export default function RegisterPage() {
           </Link>
         </div>
 
-        <h1 className="text-2xl font-bold text-center text-[#bedcf8] mb-2 tracking-wide">
+        <h1 className="text-2xl font-bold text-center text-[#cddbf2] mb-2 tracking-wide">
           Crear Cuenta
         </h1>
-        <p className="text-center text-[#bedcf8]/70 mb-2 text-sm">
+        <p className="text-center text-[#cddbf2]/70 mb-2 text-sm">
           Únete a la comunidad de Coffee Geeks
         </p>
 
-        <div className="mt-0 mb-6 text-center text-sm text-[#bedcf8]/70 flex flex-col gap-4">
+        <div className="mt-0 mb-6 text-center text-sm text-[#cddbf2]/70 flex flex-col gap-4">
           <p>
             ¿Eres participante?{" "}
-            <Link href="/register-participantes" className="text-[#bedcf8] font-semibold hover:underline">
+            <Link href="/register-participantes" className="text-[#cddbf2] font-semibold hover:underline">
               Registrate aquí
             </Link>
           </p>
@@ -71,7 +72,9 @@ export default function RegisterPage() {
               console.error("reCAPTCHA error:", err);
             }
           }
-          formAction(formData);
+          startTransition(() => {
+            formAction(formData);
+          });
         }} className="flex flex-col gap-4">
           {/* Script de reCAPTCHA v3 */}
           <script src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`} async defer></script>
@@ -82,7 +85,7 @@ export default function RegisterPage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="name">
+              <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="name">
                 Nombre
               </label>
               <input
@@ -90,26 +93,26 @@ export default function RegisterPage() {
                 name="name"
                 type="text"
                 required
-                className="w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
                 placeholder="Juan"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="lastName">
+              <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="lastName">
                 Apellido (Op)
               </label>
               <input
                 id="lastName"
                 name="lastName"
                 type="text"
-                className="w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all"
+                className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
                 placeholder="Pérez"
               />
             </div>
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="email">
+            <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="email">
               Correo Electrónico
             </label>
             <input
@@ -117,13 +120,13 @@ export default function RegisterPage() {
               name="email"
               type="email"
               required
-              className="w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
               placeholder="tu@correo.com"
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="password">
+            <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="password">
               Contraseña
             </label>
             <input
@@ -132,7 +135,7 @@ export default function RegisterPage() {
               type="password"
               required
               minLength={6}
-              className="w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all"
+              className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
               placeholder="••••••••"
             />
           </div>
@@ -142,23 +145,23 @@ export default function RegisterPage() {
             <PrivacyCheckbox
               checked={privacyAccepted}
               onChange={setPrivacyAccepted}
-              accentColor="#bedcf8"
+              accentColor="#cddbf2"
             />
           </div>
 
           <button
             type="submit"
             disabled={pending || !privacyAccepted}
-            className="mt-2 w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 focus:ring-2 focus:ring-[#bedcf8]/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-2 w-full py-3.5 rounded-xl bg-[#cddbf2] text-[#38050e] font-semibold tracking-wide hover:bg-[#cddbf2]/90 focus:ring-2 focus:ring-[#cddbf2]/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {pending ? "Creando cuenta..." : "Registrarme"}
           </button>
         </form>
 
-        <div className="mt-6 text-center text-sm text-[#bedcf8]/70 flex flex-col gap-4">
+        <div className="mt-6 text-center text-sm text-[#cddbf2]/70 flex flex-col gap-4">
           <p>
             ¿Ya tienes una cuenta?{" "}
-            <Link href="/login" className="text-[#bedcf8] font-semibold hover:underline">
+            <Link href="/login" className="text-[#cddbf2] font-semibold hover:underline">
               Inicia sesión aquí
             </Link>
           </p>

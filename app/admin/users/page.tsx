@@ -81,8 +81,8 @@ export default async function AdminUsersPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-4xl font-extrabold tracking-tight text-[#bedcf8] drop-shadow-md">Gestión de Usuarios</h1>
-        <p className="text-[#bedcf8]/60 mt-2 text-lg">Ver, Crear, Editar y Borrar usuarios del sistema.</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-[#cddbf2] drop-shadow-md">Gestión de Usuarios</h1>
+        <p className="text-[#cddbf2]/60 mt-2 text-lg">Ver, Crear, Editar y Borrar usuarios del sistema.</p>
       </div>
 
       <UserTableManager initialUsers={users} maxGalleryImages={config.maxGalleryImages} />

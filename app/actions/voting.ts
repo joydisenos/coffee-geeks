@@ -94,15 +94,16 @@ export async function getActiveCafeteriasForVoting() {
   await dbConnect();
   const session = await getSession();
   const userRole = session?.role || "user";
+  const isAuthenticated = !!session;
 
   const config = await SiteConfig.findOne();
   const currentRound = config?.currentVotingRound || 0;
 
-  if (currentRound === 0) return { round: 0, userRole, cafeterias: [] };
+  if (currentRound === 0) return { round: 0, userRole, isAuthenticated, cafeterias: [] };
 
   const leaderboard = await getLeaderboard();
   
-  return { round: currentRound, userRole, cafeterias: leaderboard };
+  return { round: currentRound, userRole, isAuthenticated, cafeterias: leaderboard };
 }
 
 // ==========================================

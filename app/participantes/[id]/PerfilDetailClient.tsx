@@ -23,67 +23,67 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400;500&display=swap');
 
         .perf-hero{position:relative;height:340px;background-size:cover;background-position:center}
-        .perf-hero-sc{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(61,8,20,.5) 0%,rgba(61,8,20,.88) 100%)}
+        .perf-hero-sc{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(56,5,14,.5) 0%,rgba(56,5,14,.88) 100%)}
         .perf-hero-cnt{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 0 32px}
         .perf-cat{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(196,212,232,.6);margin-bottom:4px}
         .perf-name{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,5vw,56px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92}
         .perf-sub{font-family:'Barlow',sans-serif;font-size:14px;color:rgba(255,255,255,.42);margin-top:6px}
         .bread{background:#fff;border-bottom:1px solid #eee}
         .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
-        .bread-i a{color:#857375;transition:color .2s;text-decoration:none}
-        .bread-i a:hover{color:#9E3A52}
-        .bread-i span{color:#22191A;opacity:.6}
+        .bread-i a{color:#38050e;opacity:.7;transition:color .2s;text-decoration:none}
+        .bread-i a:hover{color:#38050e;opacity:1}
+        .bread-i span{color:#38050e;opacity:.6}
         .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
-        .perf-wrap{display:grid;grid-template-columns:1fr 320px;gap:0;align-items:start;padding:40px 0 80px;background:#FFF8F7}
+        .perf-wrap{display:grid;grid-template-columns:1fr 320px;gap:0;align-items:start;padding:40px 0 80px;background:#f4efe4}
         .perf-main{padding:0 32px 0 0}
         .perf-photo{aspect-ratio:4/3;background-size:cover;background-position:center;border-radius:16px;margin-bottom:24px}
-        .perf-loc-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.5vw,26px);font-weight:900;text-transform:uppercase;color:#9E3A52;margin-bottom:1px}
-        .perf-loc-s{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;color:#22191A;margin-bottom:12px}
+        .perf-loc-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(18px,2.5vw,26px);font-weight:900;text-transform:uppercase;color:#38050e;margin-bottom:1px}
+        .perf-loc-s{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;text-transform:uppercase;color:#38050e;opacity:.7;margin-bottom:12px}
 
         /* Map placeholder */
-        .map-box{width:100%;height:300px;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(135deg,#C8D8F0,#B4C8E0);border:1px solid #D6C2C4;margin-top:12px; z-index:0;}
+        .map-box{width:100%;height:300px;border-radius:16px;overflow:hidden;position:relative;background:linear-gradient(135deg,#cddbf2,#8AAFD4);border:1px solid #cddbf2;margin-top:12px; z-index:0;}
 
         /* Tabs */
-        .tabs{display:flex;gap:0;border-bottom:2px solid #D6C2C4;margin-bottom:24px}
-        .tab{font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;color:#857375;padding:10px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
-        .tab.on{color:#9E3A52;border-bottom-color:#9E3A52;font-weight:700}
+        .tabs{display:flex;gap:0;border-bottom:2px solid #cddbf2;margin-bottom:24px}
+        .tab{font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;color:#38050e;opacity:.6;padding:10px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s}
+        .tab.on{color:#38050e;opacity:1;border-bottom-color:#38050e;font-weight:700}
 
         /* Score bars */
         .score-row{margin-bottom:14px}
-        .score-label{font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:#524345;margin-bottom:5px;display:flex;justify-content:space-between}
-        .score-label span{font-weight:700;color:#9E3A52}
-        .score-bar{height:7px;border-radius:50px;background:#F2E2E4;overflow:hidden}
-        .score-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#9E3A52,#C46A28);transition:width .8s ease}
+        .score-label{font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:#38050e;opacity:.7;margin-bottom:5px;display:flex;justify-content:space-between}
+        .score-label span{font-weight:700;color:#38050e}
+        .score-bar{height:7px;border-radius:50px;background:#cddbf2/30;overflow:hidden}
+        .score-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,#38050e,#8AAFD4);transition:width .8s ease}
 
         /* Info items */
-        .info-item{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid #F2E2E4;font-family:'Barlow',sans-serif;font-size:14px;color:#22191A;word-break:break-word}
+        .info-item{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:1px solid #cddbf2/20;font-family:'Barlow',sans-serif;font-size:14px;color:#38050e;word-break:break-word}
         .info-item:last-child{border-bottom:none}
-        .info-item a{color:#9E3A52;text-decoration:none}
-        .info-item a:hover{text-decoration:underline}
+        .info-item a{color:#38050e;text-decoration:underline}
+        .info-item a:hover{opacity:.8}
 
         /* Sticky sidebar card */
         .perf-sidebar{padding:0 0 40px;position:sticky;top:76px;align-self:flex-start;max-height:calc(100vh - 90px);overflow:auto;scrollbar-width:none}
         .perf-sidebar::-webkit-scrollbar{display:none}
-        .stk-card{background:#3D0814;border-radius:28px;overflow:hidden;box-shadow:0 4px 8px 3px rgba(0,0,0,.1)}
+        .stk-card{background:#38050e;border-radius:28px;overflow:hidden;box-shadow:0 4px 8px 3px rgba(0,0,0,.1)}
         .stk-img{width:100%;aspect-ratio:16/9;background-size:cover;background-position:center}
         .stk-body{padding:16px 16px 20px}
         .stk-name{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:900;text-transform:uppercase;color:#fff;margin-bottom:1px}
-        .stk-sub{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;color:#C4D4E8;margin-bottom:7px}
+        .stk-sub{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;color:#cddbf2;margin-bottom:7px}
         .stk-loc{display:flex;align-items:center;gap:5px;font-size:13px;color:rgba(255,255,255,.42);font-family:'Barlow',sans-serif;margin-bottom:14px}
-        .stk-vote-btn{width:100%;height:38px;border-radius:50px;border:none;background:#C4D4E8;color:#3D0814;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-        .stk-vote-btn:hover{background:#fff;color:#3D0814}
+        .stk-vote-btn{width:100%;height:38px;border-radius:50px;border:none;background:#cddbf2;color:#38050e;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+        .stk-vote-btn:hover{background:#fff;color:#38050e}
         .stk-div{height:1px;background:rgba(255,255,255,.1);margin:12px 0}
         .stk-stat{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
         .stk-sl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.38);font-family:'Barlow',sans-serif}
         .stk-sv{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;color:rgba(255,255,255,.8)}
-        .stk-score{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;color:#C4D4E8;line-height:1;text-align:center;padding:12px 0 6px}
+        .stk-score{font-family:'Barlow Condensed',sans-serif;font-size:2.8rem;font-weight:900;color:#cddbf2;line-height:1;text-align:center;padding:12px 0 6px}
         .stk-score small{display:block;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.08em;font-family:'Barlow',sans-serif;text-transform:uppercase;font-weight:400}
 
         /* Barista card */
-        .barista-card{background:#F2E2E4;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:16px}
-        .barista-av{width:50px;height:50px;border-radius:50%;background:#9E3A52;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;flex-shrink:0}
-        .barista-name{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;text-transform:uppercase;color:#22191A}
-        .barista-role{font-family:'Barlow',sans-serif;font-size:12px;color:#524345}
+        .barista-card{background:#cddbf2/20;border-radius:12px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:16px;border:1px solid #cddbf2}
+        .barista-av{width:50px;height:50px;border-radius:50%;background:#38050e;display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:1.3rem;font-weight:900;flex-shrink:0}
+        .barista-name{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:900;text-transform:uppercase;color:#38050e}
+        .barista-role{font-family:'Barlow',sans-serif;font-size:12px;color:#38050e;opacity:.6}
         
         .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 24px; }
         .gallery-item { aspect-ratio: 1; border-radius: 12px; background-size: cover; background-position: center; border: 1px solid rgba(0,0,0,0.05); }
@@ -123,7 +123,7 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
       </div>
 
       {/* Profile body */}
-      <div style={{ background: "#FFF8F7" }}>
+      <div style={{ background: "#f4efe4" }}>
         <div className="wrap">
           <div className="perf-wrap">
             {/* Main content */}
@@ -149,7 +149,7 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
               </div>
 
               {/* About */}
-              <p style={{ fontFamily: "'Barlow',sans-serif", fontSize: 15, lineHeight: 1.7, color: "#22191A", marginBottom: 24, whiteSpace: "pre-wrap" }}>
+              <p style={{ fontFamily: "'Barlow',sans-serif", fontSize: 15, lineHeight: 1.7, color: "#38050e", marginBottom: 24, whiteSpace: "pre-wrap" }}>
                 {shop.description || "Esta cafetería aún no ha agregado una descripción."}
               </p>
 
@@ -164,7 +164,7 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
 
               {/* Score bars (Mocked for now since DB doesn't have live votes yet) */}
               <div style={{ marginBottom: 24 }}>
-                <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "1.1rem", fontWeight: 900, textTransform: "uppercase", color: "#3D0814", marginBottom: 14 }}>Puntaje del concurso</div>
+                <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "1.1rem", fontWeight: 900, textTransform: "uppercase", color: "#38050e", marginBottom: 14 }}>Puntaje del concurso</div>
                 {[
                   { label: "Puntaje global", val: 0 },
                   { label: "Votos del público (30%)", val: 0 },
@@ -180,7 +180,7 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
               </div>
 
               {/* Info */}
-              <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "1.1rem", fontWeight: 900, textTransform: "uppercase", color: "#3D0814", marginBottom: 8 }}>Información</div>
+              <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "1.1rem", fontWeight: 900, textTransform: "uppercase", color: "#38050e", marginBottom: 8 }}>Información</div>
               {[
                 { icon: "M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 10 m-3 0a3 3 0 0 0 6 0 3 3 0 0 0-6 0", label: shop.neighborhood || "Ubicación no especificada" },
                 { icon: "M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z M12 13A3 3 0 1 0 12 7a3 3 0 0 0 0 6z", label: shop.hours || "Horarios no especificados" },
@@ -188,7 +188,7 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
                 { icon: "M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71 M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71", label: shop.web ? <a href={shop.web.startsWith('http') ? shop.web : `https://${shop.web}`} target="_blank" rel="noopener noreferrer">{shop.web}</a> : "Sin web" },
               ].map((item, i) => (
                 <div key={i} className="info-item">
-                  <svg viewBox="0 0 24 24" style={{ width: 16, height: 16, stroke: "#9E3A52", fill: "none", strokeWidth: 1.5, flexShrink: 0, marginTop: 1 }}>
+                  <svg viewBox="0 0 24 24" style={{ width: 16, height: 16, stroke: "#38050e", opacity: 0.6, fill: "none", strokeWidth: 1.5, flexShrink: 0, marginTop: 1 }}>
                     <path d={item.icon} />
                   </svg>
                   {item.label}
@@ -250,14 +250,14 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
               <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 8 }}>
                 <Link
                   href="/participantes"
-                  style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "'Barlow',sans-serif", fontSize: 13, color: "#9E3A52", textDecoration: "none" }}
+                  style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "'Barlow',sans-serif", fontSize: 13, color: "#38050e", opacity: 0.7, textDecoration: "none" }}
                 >
                   <svg viewBox="0 0 24 24" style={{ width: 14, height: 14, stroke: "currentColor", fill: "none", strokeWidth: 2 }}><polyline points="15 18 9 12 15 6" /></svg>
                   Ver todos los participantes
                 </Link>
                 <Link
                   href="/votaciones"
-                  style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "'Barlow',sans-serif", fontSize: 13, color: "#9E3A52", textDecoration: "none" }}
+                  style={{ display: "flex", alignItems: "center", gap: 7, fontFamily: "'Barlow',sans-serif", fontSize: 13, color: "#38050e", opacity: 0.7, textDecoration: "none" }}
                 >
                   <svg viewBox="0 0 24 24" style={{ width: 14, height: 14, stroke: "currentColor", fill: "none", strokeWidth: 2 }}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                   Ver ranking de votaciones

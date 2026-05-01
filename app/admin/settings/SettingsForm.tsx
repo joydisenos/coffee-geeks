@@ -4,14 +4,14 @@ import { useActionState, useEffect, useState } from "react";
 import { updateSiteConfig } from "@/app/actions/siteConfig";
 
 const inputCls =
-  "w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/30 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 transition-all text-sm";
-const labelCls = "text-[#bedcf8] text-xs font-semibold uppercase tracking-widest pl-1";
+  "w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/30 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all text-sm";
+const labelCls = "text-[#cddbf2] text-xs font-semibold uppercase tracking-widest pl-1";
 const sectionCls =
-  "p-6 rounded-2xl bg-[#4c000a] border border-[#bedcf8]/10 shadow-lg space-y-4";
+  "p-6 rounded-2xl bg-[#38050e] border border-[#cddbf2]/10 shadow-lg space-y-4";
 
 function SectionTitle({ icon, label }: { icon: string; label: string }) {
   return (
-    <h2 className="flex items-center gap-2 text-[#bedcf8] font-bold text-sm uppercase tracking-widest mb-2">
+    <h2 className="flex items-center gap-2 text-[#cddbf2] font-bold text-sm uppercase tracking-widest mb-2">
       <span>{icon}</span> {label}
     </h2>
   );
@@ -65,7 +65,7 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="Coffee Geeks Panamá | ..."
             className={inputCls}
           />
-          <p className="text-[#bedcf8]/30 text-xs pl-1">Aparece en la pestaña del navegador y resultados de búsqueda.</p>
+          <p className="text-[#cddbf2]/30 text-xs pl-1">Aparece en la pestaña del navegador y resultados de búsqueda.</p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -78,8 +78,8 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="Descripción corta del sitio para buscadores y redes sociales..."
             className={`${inputCls} resize-y`}
           />
-          <p className="text-[#bedcf8]/30 text-xs pl-1">
-            Se usa en <code className="text-[#bedcf8]/60">&lt;meta name="description"&gt;</code> y en la etiqueta OG de descripción.
+          <p className="text-[#cddbf2]/30 text-xs pl-1">
+            Se usa en <code className="text-[#cddbf2]/60">&lt;meta name="description"&gt;</code> y en la etiqueta OG de descripción.
           </p>
         </div>
 
@@ -93,7 +93,7 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="https://tusitio.com/og-image.jpg  (o ruta relativa /og.jpg)"
             className={inputCls}
           />
-          <p className="text-[#bedcf8]/30 text-xs pl-1">
+          <p className="text-[#cddbf2]/30 text-xs pl-1">
             Imagen que aparece cuando se comparte el sitio en redes sociales. Recomendado: 1200×630 px.
           </p>
         </div>
@@ -144,8 +144,8 @@ export default function SettingsForm({ config }: { config: any }) {
       {/* ── Política de Privacidad ── */}
       <div className={`${sectionCls} lg:col-span-2`}>
         <SectionTitle icon="🔒" label="Política de Privacidad" />
-        <p className="text-[#bedcf8]/40 text-xs -mt-2">
-          El texto se mostrará tal cual en la página pública <code className="text-[#bedcf8]/60">/privacidad</code>.
+        <p className="text-[#cddbf2]/40 text-xs -mt-2">
+          El texto se mostrará tal cual en la página pública <code className="text-[#cddbf2]/60">/privacidad</code>.
           Respeta los saltos de línea y caracteres especiales.
         </p>
         <div className="flex flex-col gap-2">
@@ -176,7 +176,7 @@ export default function SettingsForm({ config }: { config: any }) {
             defaultValue={config.maxGalleryImages ?? 3}
             className={inputCls}
           />
-          <p className="text-[#bedcf8]/30 text-xs pl-1">Número máximo de imágenes que una cafetería puede subir a su galería (por defecto 3).</p>
+          <p className="text-[#cddbf2]/30 text-xs pl-1">Número máximo de imágenes que una cafetería puede subir a su galería (por defecto 3).</p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -189,7 +189,7 @@ export default function SettingsForm({ config }: { config: any }) {
             placeholder="Ej: 30 de Octubre, 2024"
             className={inputCls}
           />
-          <p className="text-[#bedcf8]/30 text-xs pl-1">Esta fecha se mostrará en la sección de protagonistas del Home.</p>
+          <p className="text-[#cddbf2]/30 text-xs pl-1">Esta fecha se mostrará en la sección de protagonistas del Home.</p>
         </div>
       </div>
 
@@ -197,7 +197,7 @@ export default function SettingsForm({ config }: { config: any }) {
         <button
           type="submit"
           disabled={pending}
-          className="w-full py-4 rounded-2xl bg-[#bedcf8] hover:bg-[#bedcf8]/90 text-[#4c000a] font-bold text-base tracking-wide transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:-translate-y-0.5"
+          className="w-full py-4 rounded-2xl bg-[#cddbf2] hover:bg-[#cddbf2]/90 text-[#38050e] font-bold text-base tracking-wide transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:-translate-y-0.5"
         >
           {pending ? "Guardando..." : "Guardar Configuración"}
         </button>

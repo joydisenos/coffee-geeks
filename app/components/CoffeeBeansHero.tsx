@@ -19,8 +19,8 @@ interface CoffeeBeanSVGProps {
 function CoffeeBeanSVG({
   width = 120,
   height = 72,
-  fill = "rgba(92,14,32,0.18)",
-  stroke = "rgba(196,212,232,0.25)",
+  fill = "rgba(56,5,14,0.18)",
+  stroke = "rgba(205,219,242,0.25)",
   strokeWidth = 1.5,
 }: CoffeeBeanSVGProps) {
   const rx = width / 2;
@@ -137,16 +137,16 @@ function FloatingBean({ config }: { config: BeanConfig }) {
    con paleta en tonos espresso/burgundy/azul CGP.
 ─────────────────────────────────────────────────────────────────────────── */
 const BEANS: BeanConfig[] = [
-  { id: 1,  top: "12%", left: "-4%",  width: 220, height: 110, rotate: 18,  delay: 0.2, floatDuration: 14, floatAmplitude: 18, entryDuration: 2.2, opacity: 0.9,  fill: "rgba(92,14,32,0.22)",  stroke: "rgba(196,212,232,0.30)" },
-  { id: 2,  top: "68%", left: "88%",  width: 180, height: 90,  rotate: -20, delay: 0.4, floatDuration: 16, floatAmplitude: 14, entryDuration: 2.4, opacity: 0.85, fill: "rgba(139,26,48,0.18)", stroke: "rgba(196,212,232,0.25)" },
-  { id: 3,  top: "75%", left: "4%",   width: 140, height: 70,  rotate: -12, delay: 0.5, floatDuration: 11, floatAmplitude: 20, entryDuration: 2.0, opacity: 0.8,  fill: "rgba(61,8,20,0.20)",   stroke: "rgba(196,212,232,0.20)" },
-  { id: 4,  top: "8%",  left: "80%",  width: 110, height: 55,  rotate: 25,  delay: 0.6, floatDuration: 13, floatAmplitude: 16, entryDuration: 2.1, opacity: 0.75, fill: "rgba(92,14,32,0.15)",  stroke: "rgba(196,212,232,0.22)" },
-  { id: 5,  top: "5%",  left: "22%",  width: 80,  height: 40,  rotate: -28, delay: 0.7, floatDuration: 10, floatAmplitude: 22, entryDuration: 1.8, opacity: 0.7,  fill: "rgba(139,26,48,0.14)", stroke: "rgba(196,212,232,0.18)" },
-  { id: 6,  top: "40%", left: "93%",  width: 70,  height: 35,  rotate: 8,   delay: 0.8, floatDuration: 9,  floatAmplitude: 12, entryDuration: 1.9, opacity: 0.65, fill: "rgba(61,8,20,0.16)",   stroke: "rgba(196,212,232,0.20)" },
-  { id: 7,  top: "45%", left: "-2%",  width: 60,  height: 30,  rotate: 15,  delay: 0.9, floatDuration: 12, floatAmplitude: 18, entryDuration: 2.0, opacity: 0.6,  fill: "rgba(92,14,32,0.12)",  stroke: "rgba(196,212,232,0.15)" },
-  { id: 8,  top: "88%", left: "70%",  width: 55,  height: 27,  rotate: -18, delay: 1.0, floatDuration: 8,  floatAmplitude: 10, entryDuration: 1.7, opacity: 0.55, fill: "rgba(139,26,48,0.12)", stroke: "rgba(196,212,232,0.15)" },
-  { id: 9,  top: "18%", left: "8%",   width: 45,  height: 22,  rotate: 30,  delay: 1.1, floatDuration: 7,  floatAmplitude: 25, entryDuration: 1.6, opacity: 0.5,  fill: "rgba(92,14,32,0.10)",  stroke: "rgba(196,212,232,0.12)" },
-  { id: 10, top: "92%", left: "42%",  width: 40,  height: 20,  rotate: -5,  delay: 1.2, floatDuration: 15, floatAmplitude: 8,  entryDuration: 1.8, opacity: 0.45, fill: "rgba(61,8,20,0.10)",   stroke: "rgba(196,212,232,0.12)" },
+  { id: 1,  top: "12%", left: "-4%",  width: 220, height: 110, rotate: 18,  delay: 0.2, floatDuration: 14, floatAmplitude: 18, entryDuration: 2.2, opacity: 0.9,  fill: "rgba(56,5,14,0.22)",  stroke: "rgba(205,219,242,0.30)" },
+  { id: 2,  top: "68%", left: "88%",  width: 180, height: 90,  rotate: -20, delay: 0.4, floatDuration: 16, floatAmplitude: 14, entryDuration: 2.4, opacity: 0.85, fill: "rgba(56,5,14,0.18)", stroke: "rgba(205,219,242,0.25)" },
+  { id: 3,  top: "75%", left: "4%",   width: 140, height: 70,  rotate: -12, delay: 0.5, floatDuration: 11, floatAmplitude: 20, entryDuration: 2.0, opacity: 0.8,  fill: "rgba(56,5,14,0.20)",   stroke: "rgba(205,219,242,0.20)" },
+  { id: 4,  top: "8%",  left: "80%",  width: 110, height: 55,  rotate: 25,  delay: 0.6, floatDuration: 13, floatAmplitude: 16, entryDuration: 2.1, opacity: 0.75, fill: "rgba(56,5,14,0.15)",  stroke: "rgba(205,219,242,0.22)" },
+  { id: 5,  top: "5%",  left: "22%",  width: 80,  height: 40,  rotate: -28, delay: 0.7, floatDuration: 10, floatAmplitude: 22, entryDuration: 1.8, opacity: 0.7,  fill: "rgba(56,5,14,0.14)", stroke: "rgba(205,219,242,0.18)" },
+  { id: 6,  top: "40%", left: "93%",  width: 70,  height: 35,  rotate: 8,   delay: 0.8, floatDuration: 9,  floatAmplitude: 12, entryDuration: 1.9, opacity: 0.65, fill: "rgba(56,5,14,0.16)",   stroke: "rgba(205,219,242,0.20)" },
+  { id: 7,  top: "45%", left: "-2%",  width: 60,  height: 30,  rotate: 15,  delay: 0.9, floatDuration: 12, floatAmplitude: 18, entryDuration: 2.0, opacity: 0.6,  fill: "rgba(56,5,14,0.12)",  stroke: "rgba(205,219,242,0.15)" },
+  { id: 8,  top: "88%", left: "70%",  width: 55,  height: 27,  rotate: -18, delay: 1.0, floatDuration: 8,  floatAmplitude: 10, entryDuration: 1.7, opacity: 0.55, fill: "rgba(56,5,14,0.12)", stroke: "rgba(205,219,242,0.15)" },
+  { id: 9,  top: "18%", left: "8%",   width: 45,  height: 22,  rotate: 30,  delay: 1.1, floatDuration: 7,  floatAmplitude: 25, entryDuration: 1.6, opacity: 0.5,  fill: "rgba(56,5,14,0.10)",  stroke: "rgba(205,219,242,0.12)" },
+  { id: 10, top: "92%", left: "42%",  width: 40,  height: 20,  rotate: -5,  delay: 1.2, floatDuration: 15, floatAmplitude: 8,  entryDuration: 1.8, opacity: 0.45, fill: "rgba(56,5,14,0.10)",   stroke: "rgba(205,219,242,0.12)" },
 ];
 
 /* ─── Animated counter ─────────────────────────────────────────────────── */
@@ -229,11 +229,11 @@ export default function CoffeeBeansHero() {
     .title-gradient {
       background: linear-gradient(
         135deg,
-        #C4D4E8 0%,
+        #cddbf2 0%,
         #ffffff 30%,
-        #C4D4E8 55%,
+        #cddbf2 55%,
         #ffffff 80%,
-        #C4D4E8 100%
+        #cddbf2 100%
       );
       background-size: 300% auto;
       -webkit-background-clip: text;
@@ -242,8 +242,8 @@ export default function CoffeeBeansHero() {
       animation: shimmer 5s linear 1.5s infinite;
     }
     .btn-primary {
-      background: #C4D4E8;
-      color: #3D0814;
+      background: #cddbf2;
+      color: #38050e;
       border: none;
       padding: 14px 32px;
       border-radius: 50px;
@@ -254,7 +254,7 @@ export default function CoffeeBeansHero() {
       text-transform: uppercase;
       cursor: pointer;
       transition: background 0.2s, color 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 20px rgba(196,212,232,0.25);
+      box-shadow: 0 4px 20px rgba(205,219,242,0.25);
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -263,7 +263,7 @@ export default function CoffeeBeansHero() {
       background: #8AAFD4;
       color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(196,212,232,0.35);
+      box-shadow: 0 8px 30px rgba(205,219,242,0.35);
     }
     .btn-secondary {
       background: transparent;
@@ -284,7 +284,7 @@ export default function CoffeeBeansHero() {
     }
     .btn-secondary:hover {
       border-color: rgba(196,212,232,0.6);
-      color: #C4D4E8;
+      color: #cddbf2;
       background: rgba(196,212,232,0.06);
       transform: translateY(-2px);
     }
@@ -301,7 +301,7 @@ export default function CoffeeBeansHero() {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(22px, 3vw, 30px);
       font-weight: 900;
-      color: #C4D4E8;
+      color: #cddbf2;
       line-height: 1;
     }
     .stat-label {
@@ -329,7 +329,7 @@ export default function CoffeeBeansHero() {
       transform: translateX(-50%);
       width: 60%;
       height: 50%;
-      background: radial-gradient(ellipse, rgba(92,14,32,0.35) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(56,5,14,0.35) 0%, transparent 70%);
       pointer-events: none;
       animation: breathe 6s ease-in-out infinite;
     }
@@ -339,7 +339,7 @@ export default function CoffeeBeansHero() {
       left: -10%;
       width: 40%;
       height: 40%;
-      background: radial-gradient(ellipse, rgba(139,26,48,0.2) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(56,5,14,0.2) 0%, transparent 70%);
       pointer-events: none;
     }
     .glow-bottom-right {
@@ -348,7 +348,7 @@ export default function CoffeeBeansHero() {
       right: -5%;
       width: 35%;
       height: 35%;
-      background: radial-gradient(ellipse, rgba(61,8,20,0.25) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(56,5,14,0.25) 0%, transparent 70%);
       pointer-events: none;
     }
 
@@ -402,7 +402,7 @@ export default function CoffeeBeansHero() {
         <div style={{
           position: "absolute", top: "50%", left: 0, right: 0,
           height: 1,
-          background: "linear-gradient(90deg, transparent 0%, rgba(196,212,232,0.05) 30%, rgba(196,212,232,0.08) 50%, rgba(196,212,232,0.05) 70%, transparent 100%)",
+          background: "linear-gradient(90deg, transparent 0%, rgba(205,219,242,0.05) 30%, rgba(205,219,242,0.08) 50%, rgba(205,219,242,0.05) 70%, transparent 100%)",
           pointerEvents: "none",
         }} />
 
@@ -428,8 +428,8 @@ export default function CoffeeBeansHero() {
           }}>
             <span style={{
               width: 7, height: 7, borderRadius: "50%",
-              background: "#9E3A52",
-              boxShadow: "0 0 8px rgba(158,58,82,0.8)",
+              background: "#38050e",
+              boxShadow: "0 0 8px rgba(56,5,14,0.8)",
               display: "inline-block",
               animation: "breathe 2s ease-in-out infinite",
             }} />
@@ -445,14 +445,14 @@ export default function CoffeeBeansHero() {
 
           {/* Eyebrow line */}
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-            <div className="eyebrow-line" style={{ width: 32, height: 2, background: "#C4D4E8" }} />
+            <div className="eyebrow-line" style={{ width: 32, height: 2, background: "#cddbf2" }} />
             <span style={{
               fontFamily: "'Barlow', sans-serif",
               fontSize: "0.7rem", fontWeight: 500,
               letterSpacing: "0.2em", textTransform: "uppercase",
-              color: "#C4D4E8", opacity: 0.8,
+              color: "#cddbf2", opacity: 0.8,
             }}>Coffee Geeks Panamá</span>
-            <div className="eyebrow-line" style={{ width: 32, height: 2, background: "#C4D4E8" }} />
+            <div className="eyebrow-line" style={{ width: 32, height: 2, background: "#cddbf2" }} />
           </div>
 
           {/* Title line 1 */}
@@ -491,9 +491,22 @@ export default function CoffeeBeansHero() {
             letterSpacing: "0.04em",
             color: "rgba(255,255,255,0.40)",
             maxWidth: 440,
-            marginBottom: 40,
+            marginBottom: 10,
           }}>
-            Primer concurso que premia la mejor taza de café de Panamá — cafeterías, baristas y experiencias únicas.
+            Los mejores baristas, coffee shops, hoteles, restaurantes que ofrecen experiencias únicas alrededor del café.
+          </p>
+
+            <p className="hero-sub" style={{
+              fontFamily: "'Barlow', sans-serif",
+              fontSize: "clamp(14px, 1.8vw, 17px)",
+              fontWeight: 300,
+              lineHeight: 1.7,
+              letterSpacing: "0.04em",
+              color: "rgba(255,255,255,0.40)",
+              maxWidth: 440,
+              marginBottom: 40,
+            }}>
+            Para postularlos en la lista oficial de Panamá en Continent’s y The World’s 100 Best Coffee Shops.
           </p>
 
           {/* CTA Buttons */}
@@ -517,7 +530,7 @@ export default function CoffeeBeansHero() {
         <div className="hero-stats" style={{
           position: "absolute",
           bottom: 0, left: 0, right: 0,
-          background: "rgba(92,14,32,0.55)",
+          background: "rgba(56,5,14,0.55)",
           backdropFilter: "blur(12px)",
           borderTop: "1px solid rgba(255,255,255,0.06)",
           padding: "18px 0",
@@ -542,7 +555,7 @@ export default function CoffeeBeansHero() {
               </div>
             ))}
             <div className="stat-item" style={{ borderRight: "none" }}>
-              <span className="stat-num" style={{ color: "#9E3A52" }}>OCT</span>
+              <span className="stat-num" style={{ color: "#38050e" }}>OCT</span>
               <span className="stat-label">Gran Final<br />2026</span>
             </div>
           </div>

@@ -19,19 +19,19 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
     }
   }, [state, router]);
 
-  const inputCls = "w-full mt-1.5 px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-shadow text-sm";
-  const labelCls = "text-xs font-bold text-[#bedcf8]/70 uppercase tracking-widest pl-1";
+  const inputCls = "w-full mt-1.5 px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-shadow text-sm";
+  const labelCls = "text-xs font-bold text-[#cddbf2]/70 uppercase tracking-widest pl-1";
   const sectionCls = "space-y-6 bg-black/20 p-6 rounded-2xl border border-white/5";
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
-      <div className="bg-[#4c000a] border border-[#bedcf8]/20 rounded-3xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
-        <div className="flex justify-between items-center mb-8 sticky top-0 bg-[#4c000a] z-10 pb-4 border-b border-[#bedcf8]/10">
+      <div className="bg-[#38050e] border border-[#cddbf2]/20 rounded-3xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl relative">
+        <div className="flex justify-between items-center mb-8 sticky top-0 bg-[#38050e] z-10 pb-4 border-b border-[#cddbf2]/10">
           <div>
-            <h2 className="text-2xl font-black text-[#bedcf8] tracking-tight">Información Detallada del Participante</h2>
-            <p className="text-[#bedcf8]/50 text-sm">{user.cafeteriaName || user.name}</p>
+            <h2 className="text-2xl font-black text-[#cddbf2] tracking-tight">Información Detallada del Participante</h2>
+            <p className="text-[#cddbf2]/50 text-sm">{user.cafeteriaName || user.name}</p>
           </div>
-          <button onClick={onClose} className="text-[#bedcf8] hover:text-white font-bold text-2xl transition-colors">✕</button>
+          <button onClick={onClose} className="text-[#cddbf2] hover:text-white font-bold text-2xl transition-colors">✕</button>
         </div>
 
         {state?.success && <FlashMessage msg={state.success} type="success" />}
@@ -42,7 +42,7 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
           {/* SECCION 1: Identidad Legal y Comercial */}
           <div className={sectionCls}>
-            <h3 className="text-lg font-bold text-[#bedcf8] border-l-4 border-[#bedcf8] pl-3">Identidad Legal y Comercial</h3>
+            <h3 className="text-lg font-bold text-[#cddbf2] border-l-4 border-[#cddbf2] pl-3">Identidad Legal y Comercial</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className={labelCls}>Nombre de Razón Social (Identidad Legal)</label>
@@ -65,7 +65,7 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
           {/* SECCION 2: Representante y Empresa */}
           <div className={sectionCls}>
-            <h3 className="text-lg font-bold text-[#bedcf8] border-l-4 border-[#bedcf8] pl-3">Representante y Empresa</h3>
+            <h3 className="text-lg font-bold text-[#cddbf2] border-l-4 border-[#cddbf2] pl-3">Representante y Empresa</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className={labelCls}>Nombre de Representante</label>
@@ -97,7 +97,7 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
               <label className={labelCls}>Dirección Detallada / Barrio</label>
               <input name="neighborhood" defaultValue={user.neighborhood} className={inputCls} placeholder="Ej: San Francisco, Calle 74" />
               
-              <div className="h-60 w-full rounded-xl overflow-hidden border border-[#bedcf8]/20 relative z-0">
+              <div className="h-60 w-full rounded-xl overflow-hidden border border-[#cddbf2]/20 relative z-0">
                 <MapPicker 
                   initialLat={locationLat} 
                   initialLng={locationLng} 
@@ -113,19 +113,19 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="sellsPanamanianCoffee" value="true" defaultChecked={user.sellsPanamanianCoffee} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Vende café panameño?</span>
+                <input type="checkbox" name="sellsPanamanianCoffee" value="true" defaultChecked={user.sellsPanamanianCoffee} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Vende café panameño?</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="acceptsNotifications" value="true" defaultChecked={user.acceptsNotifications !== false} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">Acepta recibir notificaciones</span>
+                <input type="checkbox" name="acceptsNotifications" value="true" defaultChecked={user.acceptsNotifications !== false} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">Acepta recibir notificaciones</span>
               </label>
             </div>
           </div>
 
           {/* SECCION 3: Especificaciones de Café */}
           <div className={sectionCls}>
-            <h3 className="text-lg font-bold text-[#bedcf8] border-l-4 border-[#bedcf8] pl-3">Especificaciones de Café</h3>
+            <h3 className="text-lg font-bold text-[#cddbf2] border-l-4 border-[#cddbf2] pl-3">Especificaciones de Café</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className={labelCls}>Nombre de la Finca</label>
@@ -134,7 +134,7 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
               <div>
                 <label className={labelCls}>Variedades que vende</label>
                 <input name="coffeeVarietiesText" defaultValue={user.coffeeVarieties?.join(", ")} placeholder="Caturra, Geisha, etc..." className={inputCls} />
-                <p className="text-[10px] text-[#bedcf8]/40 mt-1 italic pl-1">Separadas por comas</p>
+                <p className="text-[10px] text-[#cddbf2]/40 mt-1 italic pl-1">Separadas por comas</p>
               </div>
               <div>
                 <label className={labelCls}>Marca de Máquina</label>
@@ -148,12 +148,12 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="roastsOwnCoffee" value="true" defaultChecked={user.roastsOwnCoffee} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Usted hace el tostado?</span>
+                <input type="checkbox" name="roastsOwnCoffee" value="true" defaultChecked={user.roastsOwnCoffee} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Usted hace el tostado?</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="makesOwnProfile" value="true" defaultChecked={user.makesOwnProfile} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Hace el perfil de su café?</span>
+                <input type="checkbox" name="makesOwnProfile" value="true" defaultChecked={user.makesOwnProfile} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Hace el perfil de su café?</span>
               </label>
             </div>
 
@@ -165,11 +165,11 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
           {/* SECCION 4: Visión Internacional */}
           <div className={sectionCls}>
-            <h3 className="text-lg font-bold text-[#bedcf8] border-l-4 border-[#bedcf8] pl-3">Visión Internacional</h3>
+            <h3 className="text-lg font-bold text-[#cddbf2] border-l-4 border-[#cddbf2] pl-3">Visión Internacional</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                <label className="flex items-center gap-3 cursor-pointer group mt-4">
-                <input type="checkbox" name="wantsToInternationalize" value="true" defaultChecked={user.wantsToInternationalize} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Desea internacionalizarse o franquiciar?</span>
+                <input type="checkbox" name="wantsToInternationalize" value="true" defaultChecked={user.wantsToInternationalize} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Desea internacionalizarse o franquiciar?</span>
               </label>
               <div>
                 <label className={labelCls}>¿A qué mercados?</label>
@@ -180,7 +180,7 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
           {/* SECCION 5: Información del Barista Principal */}
           <div className={sectionCls}>
-            <h3 className="text-lg font-bold text-[#bedcf8] border-l-4 border-[#bedcf8] pl-3">Información Barista Principal</h3>
+            <h3 className="text-lg font-bold text-[#cddbf2] border-l-4 border-[#cddbf2] pl-3">Información Barista Principal</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className={labelCls}>Nombre Barista Principal</label>
@@ -200,12 +200,12 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
               </div>
               <div className="flex flex-col gap-3 justify-center">
                  <label className="flex items-center gap-3 cursor-pointer group">
-                  <input type="checkbox" name="mainBaristaCertified" value="true" defaultChecked={user.mainBaristaCertified} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                  <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Cuenta con certificaciones?</span>
+                  <input type="checkbox" name="mainBaristaCertified" value="true" defaultChecked={user.mainBaristaCertified} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                  <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Cuenta con certificaciones?</span>
                 </label>
                 <label className="flex items-center gap-3 cursor-pointer group">
-                  <input type="checkbox" name="mainBaristaSCA" value="true" defaultChecked={user.mainBaristaSCA} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                  <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Avalada por SCA?</span>
+                  <input type="checkbox" name="mainBaristaSCA" value="true" defaultChecked={user.mainBaristaSCA} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                  <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Avalada por SCA?</span>
                 </label>
               </div>
             </div>
@@ -213,7 +213,7 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
           {/* SECCION 6: Diversidad y Formación del Equipo */}
           <div className={sectionCls}>
-            <h3 className="text-lg font-bold text-[#bedcf8] border-l-4 border-[#bedcf8] pl-3">Diversidad y Formación del Equipo</h3>
+            <h3 className="text-lg font-bold text-[#cddbf2] border-l-4 border-[#cddbf2] pl-3">Diversidad y Formación del Equipo</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className={labelCls}>Mujeres Baristas</label>
@@ -240,24 +240,24 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="hasCertifiedTraining" value="true" defaultChecked={user.hasCertifiedTraining} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Tiene formación certificada?</span>
+                <input type="checkbox" name="hasCertifiedTraining" value="true" defaultChecked={user.hasCertifiedTraining} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Tiene formación certificada?</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="trainingSCA" value="true" defaultChecked={user.trainingSCA} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Formación avalada por SCA?</span>
+                <input type="checkbox" name="trainingSCA" value="true" defaultChecked={user.trainingSCA} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Formación avalada por SCA?</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="interestInCertification" value="true" defaultChecked={user.interestInCertification} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Interés en certificarse?</span>
+                <input type="checkbox" name="interestInCertification" value="true" defaultChecked={user.interestInCertification} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Interés en certificarse?</span>
               </label>
                <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="wantsToJoinCommittee" value="true" defaultChecked={user.wantsToJoinCommittee} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Desea ser parte del comité país?</span>
+                <input type="checkbox" name="wantsToJoinCommittee" value="true" defaultChecked={user.wantsToJoinCommittee} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Desea ser parte del comité país?</span>
               </label>
               <label className="flex items-center gap-3 cursor-pointer group">
-                <input type="checkbox" name="hasDisabledStaff" value="true" defaultChecked={user.hasDisabledStaff} className="w-5 h-5 rounded border-[#bedcf8]/30 bg-[#bedcf8]/10 text-[#bedcf8] focus:ring-[#bedcf8]/50" />
-                <span className="text-sm font-semibold text-[#bedcf8]/80 group-hover:text-[#bedcf8] transition-colors">¿Hay personas con discapacidad?</span>
+                <input type="checkbox" name="hasDisabledStaff" value="true" defaultChecked={user.hasDisabledStaff} className="w-5 h-5 rounded border-[#cddbf2]/30 bg-[#cddbf2]/10 text-[#cddbf2] focus:ring-[#cddbf2]/50" />
+                <span className="text-sm font-semibold text-[#cddbf2]/80 group-hover:text-[#cddbf2] transition-colors">¿Hay personas con discapacidad?</span>
               </label>
             </div>
 
@@ -267,11 +267,11 @@ export default function DetailedCafeteriaForm({ user, onClose }: { user: any; on
               </div>
           </div>
 
-          <div className="sticky bottom-0 bg-[#4c000a] pt-6 pb-2 border-t border-[#bedcf8]/10 flex justify-end gap-4 z-10">
-            <button type="button" onClick={onClose} className="px-8 py-3.5 rounded-xl bg-[#3a0008] hover:bg-[#4a000a] border border-[#bedcf8]/10 text-[#bedcf8] font-bold transition-all">
+          <div className="sticky bottom-0 bg-[#38050e] pt-6 pb-2 border-t border-[#cddbf2]/10 flex justify-end gap-4 z-10">
+            <button type="button" onClick={onClose} className="px-8 py-3.5 rounded-xl bg-[#2a040b] hover:bg-[#38050e] border border-[#cddbf2]/10 text-[#cddbf2] font-bold transition-all">
               Cancelar
             </button>
-            <button type="submit" disabled={pending} className="px-10 py-3.5 rounded-xl bg-[#bedcf8] hover:bg-[#bedcf8]/90 text-[#4c000a] font-bold shadow-xl transition-all disabled:opacity-50">
+            <button type="submit" disabled={pending} className="px-10 py-3.5 rounded-xl bg-[#cddbf2] hover:bg-[#cddbf2]/90 text-[#38050e] font-bold shadow-xl transition-all disabled:opacity-50">
               {pending ? "Guardando..." : "Guardar Información Detallada"}
             </button>
           </div>

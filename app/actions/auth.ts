@@ -6,7 +6,7 @@ import bcrypt from "bcryptjs";
 import { createSession, deleteSession } from "@/lib/session";
 import { redirect } from "next/navigation";
 import { sendEmail } from "@/lib/email";
-import { getWelcomeEmailTemplate } from "@/lib/email-templates";
+import { getWelcomeEmailTemplate, getAdminNotificationEmailTemplate } from "@/lib/email-templates";
 
 // Utility para sanitizar inputs rápidos contra inyecciones absurdas
 function sanitizeString(input: any) {
@@ -36,6 +36,7 @@ export async function login(state: any, formData: FormData) {
 
   const email = sanitizeString(formData.get("email"));
   const password = sanitizeString(formData.get("password"));
+  const isAjax = formData.get("ajax") === "true";
 
   if (!email || !password) {
     return { error: "Todos los campos son obligatorios." };
@@ -58,6 +59,10 @@ export async function login(state: any, formData: FormData) {
   // Creamos la sesión y guardamos en cookie
   await createSession(user._id.toString(), user.role);
 
+  if (isAjax) {
+    return { success: true, userRole: user.role };
+  }
+
   if (user.role === "admin") {
     redirect("/admin/dashboard");
   } else {
@@ -73,6 +78,7 @@ export async function register(state: any, formData: FormData) {
   const email = sanitizeString(formData.get("email"));
   const password = sanitizeString(formData.get("password"));
   const selectedRole = formData.get("role")?.toString(); // user or cafeteria
+  const isAjax = formData.get("ajax") === "true";
 
   if (!name || !email || !password) {
     return { error: "Nombre, email y contraseña son obligatorios." };
@@ -134,8 +140,31 @@ export async function register(state: any, formData: FormData) {
     // No bloqueamos el registro si falla el correo
   }
 
+  // Notificamos al administrador
+  try {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (adminEmail) {
+      await sendEmail({
+        to: adminEmail,
+        subject: `Nuevo Registro: ${newUser.name} ${newUser.lastName || ""}`,
+        html: getAdminNotificationEmailTemplate({
+          name: newUser.name,
+          lastName: newUser.lastName,
+          email: newUser.email,
+          role: newUser.role,
+        }),
+      });
+    }
+  } catch (adminEmailError) {
+    console.error("Error sending admin notification email:", adminEmailError);
+  }
+
   // Logeamos al usuario tras su registro
   await createSession(newUser._id.toString(), newUser.role);
+
+  if (isAjax) {
+    return { success: true, userRole: newUser.role };
+  }
 
   if (role === "admin") {
     redirect("/admin/dashboard");
@@ -192,6 +221,24 @@ export async function registerCafeteria(state: any, formData: FormData) {
     });
   } catch (emailError) {
     console.error("Error sending registration email (cafeteria):", emailError);
+  }
+
+  // Notificamos al administrador
+  try {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (adminEmail) {
+      await sendEmail({
+        to: adminEmail,
+        subject: `Nuevo Registro (Participante): ${newUser.name}`,
+        html: getAdminNotificationEmailTemplate({
+          name: newUser.name,
+          email: newUser.email,
+          role: newUser.role,
+        }),
+      });
+    }
+  } catch (adminEmailError) {
+    console.error("Error sending admin notification email (cafeteria):", adminEmailError);
   }
 
   await createSession(newUser._id.toString(), newUser.role);

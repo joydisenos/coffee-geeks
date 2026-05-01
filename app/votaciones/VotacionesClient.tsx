@@ -29,7 +29,7 @@ export default function VotacionesClient({ initialRound, initialCafeterias }: Vo
 
         .ph{position:relative;padding-top:58px}
         .ph-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18}
-        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#3D0814 0%,rgba(61,8,20,.7) 100%)}
+        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#38050e 0%,rgba(56,5,14,.7) 100%)}
         .ph-cnt{position:relative;z-index:2;padding:44px 0 44px}
         .ph-flex{display:flex;align-items:center;justify-content:space-between;gap:40px}
         .ph-txt{flex:1}
@@ -40,28 +40,28 @@ export default function VotacionesClient({ initialRound, initialCafeterias }: Vo
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
         .bread{background:#fff;border-bottom:1px solid #eee}
         .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
-        .bread-i a{color:#857375;transition:color .2s;text-decoration:none}
-        .bread-i a:hover{color:#9E3A52}
-        .bread-i span{color:#22191A;opacity:.6}
+        .bread-i a{color:#38050e;opacity:.7;transition:color .2s;text-decoration:none}
+        .bread-i a:hover{color:#38050e;opacity:1}
+        .bread-i span{color:#38050e;opacity:.6}
 
-        .rk-page{padding:44px 0 64px;background:#F5F0E4}
+        .rk-page{padding:44px 0 64px;background:#f4efe4}
         .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
         .eyebrow-row{display:flex;align-items:center;gap:9px;margin-bottom:6px;justify-content:center}
-        .eyebrow-line{width:24px;height:2px;background:#9E3A52;flex-shrink:0}
-        .eyebrow-text{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#9E3A52}
+        .eyebrow-line{width:24px;height:2px;background:#38050e;flex-shrink:0}
+        .eyebrow-text{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#38050e}
 
-        .rkr{background:#fff;border-radius:16px;overflow:hidden;display:flex;align-items:stretch;box-shadow:0 1px 2px rgba(0,0,0,.12),0 1px 3px 1px rgba(0,0,0,.08);transition:box-shadow .2s,transform .2s;border:1px solid #D6C2C4;margin-bottom:9px}
+        .rkr{background:#fff;border-radius:16px;overflow:hidden;display:flex;align-items:stretch;box-shadow:0 1px 2px rgba(0,0,0,.12),0 1px 3px 1px rgba(0,0,0,.08);transition:box-shadow .2s,transform .2s;border:1px solid #cddbf2;margin-bottom:9px}
         .rkr:hover{box-shadow:0 4px 8px 3px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.12);transform:translateX(3px)}
         .rkr-photo{width:170px;flex-shrink:0;background-size:cover;background-position:center;background-color:#eee}
         .rkr-info{flex:1;padding:13px 16px;display:flex;flex-direction:column;justify-content:center}
-        .rkr-name{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;color:#22191A;margin-bottom:1px}
-        .rkr-sub{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;color:#9E3A52;margin-bottom:6px}
+        .rkr-name{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:900;text-transform:uppercase;color:#38050e;margin-bottom:1px}
+        .rkr-sub{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;color:#38050e;opacity:.6;margin-bottom:6px}
         .rkr-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-        .rkr-cat{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#524345;font-family:'Barlow',sans-serif}
-        .rkr-loc{display:flex;align-items:center;gap:3px;font-size:11px;color:#524345;font-family:'Barlow',sans-serif}
-        .rkr-right{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:13px 14px;gap:9px;background:rgba(92,14,32,.03);border-left:1px solid #D6C2C4;min-width:140px}
-        .rkr-btn{width:100%;height:36px;border-radius:50px;border:none;background:#9E3A52;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}
-        .rkr-btn:hover{filter:brightness(1.1)}
+        .rkr-cat{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:#38050e;opacity:.7;font-family:'Barlow',sans-serif}
+        .rkr-loc{display:flex;align-items:center;gap:3px;font-size:11px;color:#38050e;opacity:.6;font-family:'Barlow',sans-serif}
+        .rkr-right{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:13px 14px;gap:9px;background:rgba(56,5,14,.03);border-left:1px solid #cddbf2;min-width:140px}
+        .rkr-btn{width:100%;height:36px;border-radius:50px;border:none;background:#38050e;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;white-space:nowrap}
+        .rkr-btn:hover{background:#cddbf2;color:#38050e}
         .rkr-btn:disabled{background:#ccc;color:#666;cursor:not-allowed}
         
         @media(max-width:960px){.rkr-photo{width:110px}}
@@ -99,7 +99,7 @@ export default function VotacionesClient({ initialRound, initialCafeterias }: Vo
         <div className="wrap">
           <div className="bread-i">
             <Link href="/home">Inicio</Link>
-            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#857375", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#38050e", opacity: 0.5, fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
             <span>Votaciones Ronda {initialRound}</span>
           </div>
         </div>
@@ -118,28 +118,28 @@ export default function VotacionesClient({ initialRound, initialCafeterias }: Vo
             
             {initialRound === 0 ? (
               <div className="py-12">
-                <h2 style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "2rem", fontWeight: 900, textTransform: "uppercase", color: "#9E3A52" }}>
+                <h2 style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "2rem", fontWeight: 900, textTransform: "uppercase", color: "#38050e" }}>
                   Las votaciones están cerradas en este momento.
                 </h2>
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-4">
                 {cafeterias.length === 0 ? (
-                  <p className="py-10 text-center font-bold text-[#524345]">No hay cafeterías activas para esta ronda.</p>
+                  <p className="py-10 text-center font-bold text-[#38050e]/60">No hay cafeterías activas para esta ronda.</p>
                 ) : (
                   cafeterias.map((c: any) => (
-                    <div key={c.id} className="rkr border-l-4 border-l-[#9E3A52]">
+                    <div key={c.id} className="rkr border-l-4 border-l-[#38050e]">
                       <div className="rkr-photo" style={{ backgroundImage: `url('${c.coverImage || '/background.webp'}')` }} />
                       <div className="rkr-info">
                         <div className="rkr-name">{c.name}</div>
                         <div className="rkr-sub">{c.businessType === "coffee" ? "Coffee Shop" : c.businessType === "hotel" ? "Hotel" : "Restaurante"}</div>
                         <div className="rkr-meta">
-                          <span className="rkr-cat font-bold text-[#9E3A52] bg-[#F8E8EA] px-2 py-0.5 rounded">
+                          <span className="rkr-cat font-bold text-[#38050e] bg-[#cddbf2]/30 px-2 py-0.5 rounded">
                             {c.competitionCategory || "Sin categoría"}
                           </span>
                           <span className="rkr-loc">📍 {c.neighborhood || "Panamá"}</span>
                           <span className="rkr-loc">👨‍🍳 Barista: {c.baristaName || "-"}</span>
-                          <span className="rkr-loc font-bold text-[#9E3A52]">⭐ {c.votesCount || 0} votos</span>
+                          <span className="rkr-loc font-bold text-[#38050e]">⭐ {c.votesCount || 0} votos</span>
                         </div>
                       </div>
                       <div className="rkr-right">

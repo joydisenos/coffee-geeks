@@ -14,10 +14,10 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-4xl font-extrabold tracking-tight text-[#bedcf8] drop-shadow-md">
+        <h1 className="text-4xl font-extrabold tracking-tight text-[#cddbf2] drop-shadow-md">
           Configuración del Sitio
         </h1>
-        <p className="text-[#bedcf8]/60 text-lg mt-1">
+        <p className="text-[#cddbf2]/60 text-lg mt-1">
           SEO, redes sociales, contacto y política de privacidad.
         </p>
       </div>

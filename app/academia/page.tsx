@@ -12,29 +12,29 @@ export default function AcademiaPage() {
 
         .ph{position:relative;padding-top:58px}
         .ph-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18}
-        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#3D0814 0%,rgba(61,8,20,.7) 100%)}
+        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#38050e 0%,rgba(56,5,14,.7) 100%)}
         .ph-sello{position:absolute;right:clamp(20px,5vw,60px);top:72px;width:84px;height:84px;opacity:.55;animation:spin3 28s linear infinite}
         @keyframes spin3{to{transform:rotate(360deg)}}
         .ph-cnt{position:relative;z-index:2;padding:44px 0 44px}
         .ph-flex{display:flex;align-items:center;justify-content:space-between;gap:40px}
         .ph-txt{flex:1}
-        .ph-eye{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(196,212,232,.7);margin-bottom:10px}
+        .ph-eye{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(205,219,242,.7);margin-bottom:10px}
         .ph-h1{font-family:'Barlow Condensed',sans-serif;font-size:clamp(38px,6vw,64px);font-weight:900;text-transform:uppercase;color:#fff;line-height:.92;margin-bottom:4px}
-        .ph-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:400;text-transform:uppercase;color:rgba(196,212,232,.55)}
+        .ph-h2{font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,32px);font-weight:400;text-transform:uppercase;color:rgba(205,219,242,.55)}
         .ph-logo{width:clamp(120px,18vw,220px);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,0.3));animation:float 6s ease-in-out infinite}
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
         
         .bread{background:#fff;border-bottom:1px solid #eee}
         .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
         .bread-i a{color:#857375;transition:color .2s;text-decoration:none}
-        .bread-i a:hover{color:#9E3A52}
+        .bread-i a:hover{color:#38050e}
         .bread-i span{color:#22191A;opacity:.6}
 
-        .main-page{padding:44px 0 64px;background:#F5F0E4;min-height:400px}
+        .main-page{padding:44px 0 64px;background:#f4efe4;min-height:400px}
         .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
         .eyebrow-row{display:flex;align-items:center;gap:9px;margin-bottom:6px;justify-content:center}
-        .eyebrow-line{width:24px;height:2px;background:#9E3A52;flex-shrink:0}
-        .eyebrow-text{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#9E3A52}
+        .eyebrow-line{width:24px;height:2px;background:#38050e;flex-shrink:0}
+        .eyebrow-text{font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#38050e}
         @media(max-width:768px){
           .ph-flex{flex-direction:column;align-items:flex-start;gap:25px}
           .ph-logo{width:140px}

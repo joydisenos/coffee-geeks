@@ -47,7 +47,7 @@ export default function ParticipantesClient({ initialShops }: { initialShops: an
         /* ── Page hero ── */
         .ph{position:relative;padding-top:58px}
         .ph-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.18}
-        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#3D0814 0%,rgba(61,8,20,.7) 100%)}
+        .ph-sc{position:absolute;inset:0;background:linear-gradient(to bottom,#38050e 0%,rgba(56,5,14,.7) 100%)}
         .ph-sello{position:absolute;right:clamp(20px,5vw,60px);top:72px;width:84px;height:84px;opacity:.55;animation:spin2 28s linear infinite}
         @keyframes spin2{to{transform:rotate(360deg)}}
         .ph-cnt{position:relative;z-index:2;padding:44px 0 44px}
@@ -62,40 +62,40 @@ export default function ParticipantesClient({ initialShops }: { initialShops: an
         /* ── Breadcrumb ── */
         .bread{background:#fff;border-bottom:1px solid #eee}
         .bread-i{display:flex;align-items:center;gap:7px;padding:9px 0;font-family:'Barlow',sans-serif;font-size:12px}
-        .bread-i a{color:#857375;transition:color .2s;text-decoration:none}
-        .bread-i a:hover{color:#9E3A52}
-        .bread-i span{color:#22191A;opacity:.6}
+        .bread-i a{color:#38050e;opacity:.7;transition:color .2s;text-decoration:none}
+        .bread-i a:hover{color:#38050e;opacity:1}
+        .bread-i span{color:#38050e;opacity:.6}
 
         /* ── Participantes list section ── */
-        .part-sec{background:#FFF8F7;padding:24px 0 80px}
+        .part-sec{background:#f4efe4;padding:24px 0 80px}
         .wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 clamp(20px,5vw,60px)}
 
         /* Controls */
         .shops-ctrl{display:flex;align-items:center;gap:10px;margin-bottom:22px;flex-wrap:wrap}
-        .shops-badge{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9E3A52;background:#FFD9E2;padding:5px 13px;border-radius:50px;border:1px solid rgba(158,58,82,.12);flex-shrink:0}
-        .m3s{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #D6C2C4;border-radius:8px;padding:0 10px;height:34px}
-        .m3s input{border:none;outline:none;font-family:'Barlow',sans-serif;font-size:14px;color:#22191A;background:transparent;width:160px}
-        .chip{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:8px;border:1px solid #D6C2C4;background:transparent;color:#524345;font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s}
-        .chip:hover{background:#F8E8EA}
-        .chip.on{background:#FFD9E2;color:#3D0014;border-color:#FFD9E2}
-        .m3-sel{border:1px solid #D6C2C4;border-radius:8px;padding:5px 10px;font-family:'Barlow',sans-serif;font-size:14px;color:#524345;background:#fff;outline:none;margin-left:auto;cursor:pointer}
+        .shops-badge{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#38050e;background:#cddbf2;padding:5px 13px;border-radius:50px;border:1px solid rgba(56,5,14,.12);flex-shrink:0}
+        .m3s{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #cddbf2;border-radius:8px;padding:0 10px;height:34px}
+        .m3s input{border:none;outline:none;font-family:'Barlow',sans-serif;font-size:14px;color:#38050e;background:transparent;width:160px}
+        .chip{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:8px;border:1px solid #cddbf2;background:transparent;color:#38050e;opacity:.7;font-family:'Barlow',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .15s}
+        .chip:hover{background:#cddbf2;opacity:1}
+        .chip.on{background:#38050e;color:#cddbf2;border-color:#38050e;opacity:1}
+        .m3-sel{border:1px solid #cddbf2;border-radius:8px;padding:5px 10px;font-family:'Barlow',sans-serif;font-size:14px;color:#38050e;background:#fff;outline:none;margin-left:auto;cursor:pointer}
 
         /* Grid */
         .sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-        .sc{background:#FEF0F1;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.12),0 1px 3px 1px rgba(0,0,0,.08);transition:box-shadow .25s,transform .25s;cursor:pointer;border:1px solid rgba(92,14,32,.05)}
+        .sc{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.12),0 1px 3px 1px rgba(0,0,0,.08);transition:box-shadow .25s,transform .25s;cursor:pointer;border:1px solid #cddbf2}
         .sc:hover{box-shadow:0 4px 8px 3px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.12);transform:translateY(-5px)}
         .sc-img{width:100%;aspect-ratio:1/1;background-size:cover;background-position:center;display:flex;align-items:flex-start;justify-content:flex-end;padding:9px}
-        .sc-badge{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;background:#9E3A52;color:#fff;padding:4px 9px;border-radius:50px}
+        .sc-badge{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.04em;background:#38050e;color:#fff;padding:4px 9px;border-radius:50px}
         .sc-body{padding:13px 14px 11px}
-        .sc-cat{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9E3A52;margin-bottom:1px}
-        .sc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;font-weight:900;text-transform:uppercase;color:#22191A;line-height:1.05;margin-bottom:4px}
-        .sc-loc{display:flex;align-items:center;gap:5px;font-family:'Barlow',sans-serif;font-size:13px;color:#524345;margin-bottom:11px}
-        .sc-acts{display:flex;gap:7px;padding-top:9px;border-top:1px solid #D6C2C4}
-        .scb{flex:1;height:33px;border-radius:50px;border:none;font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:box-shadow .15s}
-        .scb-v{background:#9E3A52;color:#fff}
-        .scb-v:hover{box-shadow:0 1px 2px rgba(0,0,0,.12),0 2px 6px 2px rgba(0,0,0,.08)}
-        .scb-p{background:#F2E2E4;color:#9E3A52}
-        .scb-p:hover{background:#FFD9E2}
+        .sc-cat{font-family:'Barlow',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#38050e;opacity:.6;margin-bottom:1px}
+        .sc-name{font-family:'Barlow Condensed',sans-serif;font-size:1.45rem;font-weight:900;text-transform:uppercase;color:#38050e;line-height:1.05;margin-bottom:4px}
+        .sc-loc{display:flex;align-items:center;gap:5px;font-family:'Barlow',sans-serif;font-size:13px;color:#38050e;opacity:.5;margin-bottom:11px}
+        .sc-acts{display:flex;gap:7px;padding-top:9px;border-top:1px solid #cddbf2}
+        .scb{flex:1;height:33px;border-radius:50px;border:none;font-family:'Barlow',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+        .scb-v{background:#38050e;color:#fff}
+        .scb-v:hover{background:#cddbf2;color:#38050e}
+        .scb-p{background:#f4efe4;color:#38050e}
+        .scb-p:hover{background:#cddbf2}
 
         @media(max-width:960px){.sc-grid{grid-template-columns:1fr 1fr}}
         @media(max-width:768px){
@@ -132,7 +132,7 @@ export default function ParticipantesClient({ initialShops }: { initialShops: an
         <div className="wrap">
           <div className="bread-i">
             <Link href="/home">Inicio</Link>
-            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#857375", fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
+            <svg viewBox="0 0 24 24" style={{ width: 12, height: 12, stroke: "#38050e", opacity: 0.5, fill: "none", strokeWidth: 2 }}><polyline points="9 18 15 12 9 6" /></svg>
             <span>Participantes</span>
           </div>
         </div>
@@ -145,7 +145,7 @@ export default function ParticipantesClient({ initialShops }: { initialShops: an
           <div className="shops-ctrl">
             <span className="shops-badge">{initialShops.length} cafeterías registradas</span>
             <div className="m3s">
-              <svg viewBox="0 0 24 24" style={{ width: 15, height: 15, stroke: "#524345", fill: "none", strokeWidth: 1.5, flexShrink: 0 }}>
+              <svg viewBox="0 0 24 24" style={{ width: 15, height: 15, stroke: "#38050e", opacity: 0.6, fill: "none", strokeWidth: 1.5, flexShrink: 0 }}>
                 <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
               </svg>
               <input
@@ -185,7 +185,7 @@ export default function ParticipantesClient({ initialShops }: { initialShops: an
                   <div className="sc-cat">{shop.cat}</div>
                   <div className="sc-name">{shop.name}</div>
                   <div className="sc-loc">
-                    <svg viewBox="0 0 24 24" style={{ width: 11, height: 11, stroke: "#9E3A52", fill: "none", strokeWidth: 1.5, flexShrink: 0 }}>
+                    <svg viewBox="0 0 24 24" style={{ width: 11, height: 11, stroke: "#38050e", fill: "none", strokeWidth: 1.5, flexShrink: 0 }}>
                       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
                     </svg>
                     {shop.loc}
@@ -202,7 +202,7 @@ export default function ParticipantesClient({ initialShops }: { initialShops: an
           </div>
 
           {filtered.length === 0 && (
-            <p style={{ textAlign: "center", color: "#857375", fontFamily: "'Barlow',sans-serif", padding: "40px 0" }}>
+            <p style={{ textAlign: "center", color: "#38050e", opacity: 0.5, fontFamily: "'Barlow',sans-serif", padding: "40px 0" }}>
               No se encontraron cafeterías con ese filtro.
             </p>
           )}

@@ -5,13 +5,15 @@ import { useState, useEffect, useRef } from "react";
 interface Props {
   checked: boolean;
   onChange: (val: boolean) => void;
-  accentColor?: "white" | "amber" | "#bedcf8"; // blanco para /register, ámbar para /register-cafeteria, celeste para admin
+  accentColor?: "white" | "amber" | "#cddbf2" | "#38050e"; // blanco, ámbar, celeste, o color de voto
+  textColor?: string;
 }
 
 export default function PrivacyCheckbox({
   checked,
   onChange,
   accentColor = "white",
+  textColor,
 }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [policy, setPolicy] = useState<string>("");
@@ -49,12 +51,14 @@ export default function PrivacyCheckbox({
   const linkCls =
     accentColor === "amber"
       ? "text-amber-400 underline underline-offset-2 hover:text-amber-300 font-semibold"
-      : accentColor === "#bedcf8"
-      ? "text-[#bedcf8] underline underline-offset-2 hover:text-[#bedcf8]/80 font-semibold"
+      : accentColor === "#cddbf2"
+      ? "text-[#cddbf2] underline underline-offset-2 hover:text-[#cddbf2]/80 font-semibold"
+      : accentColor === "#38050e"
+      ? "text-[#38050e] underline underline-offset-2 hover:text-[#38050e]/80 font-semibold"
       : "text-white underline underline-offset-2 hover:text-white/80 font-semibold";
 
   const checkboxRing =
-    accentColor === "amber" ? "focus:ring-amber-500" : accentColor === "#bedcf8" ? "focus:ring-[#bedcf8]/50" : "focus:ring-white/50";
+    accentColor === "amber" ? "focus:ring-amber-500" : accentColor === "#cddbf2" ? "focus:ring-[#cddbf2]/50" : accentColor === "#38050e" ? "focus:ring-[#38050e]/50" : "focus:ring-white/50";
 
   return (
     <>
@@ -65,9 +69,10 @@ export default function PrivacyCheckbox({
           required
           checked={checked}
           onChange={(e) => onChange(e.target.checked)}
-          className={`mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-white/30 bg-black/30 accent-current focus:outline-none focus:ring-2 ${checkboxRing} cursor-pointer transition-all`}
+          className={`mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-current bg-black/5 accent-current focus:outline-none focus:ring-2 ${checkboxRing} cursor-pointer transition-all`}
+          style={{ color: textColor || 'inherit' }}
         />
-        <span className="text-xs text-[#bedcf8]/70 leading-snug">
+        <span className="text-xs leading-snug" style={{ color: textColor || 'rgba(205, 219, 242, 0.7)' }}>
           He leído y acepto la{" "}
           <button
             type="button"
@@ -76,7 +81,7 @@ export default function PrivacyCheckbox({
           >
             Política de Privacidad
           </button>{" "}
-          de <strong className="text-[#bedcf8]">Panama International Firm By YelCaballero</strong>{" "}
+          <strong style={{ color: textColor || '#cddbf2' }}>Panama International Firm By YelCaballero</strong>{" "}
           y autorizo el tratamiento de mis datos personales conforme a la normativa vigente.
         </span>
       </label>
@@ -88,7 +93,7 @@ export default function PrivacyCheckbox({
           onClick={(e) => { if (e.target === overlayRef.current) setModalOpen(false); }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in"
         >
-          <div className="relative w-full max-w-2xl max-h-[80vh] flex flex-col rounded-3xl bg-[#1a1108] border border-white/15 shadow-2xl overflow-hidden">
+          <div className="relative w-full max-w-2xl max-h-[80vh] flex flex-col rounded-3xl bg-[#38050e] border border-white/15 shadow-2xl overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 flex-shrink-0">
               <h2 className="text-white font-bold text-base tracking-wide">

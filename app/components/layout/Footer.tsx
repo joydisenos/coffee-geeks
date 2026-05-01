@@ -43,7 +43,7 @@ export default function Footer() {
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;900&family=Barlow:wght@300;400;500&display=swap');
-        .ft { background: #1A0808; padding: 48px 0 0; }
+        .ft { background: #38050e; padding: 48px 0 0; }
         .ft-wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px,5vw,60px); }
         .ft-top {
           display: flex; align-items: center; justify-content: space-between;
@@ -63,7 +63,7 @@ export default function Footer() {
           display: flex; align-items: center; justify-content: center;
           cursor: pointer; transition: all .2s;
         }
-        .fts:hover { border-color: #C4D4E8; background: rgba(196,212,232,.1); }
+        .fts:hover { border-color: #cddbf2; background: rgba(205,219,242,.1); }
         .ft-mid {
           display: grid; grid-template-columns: repeat(4,1fr);
           gap: 32px; padding: 28px 0;
@@ -72,7 +72,7 @@ export default function Footer() {
         .ft-cl {
           font-family: 'Barlow', sans-serif; font-size: 11px; font-weight: 700;
           letter-spacing: .16em; text-transform: uppercase;
-          color: #C4D4E8; margin-bottom: 12px;
+          color: #cddbf2; margin-bottom: 12px;
         }
         .ft-ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
         .ft-ul a {
@@ -88,10 +88,10 @@ export default function Footer() {
           outline: none; transition: border-color .2s;
         }
         .ft-input::placeholder { color: rgba(255,255,255,.28); }
-        .ft-input:focus { border-color: #FFB2BE; border-width: 2px; }
+        .ft-input:focus { border-color: #cddbf2; border-width: 2px; }
         .ft-sub-btn {
           width: 100%; height: 36px; margin-top: 7px; border: none;
-          border-radius: 4px; background: #D2E4FF; color: #091E32;
+          border-radius: 4px; background: #cddbf2; color: #38050e;
           font-family: 'Barlow', sans-serif; font-size: 13px; font-weight: 500;
           cursor: pointer; transition: background .15s;
         }

@@ -22,11 +22,11 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
       </div>
 
-      <div className="z-10 w-full max-w-md p-8 md:p-12 rounded-3xl bg-[#4c000a] backdrop-blur-lg shadow-2xl border border-[#bedcf8]/20 mx-4">
+      <div className="z-10 w-full max-w-md p-8 md:p-12 rounded-3xl bg-[#38050e] backdrop-blur-lg shadow-2xl border border-[#cddbf2]/20 mx-4">
 
         <div className="flex justify-center mb-0">
           <Link href="/">
-            <div className="relative w-50 h-50 drop-shadow-[0_0_15px_rgba(190,220,248,0.3)]">
+            <div className="relative w-50 h-50 drop-shadow-[0_0_15px_rgba(205,219,242,0.3)]">
               <Image
                 src="/logo-cel.webp"
                 alt="Coffee Geeks Panamá Logo"
@@ -38,12 +38,12 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-center text-[#bedcf8] mb-2 tracking-wide">
-          Iniciar Sesión
-        </h1>
-        <p className="text-center text-[#bedcf8]/70 mb-8 text-sm">
-          Ingresa a tu cuenta para continuar
-        </p>
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold text-center text-[#cddbf2] mb-2 tracking-wide">
+            Iniciar Sesión
+          </h1>
+          <p className="text-[#cddbf2]/60 font-light tracking-wide">Ingresa tus credenciales para continuar</p>
+        </div>
 
         {state?.error && (
           <div className="mb-4 p-3 rounded bg-red-500/20 border border-red-500/50 text-red-200 text-sm text-center">
@@ -51,51 +51,48 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form action={formAction} className="flex flex-col gap-5">
-          <div className="flex flex-col gap-2">
-            <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="email">
-              Correo Electrónico
-            </label>
+        <form action={formAction} className="space-y-6">
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-[#cddbf2]/50 uppercase tracking-widest ml-1">Email</label>
             <input
-              id="email"
+              required
               name="email"
               type="email"
-              required
-              className="w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 focus:border-transparent transition-all"
               placeholder="tu@correo.com"
+              className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 focus:border-transparent transition-all"
             />
           </div>
 
-          <div className="flex flex-col gap-2">
-            <label className="text-[#bedcf8] text-sm font-medium pl-1" htmlFor="password">
-              Contraseña
-            </label>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-[#cddbf2]/50 uppercase tracking-widest ml-1">Contraseña</label>
             <input
-              id="password"
+              required
               name="password"
               type="password"
-              required
-              className="w-full px-4 py-3 rounded-xl bg-[#bedcf8] border border-[#bedcf8]/10 text-[#4c000a] placeholder-[#4c000a]/50 focus:outline-none focus:ring-2 focus:ring-[#bedcf8]/50 focus:border-transparent transition-all"
               placeholder="••••••••"
+              className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 focus:border-transparent transition-all"
             />
           </div>
 
           <button
             type="submit"
             disabled={pending}
-            className="mt-4 w-full py-3.5 rounded-xl bg-[#bedcf8] text-[#4c000a] font-semibold tracking-wide hover:bg-[#bedcf8]/90 focus:ring-2 focus:ring-[#bedcf8]/50 focus:outline-none transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+            className="mt-4 w-full py-3.5 rounded-xl bg-[#cddbf2] text-[#38050e] font-semibold tracking-wide hover:bg-[#cddbf2]/90 focus:ring-2 focus:ring-[#cddbf2]/50 focus:outline-none transition-all disabled:opacity-70 disabled:cursor-not-allowed"
           >
-            {pending ? "Iniciando sesión..." : "Ingresar"}
+            {pending ? "Iniciando sesión..." : "Iniciar Sesión"}
           </button>
         </form>
 
-        <div className="mt-8 text-center text-sm text-[#bedcf8]/70 flex flex-col gap-3">
-          <p>
-            ¿No tienes una cuenta?{" "}
-            <Link href="/register" className="text-[#bedcf8] font-semibold hover:underline">
+        <div className="mt-10 text-center space-y-4">
+          <p className="text-sm text-[#cddbf2]/40">
+            ¿No tienes cuenta?{" "}
+            <Link href="/register" className="text-[#cddbf2] hover:underline font-semibold transition-colors">
               Regístrate aquí
             </Link>
           </p>
+          <Link href="/" className="block text-xs text-[#cddbf2]/30 hover:text-[#cddbf2]/60 transition-colors uppercase tracking-widest">
+            ← Volver al inicio
+          </Link>
         </div>
       </div>
     </main>

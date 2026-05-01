@@ -89,3 +89,126 @@ export const getWelcomeEmailTemplate = (name: string) => {
     </html>
   `;
 };
+
+export const getAdminNotificationEmailTemplate = (userData: { name: string; email: string; role: string; lastName?: string }) => {
+  const brandColor = "#4c000a";
+  const accentColor = "#bedcf8";
+  const textColor = "#ffffff";
+  
+  const registrationType = userData.role === "cafeteria" ? "Participante" : "Usuario";
+  const fullName = userData.lastName ? `${userData.name} ${userData.lastName}` : userData.name;
+
+  return `
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Nuevo Registro - Coffee Geeks</title>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #f4efe4;
+          color: ${brandColor};
+        }
+        .container {
+          max-width: 600px;
+          margin: 20px auto;
+          background-color: ${brandColor};
+          border-radius: 24px;
+          overflow: hidden;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .header {
+          padding: 40px 20px;
+          text-align: center;
+          background: linear-gradient(135deg, ${brandColor} 0%, #6d000f 100%);
+        }
+        .logo {
+          font-size: 24px;
+          font-weight: bold;
+          color: ${accentColor};
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+        }
+        .badge {
+          display: inline-block;
+          padding: 6px 16px;
+          background-color: ${accentColor};
+          color: ${brandColor};
+          border-radius: 50px;
+          font-size: 12px;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+        .content {
+          padding: 40px;
+          color: ${accentColor};
+        }
+        .info-card {
+          background-color: rgba(255, 255, 255, 0.05);
+          padding: 30px;
+          border-radius: 16px;
+          border: 1px solid rgba(190, 220, 248, 0.1);
+        }
+        .info-item {
+          margin-bottom: 20px;
+        }
+        .info-label {
+          font-size: 12px;
+          text-transform: uppercase;
+          opacity: 0.6;
+          margin-bottom: 4px;
+          letter-spacing: 1px;
+        }
+        .info-value {
+          font-size: 18px;
+          font-weight: 500;
+        }
+        .footer {
+          padding: 20px;
+          text-align: center;
+          font-size: 12px;
+          color: ${accentColor};
+          opacity: 0.5;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <div class="logo">COFFEE GEEKS</div>
+          <div class="badge">Nuevo Registro</div>
+        </div>
+        <div class="content">
+          <h2 style="margin-top: 0; color: ${accentColor};">Se ha registrado un nuevo ${registrationType.toLowerCase()}</h2>
+          <div class="info-card">
+            <div class="info-item">
+              <div class="info-label">Nombre Completo</div>
+              <div class="info-value">${fullName}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Correo Electrónico</div>
+              <div class="info-value">${userData.email}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Tipo de Cuenta</div>
+              <div class="info-value">${registrationType}</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Fecha de Registro</div>
+              <div class="info-value">${new Date().toLocaleString('es-PA', { timeZone: 'America/Panama' })}</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer">
+          Notificación automática del sistema Coffee Geeks Panamá.
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+};
