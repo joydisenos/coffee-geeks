@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, useTransition } from "react";
 import { registerCafeteria } from "@/app/actions/auth";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,6 +8,7 @@ import PrivacyCheckbox from "@/app/components/PrivacyCheckbox";
 
 export default function RegisterParticipantesPage() {
   const [state, formAction, pending] = useActionState(registerCafeteria, null);
+  const [isPending, startTransition] = useTransition();
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   return (
@@ -71,23 +72,39 @@ export default function RegisterParticipantesPage() {
               console.error("reCAPTCHA error:", err);
             }
           }
-          formAction(formData);
+          startTransition(() => {
+            formAction(formData);
+          });
         }} className="flex flex-col gap-4">
           <script src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`} async defer></script>
           <input type="hidden" name="recaptchaToken" value="" />
 
-          <div className="flex flex-col gap-2">
-            <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="name">
-              Nombre del Responsable
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
-              placeholder="Juan Pérez"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="name">
+                Nombre del Responsable
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
+                placeholder="Juan"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-[#cddbf2] text-sm font-medium pl-1" htmlFor="lastName">
+                Apellido
+              </label>
+              <input
+                id="lastName"
+                name="lastName"
+                type="text"
+                className="w-full px-4 py-3 rounded-xl bg-[#cddbf2] border border-[#cddbf2]/10 text-[#38050e] placeholder-[#38050e]/50 focus:outline-none focus:ring-2 focus:ring-[#cddbf2]/50 transition-all"
+                placeholder="Pérez"
+              />
+            </div>
           </div>
 
           <div className="flex flex-col gap-2">

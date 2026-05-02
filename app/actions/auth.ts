@@ -177,6 +177,7 @@ export async function registerCafeteria(state: any, formData: FormData) {
   await dbConnect();
 
   const name = sanitizeString(formData.get("name"));
+  const lastName = sanitizeString(formData.get("lastName"));
   const email = sanitizeString(formData.get("email"));
   const password = sanitizeString(formData.get("password"));
 
@@ -207,6 +208,7 @@ export async function registerCafeteria(state: any, formData: FormData) {
 
   const newUser = await User.create({
     name,
+    lastName,
     email,
     password: hashedPassword,
     role,
@@ -225,13 +227,14 @@ export async function registerCafeteria(state: any, formData: FormData) {
 
   // Notificamos al administrador
   try {
-    const adminEmail = process.env.ADMIN_EMAIL;
+      const adminEmail = process.env.ADMIN_EMAIL;
     if (adminEmail) {
       await sendEmail({
         to: adminEmail,
-        subject: `Nuevo Registro (Participante): ${newUser.name}`,
+        subject: `Nuevo Registro (Participante): ${newUser.name} ${newUser.lastName || ""}`,
         html: getAdminNotificationEmailTemplate({
           name: newUser.name,
+          lastName: newUser.lastName,
           email: newUser.email,
           role: newUser.role,
         }),
