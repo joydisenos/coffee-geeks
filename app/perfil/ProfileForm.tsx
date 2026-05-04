@@ -13,6 +13,9 @@ import {
 import MapPicker from "@/app/components/MapPicker";
 import FlashMessage from "@/app/components/FlashMessage";
 import Image from "next/image";
+import { QRCodeSVG } from "qrcode.react";
+import { getSlugId } from "@/lib/utils";
+
 
 
 
@@ -24,6 +27,7 @@ const labelCls = "text-[#cddbf2] text-sm font-medium pl-1";
 // ─── Componente principal ──────────────────────────────────────────────────────
 export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any, maxGalleryImages?: number }) {
   const [activeTab, setActiveTab] = useState("personal");
+  const [showQRModal, setShowQRModal] = useState(false);
 
   const tabs = [
     { id: "personal", label: "Información Personal" },
@@ -147,6 +151,29 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
     await setHighlightedBarista(baristaId, user._id || user.id);
   }
 
+  const downloadQR = () => {
+    const svg = document.getElementById("qr-code-svg");
+    if (!svg) return;
+    const svgData = new XMLSerializer().serializeToString(svg);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const img = new window.Image();
+    img.onload = () => {
+      // Usar un tamaño grande para mejor calidad de impresión
+      canvas.width = 1024;
+      canvas.height = 1024;
+      ctx!.fillStyle = "white";
+      ctx!.fillRect(0, 0, canvas.width, canvas.height);
+      ctx?.drawImage(img, 0, 0, 1024, 1024);
+      const pngFile = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
+      downloadLink.download = `QR-${user.cafeteriaName || "perfil"}.png`;
+      downloadLink.href = pngFile;
+      downloadLink.click();
+    };
+    img.src = "data:image/svg+xml;base64," + btoa(unescape(encodeURIComponent(svgData)));
+  };
+
   // ── Estado controlado para validación en tiempo real ──
   const [formData, setFormData] = useState({
     name: user.name || "",
@@ -206,6 +233,21 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
   return (
     <div className="flex flex-col gap-6">
       
+      {/* ─── Acciones Rápidas ─── */}
+      {user.role === "cafeteria" && (
+        <div className="flex justify-end">
+          <button 
+            onClick={() => setShowQRModal(true)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#cddbf2]/10 hover:bg-[#cddbf2]/20 text-[#cddbf2] font-bold text-[10px] sm:text-xs transition-all border border-[#cddbf2]/10 shadow-lg shadow-black/20"
+          >
+            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-current" style={{ strokeWidth: 2 }}>
+              <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Mi Código QR
+          </button>
+        </div>
+      )}
+
       {/* ─── Navegación por Pestañas ─── */}
       <div className="flex flex-wrap md:flex-nowrap gap-1.5 mb-2 p-1 rounded-2xl bg-[#2a040b] border border-[#cddbf2]/10">
         {tabs.map((tab) => {
@@ -760,6 +802,58 @@ export default function ProfileForm({ user, maxGalleryImages = 3 }: { user: any,
           </section>
         )}
       </div>
+
+      {/* ─── Modal de QR ─── */}
+      {showQRModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="relative w-full max-w-md bg-[#38050e] rounded-3xl border border-[#cddbf2]/20 p-8 shadow-2xl animate-in zoom-in-95 duration-300">
+            <button 
+              onClick={() => setShowQRModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-black/20 text-[#cddbf2]/40 hover:text-[#cddbf2] transition-colors"
+            >
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current" style={{ strokeWidth: 2.5 }}>
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            </button>
+            
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-full bg-[#cddbf2]/10 flex items-center justify-center mb-4">
+                <svg viewBox="0 0 24 24" className="w-6 h-6 text-[#cddbf2] fill-none stroke-current" style={{ strokeWidth: 2 }}>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5l5 5 5-5m-5 5V3" />
+                </svg>
+              </div>
+              
+              <h2 className="text-[#cddbf2] text-xl font-bold mb-2">Código QR del Perfil</h2>
+              <p className="text-[#cddbf2]/50 text-xs mb-8">Descarga e imprime para tu establecimiento</p>
+              
+              <div className="bg-white p-6 rounded-2xl shadow-xl mb-8">
+                <QRCodeSVG
+                  id="qr-code-svg"
+                  value={`${typeof window !== "undefined" ? window.location.origin : ""}/participantes/${getSlugId(user.cafeteriaName, user._id || user.id)}`}
+                  size={200}
+                  level="H"
+                  includeMargin={true}
+                />
+              </div>
+              
+              <h3 className="text-[#cddbf2] font-bold text-sm mb-2">¡Listo para compartir!</h3>
+              <p className="text-[#cddbf2]/60 text-xs mb-8 leading-relaxed">
+                Tus clientes podrán escanear este código para ver tu historia, conocer a tus baristas y votar por ti directamente.
+              </p>
+              
+              <button 
+                onClick={downloadQR}
+                className="w-full py-4 rounded-xl bg-[#cddbf2] text-[#38050e] font-bold tracking-wide hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-lg shadow-black/20"
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-none stroke-current" style={{ strokeWidth: 2 }}>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5l5 5 5-5m-5 5V3" />
+                </svg>
+                Descargar para Impresión
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

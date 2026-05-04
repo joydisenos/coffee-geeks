@@ -62,8 +62,8 @@ export default function Navbar() {
         .tbar-i { display: flex; align-items: stretch; height: 58px; }
         .tb-brand {
           display: flex; align-items: center; gap: 10px;
-          padding: 0 18px 0 24px; background: #a36a3e; flex-shrink: 0;
-          cursor: pointer; border-right: 1px solid rgba(255,255,255,.07);
+          padding: 0 18px 0 24px; background: #38050e; flex-shrink: 0;
+          cursor: pointer;
           transition: background .2s; text-decoration: none;
         }
         .tb-brand:hover { background: #2a040b }

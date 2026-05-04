@@ -162,23 +162,6 @@ export default function PerfilDetailClient({ shop }: { shop: any }) {
                 </div>
               )}
 
-              {/* Score bars (Mocked for now since DB doesn't have live votes yet) */}
-              <div style={{ marginBottom: 24 }}>
-                <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "1.1rem", fontWeight: 900, textTransform: "uppercase", color: "#38050e", marginBottom: 14 }}>Puntaje del concurso</div>
-                {[
-                  { label: "Puntaje global", val: 0 },
-                  { label: "Votos del público (30%)", val: 0 },
-                  { label: "Evaluación del jurado (70%)", val: 0 },
-                ].map(({ label, val }) => (
-                  <div key={label} className="score-row">
-                    <div className="score-label">{label}<span>{val}/100</span></div>
-                    <div className="score-bar">
-                      <div className="score-fill" style={{ width: `${val}%` }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
               {/* Info */}
               <div style={{ fontFamily: "'Barlow Condensed',sans-serif", fontSize: "1.1rem", fontWeight: 900, textTransform: "uppercase", color: "#38050e", marginBottom: 8 }}>Información</div>
               {[
