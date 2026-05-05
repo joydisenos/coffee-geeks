@@ -7,6 +7,7 @@ import ShopsSection from "@/app/components/home/ShopsSection";
 import RankingSection from "@/app/components/home/RankingSection";
 import AcademiaSection from "@/app/components/home/AcademiaSection";
 import BlogSection from "@/app/components/home/BlogSection";
+import MapSection from "@/app/components/home/MapSection";
 
 export const metadata: Metadata = {
   title: "Coffee Geeks Panamá | El Camino a la Gran Taza",
@@ -56,6 +57,8 @@ export default async function HomePage() {
     loc: c.neighborhood || "Panamá",
     votes: votesCountMap[c._id.toString()] || 0,
     img: c.coverImage || "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=75",
+    lat: c.locationLat,
+    lng: c.locationLng
   }));
 
   const sortedByVotes = [...SHOPS].sort((a, b) => b.votes - a.votes);
@@ -113,6 +116,9 @@ export default async function HomePage() {
 
         {/* 3. Cafeterías participantes */}
         <ShopsSection initialShops={SHOPS} />
+
+        {/* 3.5 Mapa de la ruta */}
+        <MapSection shops={SHOPS} />
 
         {/* 4. Ranking en vivo */}
         <RankingSection 

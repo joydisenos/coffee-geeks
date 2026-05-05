@@ -1,33 +1,11 @@
+import { getBlogPosts } from "@/app/actions/blog";
 import Link from "next/link";
 
-const POSTS = [
-  {
-    id: "guia",
-    chip: "Guía",
-    bg: "linear-gradient(135deg,#2C1A0E,#5C3A1A)",
-    date: "12 Abr · 2026",
-    title: "Guía de supervivencia Coffee Geek",
-    excerpt: "Todo lo que necesitas antes de explorar la ruta del café panameño.",
-  },
-  {
-    id: "origen",
-    chip: "Origen",
-    bg: "linear-gradient(135deg,#1A2C0E,#3A5C1A)",
-    date: "08 Abr · 2026",
-    title: "Por qué el café panameño domina el mundo",
-    excerpt: "Geisha, Catuaí y Bourbon: el terroir único de Chiriquí.",
-  },
-  {
-    id: "entrevista",
-    chip: "Entrevista",
-    bg: "linear-gradient(135deg,#1A0E2C,#3A1A5C)",
-    date: "03 Abr · 2026",
-    title: "Entrevista cruzada con los 3 jueces del concurso",
-    excerpt: "Los criterios secretos que evalúan la experiencia integral de cada local.",
-  },
-];
+export default async function BlogSection() {
+  const { posts } = await getBlogPosts(1, 3);
+  
+  if (posts.length === 0) return null;
 
-export default function BlogSection() {
   return (
     <>
       <style>{`
@@ -74,16 +52,16 @@ export default function BlogSection() {
           </div>
 
           <div className="blog-grid">
-            {POSTS.map((post) => (
-              <div className="bc" key={post.id}>
-                <div className="bc-img" style={{ background: post.bg }}>
-                  <span className="bc-chip">{post.chip}</span>
+            {posts.map((post: any) => (
+              <div className="bc" key={post._id}>
+                <div className="bc-img" style={{ backgroundImage: `url(${post.mainImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                  <span className="bc-chip">Blog</span>
                 </div>
                 <div className="bc-body">
-                  <div className="bc-date">{post.date}</div>
+                  <div className="bc-date">{new Date(post.createdAt).toLocaleDateString('es-PA', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
                   <div className="bc-title">{post.title}</div>
-                  <div className="bc-exc">{post.excerpt}</div>
-                  <Link href={`/blog/${post.id}`} className="bc-more">Leer más →</Link>
+                  <div className="bc-exc">{post.shortDescription}</div>
+                  <Link href={`/blog/${post.slug}`} className="bc-more">Leer más →</Link>
                 </div>
               </div>
             ))}
